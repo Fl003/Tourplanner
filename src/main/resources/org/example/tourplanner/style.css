@@ -1,0 +1,46 @@
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #70b152;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab-pane {
+    -fx-tab-min-width: 90px;
+}
+
+.menu-bar {
+    -fx-background-color: #70b152;
+}
+
+#newTour {
+    -fx-background-color: #70b152;
+}
+
+#searchTour {
+    -fx-background-color: #70b152;
+}
+
+#searchLogs {
+    -fx-background-color: #70b152;
+}
+
+#newLog {
+    -fx-background-color: #70b152;
+}
+
+#modifyLog {
+    -fx-background-color: orange;
+}
+
+#deleteLog {
+    -fx-background-color: darkred;
+}
+
+#statusBar {
+    -fx-background-color: #70b152;
+}
+
+#estimatedLabel, #distanceLabel {
+    -fx-font-weight: bold;
+}
