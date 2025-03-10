@@ -43,47 +43,47 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Tour">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Create" />
                         <MenuItem mnemonicParsing="false" text="Modify" />
                         <MenuItem mnemonicParsing="false" text="Delete" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Import" />
-                        <MenuItem mnemonicParsing="false" text="Export" />
+                        <MenuItem mnemonicParsing="false" text="Import Tourdata" />
+                        <MenuItem mnemonicParsing="false" text="Export Tourdata" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Report">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Tour" />
-                        <MenuItem mnemonicParsing="false" text="Summarize" />
+                        <MenuItem mnemonicParsing="false" text="Tour Report" />
+                        <MenuItem mnemonicParsing="false" text="Summarize Report" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
+            <HBox alignment="CENTER" prefHeight="26.0" prefWidth="200.0">
+                <children>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                        <children>
+                            <TextField prefHeight="26.0" prefWidth="969.0" promptText="Search ..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="0.0" />
+                            <Button fx:id="searchTour" mnemonicParsing="false" text="🔎" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        </children>
+                    </AnchorPane>
+                </children>
+            </HBox>
         <SplitPane dividerPositions="0.25" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <items>
-                <AnchorPane minWidth="250.0">
+                <AnchorPane minWidth="250.0" style="-fx-background-color: white;">
                     <children>
                         <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Tours" textAlignment="CENTER" textFill="#70b152" wrapText="false">
                             <font>
                                 <Font name="Arial Bold" size="18.0" fx:id="x1" />
                             </font>
                         </Label>
-                        <ListView layoutX="11.0" layoutY="71.2" prefHeight="431.0" prefWidth="200.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="71.0" />
+                        <ListView layoutX="11.0" layoutY="44.0" prefHeight="466.0" prefWidth="230.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="44.0" />
                         <Button fx:id="newTour" layoutX="11.0" layoutY="513.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" text="New Tour" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Button>
-                        <HBox alignment="CENTER" layoutX="11.0" layoutY="44.0" prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-                            <children>
-                                <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <TextField prefHeight="26.0" prefWidth="173.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="26.400000000000006" AnchorPane.topAnchor="0.0" />
-                                        <Button fx:id="searchTour" mnemonicParsing="false" text="🔎" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    </children>
-                                </AnchorPane>
-                            </children>
-                        </HBox>
                     </children>
                 </AnchorPane>
                 <AnchorPane minWidth="700.0" prefHeight="200.0" prefWidth="200.0">
@@ -100,7 +100,7 @@
                                                             <children>
                                                                 <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                     <items>
-                                                                        <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0">
+                                                                        <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
                                                                             <children>
                                                                                 <Label layoutX="19.0" layoutY="59.0" text="Starting point:" />
                                                                                 <TextField layoutX="106.0" layoutY="18.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="106.0" AnchorPane.rightAnchor="19.19999999999999" />
@@ -119,7 +119,7 @@
                                                                                 </TextField>
                                                                             </children>
                                                                         </AnchorPane>
-                                                                        <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0">
+                                                                        <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
                                                                             <children>
                                                                                 <Label layoutX="39.0" layoutY="14.0" text="Description:" AnchorPane.leftAnchor="39.0" />
                                                                                 <TextArea layoutX="111.0" layoutY="14.0" prefHeight="114.0" prefWidth="230.0" wrapText="true" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="14.0" />
@@ -145,15 +145,13 @@
                                         </TabPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane minHeight="300.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                <AnchorPane minHeight="300.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: white;">
                                     <children>
                                         <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Logs" textAlignment="CENTER" textFill="#70b152" wrapText="false">
                                             <font>
                                                 <Font name="Arial Bold" size="18.0" fx:id="x11" />
                                             </font>
                                         </Label>
-                                        <TextField layoutX="408.19999999999993" layoutY="47.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.rightAnchor="42.200000000000045" />
-                                        <Button fx:id="searchLogs" layoutX="628.0" layoutY="47.0" mnemonicParsing="false" text="🔎" textFill="WHITE" AnchorPane.rightAnchor="14.399999999999977" />
                                         <ButtonBar buttonOrder="L_E+U+FBXI_YNOCAH_R" layoutY="40.0" prefHeight="40.0" prefWidth="236.0">
                                             <buttons>
                                                 <Button fx:id="newLog" mnemonicParsing="false" text="New" textFill="WHITE">

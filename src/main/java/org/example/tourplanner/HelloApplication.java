@@ -13,6 +13,8 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 995, 600);
         stage.setTitle("Tourplanner");
+        stage.setMinHeight(650);
+        stage.setMinWidth(1050);
         stage.setScene(scene);
         stage.show();
         stage.setMaximized(true);
