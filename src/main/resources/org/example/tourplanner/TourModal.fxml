@@ -4,21 +4,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="251.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="251.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.view.TourModalController">
     <children>
         <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="202.0" prefWidth="367.0" style="-fx-background-color: white;">
                     <children>
                         <Label layoutX="20.0" layoutY="97.0" text="Starting point:" />
-                        <TextField id="TourName" layoutX="107.0" layoutY="56.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="18.19999999999999" />
+                        <TextField fx:id="tourName" layoutX="107.0" layoutY="56.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="18.19999999999999" />
                         <Label layoutX="61.0" layoutY="60.0" text="Name:" />
                         <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.400000000000034" />
-                        <TextField id="TourStartingpoint" layoutX="107.0" layoutY="93.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="18.600000000000023" />
+                        <TextField fx:id="tourStartingpoint" layoutX="107.0" layoutY="93.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="18.600000000000023" />
                         <Label layoutX="18.0" layoutY="170.0" text="Transport type:" />
-                        <ComboBox id="TourTransporttype" layoutX="107.0" layoutY="166.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="18.600000000000023" />
+                        <ComboBox fx:id="tourTransporttype" layoutX="107.0" layoutY="166.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="18.600000000000023" />
                         <Label layoutX="35.0" layoutY="133.0" text="Destination:" />
-                        <TextField id="TourDestination" layoutX="107.0" layoutY="129.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="18.600000000000023">
+                        <TextField fx:id="tourDestination" layoutX="107.0" layoutY="129.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="18.600000000000023">
                             <tooltip>
                                 <Tooltip text="Name der Tour" />
                             </tooltip>
@@ -33,9 +33,9 @@
                 <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
                     <children>
                         <Label layoutX="39.0" layoutY="60.0" text="Description:" AnchorPane.leftAnchor="39.0" />
-                        <TextArea id="TourDescription" layoutX="111.0" layoutY="53.0" prefHeight="143.0" prefWidth="232.0" wrapText="true" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="53.0" />
+                        <TextArea fx:id="tourDescription" layoutX="111.0" layoutY="53.0" prefHeight="143.0" prefWidth="232.0" wrapText="true" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="53.0" />
                         <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.4" AnchorPane.rightAnchor="14.399999999999977" />
-                  <Button layoutX="228.0" layoutY="211.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #70b152;" text="Create" textFill="WHITE" AnchorPane.rightAnchor="25.0">
+                  <Button layoutX="228.0" layoutY="211.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #70b152;" text="Create" textFill="WHITE" AnchorPane.rightAnchor="25.0" onAction="#createTour">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>

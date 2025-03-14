@@ -9,6 +9,7 @@ public class ControllerFactory {
     private final GeneralViewModel generalViewModel;
     private final MapViewModel mapViewModel;
     private final LogViewModel logViewModel;
+    private final TourModalViewModel tourModalViewModel;
 
     public ControllerFactory() {
         searchBarViewModel = new SearchBarViewModel();
@@ -17,6 +18,7 @@ public class ControllerFactory {
         mapViewModel = new MapViewModel();
         logViewModel = new LogViewModel();
         mainViewModel = new MainViewModel();
+        tourModalViewModel = new TourModalViewModel();
     }
 
     //
@@ -35,6 +37,8 @@ public class ControllerFactory {
             return new MapController(mapViewModel);
         } else if (controllerClass == LogController.class) {
             return new LogController(logViewModel);
+        } else if (controllerClass == TourModalController.class) {
+            return new TourModalController(tourModalViewModel, tourOverviewModel);
         }
         throw new IllegalArgumentException("Unknown controller class: " + controllerClass);
     }

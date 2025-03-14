@@ -36,6 +36,16 @@ public class Tour {
 
     }
 
+    public Tour(String name, String startingpoint, String destination, String transportType, String description) {
+        this.name = new SimpleStringProperty(name);
+        this.startingpoint = new SimpleStringProperty(startingpoint);
+        this.destination= new SimpleStringProperty(destination);
+        this.transportType = new SimpleStringProperty(transportType);
+        this.description = new SimpleStringProperty(description);
+        this.distance = new SimpleDoubleProperty(0);
+        this.duration = new SimpleDoubleProperty(0);
+    }
+
     public String getStartingpoint() {
         return startingpoint.get();
     }

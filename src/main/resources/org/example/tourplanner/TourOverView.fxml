@@ -20,7 +20,7 @@
                   AnchorPane.topAnchor="44.0"/>
         <Button fx:id="newTour" layoutX="11.0" layoutY="513.0" mnemonicParsing="false" prefHeight="38.0"
                 prefWidth="200.0" text="New Tour" textFill="WHITE" AnchorPane.bottomAnchor="10.0"
-                AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0">
+                AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0" onAction="#showTourModal">
             <font>
                 <Font name="Arial Bold" size="12.0"/>
             </font>

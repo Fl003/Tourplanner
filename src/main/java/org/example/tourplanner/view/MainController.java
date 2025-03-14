@@ -39,20 +39,14 @@ public class MainController implements Initializable {
 
     }
 
-    public void showTourModal(ActionEvent actionEvent) {
-        try {
-            Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourModal.fxml"));
-            Parent root = loader.load();
-            dialogStage.setScene(new Scene(root));
-            dialogStage.setTitle("Create Tour");
-            dialogStage.setMinHeight(251.0);
-            dialogStage.setMinWidth(742.0);
-            dialogStage.showAndWait();
-        } catch(IOException ex) {
-            // ERROR
-            System.out.println(ex.getMessage());
-        }
+    public void showTourModal(ActionEvent actionEvent) throws IOException {
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        Parent root = FXMLDependencyInjection.load("TourModal.fxml", Locale.GERMAN);
+        dialogStage.setScene(new Scene(root));
+        dialogStage.setTitle("Create Tour");
+        dialogStage.setMinHeight(251.0);
+        dialogStage.setMinWidth(742.0);
+        dialogStage.showAndWait();
     }
 }
