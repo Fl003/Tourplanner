@@ -100,6 +100,9 @@ public class Tour {
         this.distance.set(duration);
     }
 
-
+    @Override
+    public String toString() {
+        return getName();
+    }
 
 }

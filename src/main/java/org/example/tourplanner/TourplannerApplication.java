@@ -1,17 +1,19 @@
 package org.example.tourplanner;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class TourplannerApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(TourplannerApplication.class.getResource("MainView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 995, 600);
+        Parent root = FXMLDependencyInjection.load("MainView.fxml", Locale.GERMAN);
+
+        Scene scene = new Scene(root, 995, 600);
         stage.setTitle("Tourplanner");
         stage.setMinHeight(650);
         stage.setMinWidth(1050);
