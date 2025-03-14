@@ -57,7 +57,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="995.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.MainController">
+<VBox prefHeight="600.0" prefWidth="995.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.view.MainController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
