@@ -116,86 +116,19 @@
                                             <tabs>
                                                 <Tab text="General">
                                                     <content>
-                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                                            <children>
-                                                                <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                                    <items>
-                                                                        <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
-                                                                            <children>
-                                                                                <Label layoutX="19.0" layoutY="59.0" text="Starting point:" />
-                                                                                <TextField id="TourName" layoutX="106.0" layoutY="18.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="106.0" AnchorPane.rightAnchor="19.19999999999999" />
-                                                                                <Label layoutX="60.0" layoutY="22.0" text="Name:" />
-                                                                                <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.400000000000034" />
-                                                                                <TextField id="TourStartingpoint" layoutX="106.4" layoutY="55.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="106.4" AnchorPane.rightAnchor="19.19999999999999" />
-                                                                                <Label fx:id="distanceLabel" layoutX="49.0" layoutY="186.0" text="Distance:" />
-                                                                                <Label layoutX="106.0" layoutY="186.0" text="50km" />
-                                                                                <Label layoutX="17.0" layoutY="132.0" text="Transport type:" />
-                                                                                <ComboBox id="TourTransporttype" layoutX="106.4" layoutY="128.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="106.4" AnchorPane.rightAnchor="19.19999999999999" />
-                                                                                <Label layoutX="34.0" layoutY="95.0" text="Destination:" />
-                                                                                <TextField id="TourDestination" layoutX="106.4" layoutY="91.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="106.4" AnchorPane.rightAnchor="19.19999999999999">
-                                                                                    <tooltip>
-                                                                                        <Tooltip text="Name der Tour" />
-                                                                                    </tooltip>
-                                                                                </TextField>
-                                                                            </children>
-                                                                        </AnchorPane>
-                                                                        <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
-                                                                            <children>
-                                                                                <Label layoutX="39.0" layoutY="14.0" text="Description:" AnchorPane.leftAnchor="39.0" />
-                                                                                <TextArea id="TourDescription" layoutX="111.0" layoutY="14.0" prefHeight="114.0" prefWidth="230.0" wrapText="true" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="14.0" />
-                                                                                <Label fx:id="estimatedLabel" layoutX="14.0" layoutY="176.0" text="Estimated time:" AnchorPane.rightAnchor="263.6" />
-                                                                                <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.4" AnchorPane.rightAnchor="14.399999999999977" />
-                                                                                <Label layoutX="112.00000000000001" layoutY="176.0" text="1:15h" AnchorPane.rightAnchor="224.8" />
-                                                                            </children>
-                                                                        </AnchorPane>
-                                                                    </items>
-                                                                </SplitPane>
-                                                            </children>
-                                                        </AnchorPane>
+                                                        <fx:include fx:id="general" source="GeneralView.fxml"/>
                                                     </content>
                                                 </Tab>
                                                 <Tab text="Map">
                                                     <content>
-                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-
-                                                        </AnchorPane>
+                                                        <fx:include fx:id="map" source="MapView.fxml"/>
                                                     </content>
                                                 </Tab>
                                             </tabs>
                                         </TabPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane minHeight="300.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: white;">
-                                    <children>
-                                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Logs" textAlignment="CENTER" textFill="#70b152" wrapText="false">
-                                            <font>
-                                                <Font name="Arial Bold" size="18.0" fx:id="x11" />
-                                            </font>
-                                        </Label>
-                                        <ButtonBar buttonOrder="L_E+U+FBXI_YNOCAH_R" layoutY="40.0" prefHeight="40.0" prefWidth="236.0">
-                                            <buttons>
-                                                <Button fx:id="newLog" mnemonicParsing="false" text="New" textFill="WHITE">
-                                                    <font>
-                                                        <Font name="Arial Bold" size="12.0" />
-                                                    </font></Button>
-                                                <Button fx:id="modifyLog" mnemonicParsing="false" text="Modify" textFill="WHITE">
-                                                    <font>
-                                                        <Font name="Arial Bold" size="12.0" />
-                                                    </font></Button>
-                                                <Button fx:id="deleteLog" mnemonicParsing="false" text="Delete" textFill="WHITE">
-                                                    <font>
-                                                        <Font name="Arial Bold" size="12.0" />
-                                                    </font></Button>
-                                            </buttons>
-                                        </ButtonBar>
-                                        <TableView id="LogTable" layoutX="22.0" layoutY="80.0" prefHeight="181.0" prefWidth="634.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="80.0">
-                                            <columns>
-                                                <TableColumn prefWidth="75.0" text="C1" />
-                                                <TableColumn prefWidth="75.0" text="C2" />
-                                            </columns>
-                                        </TableView>
-                                    </children>
-                                </AnchorPane>
+                                <fx:include fx:id="log" source="LogView.fxml"/>
                             </items>
                         </SplitPane>
                     </children>
