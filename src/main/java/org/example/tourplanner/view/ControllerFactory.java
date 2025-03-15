@@ -5,7 +5,7 @@ import org.example.tourplanner.viewmodel.*;
 public class ControllerFactory {
     private final MainViewModel mainViewModel;
     private final SearchBarViewModel searchBarViewModel;
-    private final TourOverviewModel tourOverviewModel;
+    private final TourListViewModel tourListViewModel;
     private final GeneralViewModel generalViewModel;
     private final MapViewModel mapViewModel;
     private final LogViewModel logViewModel;
@@ -13,8 +13,8 @@ public class ControllerFactory {
 
     public ControllerFactory() {
         searchBarViewModel = new SearchBarViewModel();
-        tourOverviewModel = new TourOverviewModel();
-        generalViewModel = new GeneralViewModel();
+        tourListViewModel = new TourListViewModel();
+        generalViewModel = new GeneralViewModel(tourListViewModel);
         mapViewModel = new MapViewModel();
         logViewModel = new LogViewModel();
         mainViewModel = new MainViewModel();
@@ -29,8 +29,8 @@ public class ControllerFactory {
             return new MainController(mainViewModel);
         } else if (controllerClass == SearchBarController.class) {
             return new SearchBarController(searchBarViewModel);
-        } else if (controllerClass == TourOverviewController.class) {
-            return new TourOverviewController(tourOverviewModel);
+        } else if (controllerClass == TourListController.class) {
+            return new TourListController(tourListViewModel);
         } else if (controllerClass == GeneralController.class) {
             return new GeneralController(generalViewModel);
         } else if (controllerClass == MapController.class) {
@@ -38,7 +38,7 @@ public class ControllerFactory {
         } else if (controllerClass == LogController.class) {
             return new LogController(logViewModel);
         } else if (controllerClass == TourModalController.class) {
-            return new TourModalController(tourModalViewModel, tourOverviewModel);
+            return new TourModalController(tourModalViewModel, tourListViewModel);
         }
         throw new IllegalArgumentException("Unknown controller class: " + controllerClass);
     }

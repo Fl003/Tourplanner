@@ -8,12 +8,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.tourplanner.model.Tour;
+import org.example.tourplanner.model.TransportType;
 import org.example.tourplanner.viewmodel.TourModalViewModel;
-import org.example.tourplanner.viewmodel.TourOverviewModel;
+import org.example.tourplanner.viewmodel.TourListViewModel;
 
 public class TourModalController {
     private final TourModalViewModel tourModalViewModel;
-    private final TourOverviewModel tourOverviewModel;
+    private final TourListViewModel tourListViewModel;
 
     @FXML
     public TextField tourName;
@@ -26,15 +27,15 @@ public class TourModalController {
     @FXML
     public TextArea tourDescription;
 
-    public TourModalController(TourModalViewModel tourModalViewModel, TourOverviewModel tourOverviewModel) {
+    public TourModalController(TourModalViewModel tourModalViewModel, TourListViewModel tourListViewModel) {
         this.tourModalViewModel = tourModalViewModel;
-        this.tourOverviewModel = tourOverviewModel;
+        this.tourListViewModel = tourListViewModel;
     }
 
     public void createTour(ActionEvent actionEvent) {
         // TODO: validation
-        Tour newTour = new Tour(tourName.getText(), tourStartingpoint.getText(), tourDestination.getText(), tourTransporttype.getSelectionModel().getSelectedItem().toString(), tourDescription.getText());
-        this.tourOverviewModel.addTour(newTour);
+        Tour newTour = new Tour(tourName.getText(), tourStartingpoint.getText(), tourDestination.getText(), TransportType.valueOf(tourTransporttype.getSelectionModel().getSelectedItem().toString()), tourDescription.getText());
+        this.tourListViewModel.addTour(newTour);
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();

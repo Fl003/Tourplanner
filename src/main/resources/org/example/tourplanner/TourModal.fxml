@@ -18,11 +18,7 @@
                         <Label layoutX="18.0" layoutY="170.0" text="Transport type:" />
                         <ComboBox fx:id="tourTransporttype" layoutX="107.0" layoutY="166.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="18.600000000000023" />
                         <Label layoutX="35.0" layoutY="133.0" text="Destination:" />
-                        <TextField fx:id="tourDestination" layoutX="107.0" layoutY="129.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="18.600000000000023">
-                            <tooltip>
-                                <Tooltip text="Name der Tour" />
-                            </tooltip>
-                        </TextField>
+                        <TextField fx:id="tourDestination" layoutX="107.0" layoutY="129.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="18.600000000000023" />
                   <Label layoutX="24.0" layoutY="18.0" text="Create New Tour" textFill="#70b152">
                      <font>
                         <Font name="Arial Bold" size="18.0" />

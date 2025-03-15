@@ -1,57 +1,54 @@
 package org.example.tourplanner.model;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class Tour {
     private final StringProperty name;
-    private final StringProperty startingpoint;
+    private final StringProperty startingPoint;
     private final StringProperty destination;
-    private final StringProperty transportType;
+    private final ObjectProperty<TransportType> transportType;
     private final StringProperty description;
     private final DoubleProperty distance;
-    private final DoubleProperty duration;
+    private final DoubleProperty estimatedTime;
 
 
-    public Tour(StringProperty name, StringProperty startingpoint, StringProperty destination, StringProperty transportType, StringProperty description, DoubleProperty distance, DoubleProperty duration) {
+    public Tour(StringProperty name, StringProperty startingPoint, StringProperty destination, ObjectProperty<TransportType> transportType, StringProperty description, DoubleProperty distance, DoubleProperty estimatedTime) {
         this.name = name;
-        this.startingpoint = startingpoint;
+        this.startingPoint = startingPoint;
         this.destination = destination;
         this.transportType = transportType;
         this.description = description;
         this.distance = distance;
-        this.duration = duration;
+        this.estimatedTime = estimatedTime;
     }
 
-    public Tour(String name, String startingpoint, String destination, String transportType, String description, Double distance, Double duration) {
+    public Tour(String name, String startingPoint, String destination, TransportType transportType, String description, Double distance, Double estimatedTime) {
         this.name = new SimpleStringProperty(name);
-        this.startingpoint = new SimpleStringProperty(startingpoint);
+        this.startingPoint = new SimpleStringProperty(startingPoint);
         this.destination= new SimpleStringProperty(destination);
-        this.transportType = new SimpleStringProperty(transportType);
+        this.transportType = new SimpleObjectProperty<>(transportType);
         this.description = new SimpleStringProperty(description);
         this.distance = new SimpleDoubleProperty(distance);
-        this.duration = new SimpleDoubleProperty(duration);
+        this.estimatedTime = new SimpleDoubleProperty(estimatedTime);
 
     }
 
-    public Tour(String name, String startingpoint, String destination, String transportType, String description) {
+    public Tour(String name, String startingPoint, String destination, TransportType transportType, String description) {
         this.name = new SimpleStringProperty(name);
-        this.startingpoint = new SimpleStringProperty(startingpoint);
+        this.startingPoint = new SimpleStringProperty(startingPoint);
         this.destination= new SimpleStringProperty(destination);
-        this.transportType = new SimpleStringProperty(transportType);
+        this.transportType = new SimpleObjectProperty<>(transportType);
         this.description = new SimpleStringProperty(description);
         this.distance = new SimpleDoubleProperty(0);
-        this.duration = new SimpleDoubleProperty(0);
+        this.estimatedTime = new SimpleDoubleProperty(0);
     }
 
     public String getStartingpoint() {
-        return startingpoint.get();
+        return startingPoint.get();
     }
 
-    public StringProperty startingpointProperty() {
-        return startingpoint;
+    public StringProperty startingPointProperty() {
+        return startingPoint;
     }
 
     public String getName() {
@@ -70,11 +67,11 @@ public class Tour {
         return destination;
     }
 
-    public String getTransportType() {
+    public TransportType getTransportType() {
         return transportType.get();
     }
 
-    public StringProperty transportTypeProperty() {
+    public ObjectProperty<TransportType> transportTypeProperty() {
         return transportType;
     }
 
@@ -94,20 +91,20 @@ public class Tour {
         return distance;
     }
 
-    public double getDuration() {
-        return duration.get();
+    public double getEstimatedTime() {
+        return estimatedTime.get();
     }
 
-    public DoubleProperty durationProperty() {
-        return duration;
+    public DoubleProperty estimatedTimeProperty() {
+        return estimatedTime;
     }
 
     public void setDistance(double distance) {
         this.distance.set(distance);
     }
 
-    public void setDuration(double duration) {
-        this.distance.set(duration);
+    public void setEstimatedTime(double estimatedTime) {
+        this.distance.set(estimatedTime);
     }
 
     @Override

@@ -9,24 +9,25 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.tourplanner.FXMLDependencyInjection;
 import org.example.tourplanner.model.Tour;
-import org.example.tourplanner.viewmodel.TourOverviewModel;
+import org.example.tourplanner.viewmodel.TourListViewModel;
 
 import java.io.IOException;
 import java.util.Locale;
 
-public class TourOverviewController {
+public class TourListController {
     @FXML
     public ListView<Tour> tourList;
 
-    private final TourOverviewModel tourOverviewModel;
+    private final TourListViewModel tourListViewModel;
 
-    public TourOverviewController(TourOverviewModel tourOverviewModel) {
-        this.tourOverviewModel = tourOverviewModel;
+    public TourListController(TourListViewModel tourListViewModel) {
+        this.tourListViewModel = tourListViewModel;
     }
 
     @FXML
     void initialize() {
-        tourList.setItems(tourOverviewModel.getObservableTours());
+        tourList.setItems(tourListViewModel.getObservableTours());
+        tourList.getSelectionModel().selectedItemProperty().addListener(tourListViewModel.getChangeListener());
     }
 
     public void showTourModal(ActionEvent actionEvent) throws IOException {
