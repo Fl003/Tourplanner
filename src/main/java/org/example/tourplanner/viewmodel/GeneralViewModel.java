@@ -1,5 +1,6 @@
 package org.example.tourplanner.viewmodel;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ public class GeneralViewModel {
     private final StringProperty startingPoint = new SimpleStringProperty();
     private final StringProperty destination = new SimpleStringProperty();
     private final ObjectProperty<TransportType> transportType = new SimpleObjectProperty<>();
+    private final StringProperty transportTypeString = new SimpleStringProperty();
     private final StringProperty description = new SimpleStringProperty();
     private final StringProperty distance = new SimpleStringProperty();
     private final StringProperty estimatedTime = new SimpleStringProperty();
@@ -66,7 +68,14 @@ public class GeneralViewModel {
     public StringProperty distanceProperty() {
         return distance;
     }
-    public ObjectProperty<TransportType> transportTypeProperty() {
+    public ObjectProperty<TransportType> transportTypeObjectProperty() {
         return transportType;
+    }
+    public StringProperty transportTypeStringProperty() {
+        transportTypeString.bind(Bindings.createStringBinding(
+                () -> transportType.get() == null ? "" : transportType.get().toString(),
+                transportType
+        ));
+        return transportTypeString;
     }
 }

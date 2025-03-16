@@ -2,45 +2,40 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.tourplanner.view.LogController"
-            minHeight="300.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: white;">
-    <children>
-        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;"
-               text="Logs" textAlignment="CENTER" textFill="#70b152" wrapText="false">
+<AnchorPane minHeight="300.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.view.LogController">
+        <Label alignment="CENTER" layoutX="23.0" layoutY="14.0" minWidth="60.0" style="&#10;" text="%LogsView_Title" textAlignment="CENTER" textFill="#70b152">
             <font>
-                <Font name="Arial Bold" size="18.0" fx:id="x11"/>
+                <Font name="Arial Bold" size="18.0" />
             </font>
         </Label>
-        <ButtonBar buttonOrder="L_E+U+FBXI_YNOCAH_R" layoutY="40.0" prefHeight="40.0" prefWidth="236.0">
+        <ButtonBar buttonMinWidth="100.0" buttonOrder="L_E+U+FBXI_YNOCAH_R" layoutY="40.0" prefHeight="40.0" prefWidth="236.0">
             <buttons>
-                <Button fx:id="newLog" mnemonicParsing="false" text="New" textFill="WHITE">
+                <Button mnemonicParsing="false" text="%CreateLog" textFill="WHITE">
                     <font>
-                        <Font name="Arial Bold" size="12.0"/>
+                        <Font name="Arial Bold" size="12.0" />
                     </font>
                 </Button>
-                <Button fx:id="modifyLog" mnemonicParsing="false" text="Modify" textFill="WHITE">
+                <Button mnemonicParsing="false" text="%ModifyLog" textFill="WHITE">
                     <font>
-                        <Font name="Arial Bold" size="12.0"/>
+                        <Font name="Arial Bold" size="12.0" />
                     </font>
                 </Button>
-                <Button fx:id="deleteLog" mnemonicParsing="false" text="Delete" textFill="WHITE">
+                <Button mnemonicParsing="false" text="%DeleteLog" textFill="WHITE">
                     <font>
-                        <Font name="Arial Bold" size="12.0"/>
+                        <Font name="Arial Bold" size="12.0" />
                     </font>
                 </Button>
             </buttons>
         </ButtonBar>
-        <TableView id="LogTable" layoutX="22.0" layoutY="80.0" prefHeight="181.0" prefWidth="634.0"
-                   AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="14.0"
-                   AnchorPane.topAnchor="80.0">
+        <TableView fx:id="logTable" layoutX="22.0" layoutY="80.0" prefHeight="181.0" prefWidth="634.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="80.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="C1"/>
-                <TableColumn prefWidth="75.0" text="C2"/>
+                <TableColumn prefWidth="75.0" fx:id="columnDateTime" text="%ColumnDateTime" />
+                <TableColumn prefWidth="75.0" fx:id="columnDifficulty" text="%ColumnDifficulty" />
+                <TableColumn prefWidth="75.0" fx:id="columnTotalDistance" text="%ColumnTotalDistance" />
+                <TableColumn prefWidth="75.0" fx:id="columnTotalTime" text="%ColumnTotalTime" />
+                <TableColumn prefWidth="75.0" fx:id="columnRating" text="%ColumnRating" />
             </columns>
         </TableView>
-    </children>
 </AnchorPane>

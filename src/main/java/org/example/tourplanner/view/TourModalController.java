@@ -17,15 +17,15 @@ public class TourModalController {
     private final TourListViewModel tourListViewModel;
 
     @FXML
-    public TextField tourName;
+    public TextField name;
     @FXML
-    public TextField tourStartingpoint;
+    public TextField startingPoint;
     @FXML
-    public ComboBox tourTransporttype;
+    public ComboBox transportType;
     @FXML
-    public TextField tourDestination;
+    public TextField destination;
     @FXML
-    public TextArea tourDescription;
+    public TextArea description;
 
     public TourModalController(TourModalViewModel tourModalViewModel, TourListViewModel tourListViewModel) {
         this.tourModalViewModel = tourModalViewModel;
@@ -34,7 +34,7 @@ public class TourModalController {
 
     public void createTour(ActionEvent actionEvent) {
         // TODO: validation
-        Tour newTour = new Tour(tourName.getText(), tourStartingpoint.getText(), tourDestination.getText(), TransportType.valueOf(tourTransporttype.getSelectionModel().getSelectedItem().toString()), tourDescription.getText());
+        Tour newTour = new Tour(name.getText(), startingPoint.getText(), destination.getText(), TransportType.valueOf(transportType.getSelectionModel().getSelectedItem().toString()), description.getText());
         this.tourListViewModel.addTour(newTour);
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
@@ -43,6 +43,6 @@ public class TourModalController {
 
     @FXML
     void initialize() {
-        tourTransporttype.setItems(this.tourModalViewModel.getTransportType());
+        transportType.setItems(this.tourModalViewModel.getTransportType());
     }
 }
