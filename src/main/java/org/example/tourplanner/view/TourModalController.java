@@ -3,6 +3,7 @@ package org.example.tourplanner.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -33,12 +34,27 @@ public class TourModalController {
     }
 
     public void createTour(ActionEvent actionEvent) {
-        // TODO: validation
-        Tour newTour = new Tour(name.getText(), startingPoint.getText(), destination.getText(), TransportType.valueOf(transportType.getSelectionModel().getSelectedItem().toString()), description.getText());
-        this.tourListViewModel.addTour(newTour);
-        Node source = (Node) actionEvent.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        //validation
+        if(name.getText().isEmpty() || startingPoint.getText().isEmpty() || destination.getText().isEmpty() || description.getText().isEmpty() || transportType.getValue() == null) {
+            new Alert(Alert.AlertType.ERROR, "Alles muss ausgefüllt sein");
+            return;
+        }
+
+        if(!name.getText().matches("[a-zA-ZäöüÄÖÜß ]+") || !startingPoint.getText().matches("[a-zA-ZäöüÄÖÜß ]+") || !destination.getText().matches("[a-zA-ZäöüÄÖÜß ]+")){
+            new Alert(Alert.AlertType.WARNING, "Name, Startpunkt und Ziel dürfen nur Buchstaben enthalten.");
+            return;
+        }
+
+        try{
+            TransportType selectedTransportType = TransportType.valueOf(transportType.getSelectionModel().getSelectedItem().toString());
+            Tour newTour = new Tour(name.getText(), startingPoint.getText(), destination.getText(), TransportType.valueOf(transportType.getSelectionModel().getSelectedItem().toString()), description.getText());
+            this.tourListViewModel.addTour(newTour);
+            Node source = (Node) actionEvent.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+            stage.close();
+        } catch(IllegalArgumentException e){
+            new Alert(Alert.AlertType.ERROR, "ungültiger Transporttyp");
+        }
     }
 
     @FXML
