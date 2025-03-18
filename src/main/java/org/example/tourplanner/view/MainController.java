@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.tourplanner.FXMLDependencyInjection;
@@ -24,14 +26,18 @@ public class MainController implements Initializable {
     public TableView tourTable;
 
     private final MainViewModel mainViewModel;
+    @FXML
+    public HBox statusBar;
+    @FXML
+    public Label statusMessage;
 
     public MainController(MainViewModel mainViewModel) {
         this.mainViewModel = mainViewModel;
     }
 
-    @FXML
-    protected void onHelloButtonClick() {
-
+    public void showSuccess(String message) {
+        // TODO: make statusBar green, show message
+        statusBar.setStyle("-fx-background-color: green;");
     }
 
     @Override

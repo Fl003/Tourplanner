@@ -37,10 +37,6 @@
     -fx-background-color: darkred;
 }
 
-#statusBar {
-    -fx-background-color: #70b152;
-}
-
 #estimatedLabel, #distanceLabel {
     -fx-font-weight: bold;
 }

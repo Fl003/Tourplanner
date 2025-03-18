@@ -3,10 +3,8 @@ package org.example.tourplanner.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.model.TransportType;
@@ -27,6 +25,10 @@ public class TourModalController {
     public TextField destination;
     @FXML
     public TextArea description;
+    @FXML
+    public HBox statusBar;
+    @FXML
+    public Label statusMessage;
 
     public TourModalController(TourModalViewModel tourModalViewModel, TourListViewModel tourListViewModel) {
         this.tourModalViewModel = tourModalViewModel;
@@ -34,8 +36,12 @@ public class TourModalController {
     }
 
     public void createTour(ActionEvent actionEvent) {
+
+        // TODO: status bar red, status message = message, strings in res bundle
+
         //validation
         if(name.getText().isEmpty() || startingPoint.getText().isEmpty() || destination.getText().isEmpty() || description.getText().isEmpty() || transportType.getValue() == null) {
+            statusBar.setStyle("-fx-background-color: red;");
             new Alert(Alert.AlertType.ERROR, "Alles muss ausgefüllt sein");
             return;
         }

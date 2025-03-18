@@ -91,14 +91,22 @@ public class TourListController {
         });
     }
 
-    public void showTourModal(ActionEvent actionEvent) throws IOException {
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLDependencyInjection.load("TourModal.fxml", Locale.GERMAN);
-        dialogStage.setScene(new Scene(root));
-        dialogStage.setTitle("Create Tour");
-        dialogStage.setMinHeight(251.0);
-        dialogStage.setMinWidth(742.0);
-        dialogStage.showAndWait();
+    public void showTourModal(ActionEvent actionEvent) {
+        try {
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            Parent root = FXMLDependencyInjection.load("TourModal.fxml", Locale.GERMAN);
+            dialogStage.setScene(new Scene(root));
+            dialogStage.setTitle("Create Tour");
+            dialogStage.setMinHeight(251.0);
+            dialogStage.setMinWidth(742.0);
+
+            dialogStage.showAndWait();
+            // TODO: how to call function from other controller????
+            //MainController.showSuccess("message");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
