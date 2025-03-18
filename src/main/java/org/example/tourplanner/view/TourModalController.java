@@ -47,13 +47,13 @@ public class TourModalController {
 
         try{
             TransportType selectedTransportType = TransportType.valueOf(transportType.getSelectionModel().getSelectedItem().toString());
-            Tour newTour = new Tour(name.getText(), startingPoint.getText(), destination.getText(), TransportType.valueOf(transportType.getSelectionModel().getSelectedItem().toString()), description.getText());
+            Tour newTour = new Tour(name.getText(), startingPoint.getText(), destination.getText(), selectedTransportType, description.getText());
             this.tourListViewModel.addTour(newTour);
             Node source = (Node) actionEvent.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
         } catch(IllegalArgumentException e){
-            new Alert(Alert.AlertType.ERROR, "ungültiger Transporttyp");
+            new Alert(Alert.AlertType.ERROR, "Ungültiger Transporttyp");
         }
     }
 

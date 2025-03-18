@@ -11,7 +11,7 @@ import java.util.Locale;
 public class TourplannerApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLDependencyInjection.load("MainView.fxml", Locale.GERMAN);
+        Parent root = FXMLDependencyInjection.load("MainView.fxml", Locale.ENGLISH);
 
         Scene scene = new Scene(root, 995, 600);
         stage.setTitle("Tourplanner");
