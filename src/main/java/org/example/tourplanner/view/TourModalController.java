@@ -11,6 +11,12 @@ import org.example.tourplanner.model.TransportType;
 import org.example.tourplanner.viewmodel.TourModalViewModel;
 import org.example.tourplanner.viewmodel.TourListViewModel;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.ResourceBundle;
+
 public class TourModalController {
     private final TourModalViewModel tourModalViewModel;
     private final TourListViewModel tourListViewModel;
@@ -29,6 +35,8 @@ public class TourModalController {
     public HBox statusBar;
     @FXML
     public Label statusMessage;
+    @FXML
+    private ResourceBundle resources;
 
     public TourModalController(TourModalViewModel tourModalViewModel, TourListViewModel tourListViewModel) {
         this.tourModalViewModel = tourModalViewModel;
@@ -36,18 +44,17 @@ public class TourModalController {
     }
 
     public void createTour(ActionEvent actionEvent) {
-
         // TODO: status bar red, status message = message, strings in res bundle
-
         //validation
         if(name.getText().isEmpty() || startingPoint.getText().isEmpty() || destination.getText().isEmpty() || description.getText().isEmpty() || transportType.getValue() == null) {
             statusBar.setStyle("-fx-background-color: red;");
-            new Alert(Alert.AlertType.ERROR, "Alles muss ausgefüllt sein");
+            statusMessage.setText(this.resources.getString("BlankField"));
             return;
         }
 
         if(!name.getText().matches("[a-zA-ZäöüÄÖÜß ]+") || !startingPoint.getText().matches("[a-zA-ZäöüÄÖÜß ]+") || !destination.getText().matches("[a-zA-ZäöüÄÖÜß ]+")){
-            new Alert(Alert.AlertType.WARNING, "Name, Startpunkt und Ziel dürfen nur Buchstaben enthalten.");
+            statusBar.setStyle("-fx-background-color: red;");
+            statusMessage.setText(this.resources.getString("OnlyLetters"));
             return;
         }
 
@@ -59,12 +66,14 @@ public class TourModalController {
             Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
         } catch(IllegalArgumentException e){
-            new Alert(Alert.AlertType.ERROR, "Ungültiger Transporttyp");
+            statusBar.setStyle("-fx-background-color: red;");
+            statusMessage.setText(this.resources.getString("CorrectTransportType"));
         }
     }
 
     @FXML
     void initialize() {
         transportType.setItems(this.tourModalViewModel.getTransportType());
+
     }
 }
