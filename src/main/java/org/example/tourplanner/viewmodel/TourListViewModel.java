@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TourListViewModel {
+    public void deleteTour(Tour selectedItem) {
+        tourList.remove(selectedItem);
+        getObservableTours().remove(selectedItem);
+    }
+
     public interface SelectionChangedListener {
         void onSelectionChanged(Tour tour);
     }

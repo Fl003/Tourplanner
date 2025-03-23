@@ -22,7 +22,6 @@ import org.example.tourplanner.FXMLDependencyInjection;
 import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.viewmodel.TourListViewModel;
 
-import java.io.IOException;
 import java.util.Locale;
 
 public class TourListController {
@@ -69,6 +68,7 @@ public class TourListController {
                             Tour tour = getItem();
                             if (tour != null) {
                                 System.out.println(tour.getName() + " deleted");
+                                deleteBtn();
                             }
                         });
                         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -108,5 +108,8 @@ public class TourListController {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+    public void deleteBtn() {
+        tourListViewModel.deleteTour(tourList.getSelectionModel().getSelectedItem());
     }
 }
