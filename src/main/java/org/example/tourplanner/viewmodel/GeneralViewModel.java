@@ -36,7 +36,6 @@ public class GeneralViewModel {
     }
 
     public void selectTour(Tour tour) {
-
         name.set(tour.getName());
         startingPoint.set(tour.getStartingpoint());
         destination.set(tour.getDestination());
@@ -67,9 +66,6 @@ public class GeneralViewModel {
     }
     public StringProperty distanceProperty() {
         return distance;
-    }
-    public ObjectProperty<TransportType> transportTypeObjectProperty() {
-        return transportType;
     }
     public StringProperty transportTypeStringProperty() {
         transportTypeString.bind(Bindings.createStringBinding(

@@ -48,7 +48,7 @@ public class MainController implements Initializable {
     public void showTourModal(ActionEvent actionEvent) throws IOException {
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLDependencyInjection.load("TourModal.fxml", Locale.GERMAN);
+        Parent root = FXMLDependencyInjection.load("TourModal.fxml", Locale.ENGLISH);
         dialogStage.setScene(new Scene(root));
         dialogStage.setTitle("Create Tour");
         dialogStage.setMinHeight(251.0);

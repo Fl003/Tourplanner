@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox minHeight="0.0" minWidth="0.0" prefHeight="307.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.view.LogModalController">
+    <AnchorPane prefHeight="291.0" prefWidth="742.0">
+        <SplitPane dividerPositions="0.5" prefHeight="284.0" prefWidth="742.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="255.0" prefWidth="363.0" style="-fx-background-color: white;">
+                <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="106.0" minWidth="100.0" text="%Difficulty" AnchorPane.leftAnchor="10.0" />
+                <Label alignment="CENTER_RIGHT" layoutX="61.0" layoutY="60.0" minWidth="100.0" text="%DateTime" AnchorPane.leftAnchor="10.0" />
+                <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                <TextField fx:id="difficulty" layoutX="120.0" layoutY="102.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0" />
+                <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="192.0" minWidth="100.0" text="%TotalTime" AnchorPane.leftAnchor="10.0" />
+                <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="149.0" minWidth="100.0" text="%TotalDistance" AnchorPane.leftAnchor="10.0" />
+                <TextField fx:id="totalDistance" layoutX="120.0" layoutY="145.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0" />
+                <Label fx:id="modalTitle" alignment="CENTER_RIGHT" layoutX="24.0" layoutY="18.0" textFill="#70b152">
+                    <font>
+                        <Font name="Arial Bold" size="18.0" />
+                    </font>
+                </Label>
+                <DatePicker fx:id="logDate" layoutX="120.0" layoutY="55.0" prefHeight="26.0" prefWidth="140.0" />
+                <TextField fx:id="logHour" layoutX="278.0" layoutY="55.0" prefHeight="26.0" prefWidth="31.0" />
+                <TextField fx:id="logMinute" layoutX="316.0" layoutY="55.0" prefHeight="26.0" prefWidth="31.0" />
+                <Label layoutX="311.0" layoutY="59.0" text=":" />
+                <TextField fx:id="totalTime" layoutX="120.0" layoutY="187.0" prefHeight="26.0" prefWidth="227.0" />
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
+                <Label alignment="CENTER_RIGHT" layoutX="39.0" layoutY="60.0" minWidth="100.0" text="%Comment" AnchorPane.leftAnchor="10.0" />
+                <TextArea fx:id="comment" layoutX="120.0" layoutY="56.0" prefHeight="122.0" prefWidth="228.0" wrapText="true" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0" />
+                <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                <Button layoutX="232.8" layoutY="245.0" mnemonicParsing="false" onAction="#saveLog" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #70b152;" text="%Create_Button" textFill="WHITE" AnchorPane.rightAnchor="20.0">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Button>
+                <ImageView fx:id="star5" fitHeight="26.0" fitWidth="23.0" layoutX="270.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="270.0">
+                    <Image url="@icons/star.png" />
+                </ImageView>
+                <ImageView fx:id="star2" fitHeight="26.0" fitWidth="23.0" layoutX="120.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="120.0">
+                    <Image url="@icons/star.png" />
+                </ImageView>
+                <ImageView fx:id="star1" fitHeight="26.0" fitWidth="23.0" layoutX="70.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="70.0">
+                    <Image url="@icons/star.png" />
+                </ImageView>
+                <ImageView fx:id="star3" fitHeight="26.0" fitWidth="23.0" layoutX="170.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="170.0">
+                    <Image url="@icons/star.png" />
+                </ImageView>
+                <ImageView fx:id="star4" fitHeight="26.0" fitWidth="23.0" layoutX="220.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="220.0">
+                    <Image url="@icons/star.png" />
+                </ImageView>
+            </AnchorPane>
+        </SplitPane>
+    </AnchorPane>
+    <HBox fx:id="statusBar" alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="742.0" spacing="5.0" VBox.vgrow="NEVER">
+        <Label fx:id="statusMessage" maxHeight="1.7976931348623157E308" textFill="WHITE" HBox.hgrow="ALWAYS">
+            <font>
+                <Font size="11.0" />
+            </font>
+            <HBox.margin>
+                <Insets left="10.0" />
+            </HBox.margin>
+        </Label>
+        <Pane HBox.hgrow="ALWAYS" />
+        <padding>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+        </padding>
+    </HBox>
+</VBox>
