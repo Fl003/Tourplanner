@@ -2,6 +2,7 @@ package org.example.tourplanner.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -21,7 +22,6 @@ import javafx.util.Callback;
 import org.example.tourplanner.FXMLDependencyInjection;
 import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.viewmodel.TourListViewModel;
-
 import java.util.Locale;
 
 public class TourListController {
@@ -60,7 +60,9 @@ public class TourListController {
                             Tour tour = getItem();
                             if (tour != null) {
                                 System.out.println(tour.getName() + " edited");
+                                editBtn(tour);
                             }
+
                         });
                         deleteBtn.setGraphic(new ImageView(imgDelete));
                         deleteBtn.setStyle("-fx-background-color: darkred;");
@@ -109,7 +111,35 @@ public class TourListController {
             e.printStackTrace();
         }
     }
+
+    public void showTourModal(Tour selectedTour){
+        try {
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+
+            FXMLLoader loader = FXMLDependencyInjection.getLoader("TourModal.fxml", Locale.GERMAN);
+            Parent root = loader.load();
+
+            TourModalController controller = loader.getController();
+            controller.setTour(selectedTour);
+
+            dialogStage.setScene(new Scene(root));
+            dialogStage.setTitle("Edit Tour");
+            dialogStage.setMinHeight(251.0);
+            dialogStage.setMinWidth(742.0);
+            dialogStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deleteBtn() {
         tourListViewModel.deleteTour(tourList.getSelectionModel().getSelectedItem());
     }
+    public void editBtn(Tour selectedTour){
+        //tourListViewModel.editTour(tourList.getSelectionModel().getSelectedItem());
+        if(selectedTour == null){return;}
+        showTourModal(selectedTour);
+    }
+
 }
