@@ -28,7 +28,7 @@
                 <Label alignment="CENTER_RIGHT" layoutX="39.0" layoutY="60.0" minWidth="100.0" text="%Description" AnchorPane.leftAnchor="10.0" />
                 <TextArea fx:id="description" layoutX="120.0" layoutY="56.0" prefHeight="138.0" prefWidth="228.0" wrapText="true" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0" />
                 <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-                <Button layoutX="228.0" layoutY="211.0" mnemonicParsing="false" onAction="#createTour" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #70b152;" text="%Create_Button" textFill="WHITE" AnchorPane.rightAnchor="20.0">
+                <Button layoutX="228.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleSavingMethod" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #70b152;" text="%Create_Button" textFill="WHITE" AnchorPane.rightAnchor="20.0">
                     <font>
                         <Font name="Arial Bold" size="12.0" />
                     </font>
