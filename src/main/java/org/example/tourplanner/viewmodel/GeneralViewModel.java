@@ -36,6 +36,11 @@ public class GeneralViewModel {
     }
 
     public void selectTour(Tour tour) {
+        if(tour == null){
+            //NUllpointerexception
+            System.out.println("tour is null");
+            return;
+        }
         name.set(tour.getName());
         startingPoint.set(tour.getStartingpoint());
         destination.set(tour.getDestination());
