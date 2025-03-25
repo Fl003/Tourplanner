@@ -130,4 +130,13 @@ public class Tour {
         return getName();
     }
 
+    public void setName(String name) {this.name.set(name);}
+
+    public void setStartingPoint(String startingPoint) { this.startingPoint.set(startingPoint); }
+
+    public void setDestination(String destination) {this.destination.set(destination); }
+
+    public void setTransportType(TransportType transportType) {this.transportType.set(transportType);}
+
+    public void setDescription(String description) {this.description.set(description); }
 }
