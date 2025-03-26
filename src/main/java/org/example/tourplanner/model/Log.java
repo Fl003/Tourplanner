@@ -36,27 +36,27 @@ public class Log {
         this.rating = new SimpleIntegerProperty(0);
     }
 
-    public String getDifficulty() {
-        return difficulty.get();
-    }
-
-    public StringProperty difficultyProperty() {
-        return difficulty;
-    }
-
-    public Integer getTotalDistance() {
-        return totalDistance.get();
-    }
-
+    public StringProperty difficultyProperty() { return difficulty; }
     public IntegerProperty totalDistanceProperty() {
         return totalDistance;
     }
+    public IntegerProperty totalTimeProperty() { return totalTime; }
+    public IntegerProperty ratingProperty() { return rating; }
+    public StringProperty commentProperty() { return comment; }
+    public ObjectProperty<LocalDate> dateProperty() { return date; }
+    public IntegerProperty hourProperty() { return hour; }
+    public IntegerProperty minuteProperty() { return minute; }
 
     public void setDifficulty(String difficulty) {
         this.difficulty.set(difficulty);
     }
-
     public void setTotalDistance(int totalDistance) {
         this.totalDistance.set(totalDistance);
     }
+    public void setTotalTime(int totalTime) { this.totalTime.set(totalTime); }
+    public void setRating(int rating) { this.rating.set(rating); }
+    public void setComment(String comment) { this.comment.set(comment); }
+    public void setDate(LocalDate date) { this.date.set(date); }
+    public void setHour(int hour) { this.hour.set(hour); }
+    public void setMinute(int minute) { this.minute.set(minute); }
 }

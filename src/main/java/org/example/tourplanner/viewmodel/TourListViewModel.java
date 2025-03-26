@@ -18,7 +18,6 @@ public class TourListViewModel {
         getObservableTours().remove(selectedItem);
     }
 
-
     public void updateTour(Tour editableTour) {
         for(int i = 0; i < tourList.size(); i++) {
             if(tourList.get(i).equals(editableTour)) {
@@ -26,6 +25,17 @@ public class TourListViewModel {
                 break;
             }
         }
+    }
+
+    public void saveLog(Log newLog, Tour selectedTour) {
+        int index = tourList.indexOf(selectedTour);
+        for(int i = 0; i < tourList.get(index).getLogs().size(); i++) {
+            if(tourList.get(index).getLogs().get(i).equals(newLog)) {
+                tourList.get(index).getLogs().set(i, newLog);
+                return;
+            }
+        }
+        tourList.get(index).getLogs().add(newLog);
     }
 
     public interface SelectionChangedListener {
@@ -53,13 +63,19 @@ public class TourListViewModel {
     }
 
     public TourListViewModel() {
-        tourList.add(new Tour("Test1", "Fh Technikum", "Handelskai", TransportType.CAR, "Not available", 1408.8, 281.9));
+        tourList.add(new Tour(1,"Test1", "Fh Technikum", "Handelskai", TransportType.CAR, "Not available", 1408.8, 281.9));
         Log l = new Log(LocalDate.now(), 15, 35, "Was a very nice trip", "easy", 3502, 432, 3);
         tourList.getFirst().addLog(l);
     }
 
     public void addTour(Tour tour) {
         tourList.add(tour);
+    }
+
+    public void deleteLog(Log log, Tour tour) {
+        // search for tour and delete log from tour
+        int i = this.tourList.indexOf(tour);
+        this.tourList.get(i).removeLog(log);
     }
 
     public ObservableList<Tour> getObservableTours() {

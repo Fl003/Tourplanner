@@ -50,7 +50,7 @@ public class TourModalController {
 
         if(!name.getText().matches("[a-zA-ZäöüÄÖÜß ]+") || !startingPoint.getText().matches("[a-zA-ZäöüÄÖÜß ]+") || !destination.getText().matches("[a-zA-ZäöüÄÖÜß ]+")){
             statusBar.setStyle("-fx-background-color: red;");
-            statusMessage.setText(this.resources.getString("OnlyLetters"));
+            statusMessage.setText(this.resources.getString("OnlyLettersTour"));
             return;
         }
 

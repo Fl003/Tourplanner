@@ -1,11 +1,11 @@
 package org.example.tourplanner.model;
 
 import javafx.beans.property.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Tour {
+    private final Integer id;
     private final StringProperty name;
     private final StringProperty startingPoint;
     private final StringProperty destination;
@@ -13,10 +13,11 @@ public class Tour {
     private final StringProperty description;
     private final DoubleProperty distance;
     private final DoubleProperty estimatedTime;
-    private List<Log> logs;
+    private ObservableList<Log> logs = FXCollections.observableArrayList();
 
 
     public Tour(StringProperty name, StringProperty startingPoint, StringProperty destination, ObjectProperty<TransportType> transportType, StringProperty description, DoubleProperty distance, DoubleProperty estimatedTime) {
+        this.id = 0;
         this.name = name;
         this.startingPoint = startingPoint;
         this.destination = destination;
@@ -24,10 +25,10 @@ public class Tour {
         this.description = description;
         this.distance = distance;
         this.estimatedTime = estimatedTime;
-        this.logs = new ArrayList<>();
     }
 
-    public Tour(String name, String startingPoint, String destination, TransportType transportType, String description, Double distance, Double estimatedTime) {
+    public Tour(Integer id, String name, String startingPoint, String destination, TransportType transportType, String description, Double distance, Double estimatedTime) {
+        this.id = id;
         this.name = new SimpleStringProperty(name);
         this.startingPoint = new SimpleStringProperty(startingPoint);
         this.destination= new SimpleStringProperty(destination);
@@ -35,10 +36,10 @@ public class Tour {
         this.description = new SimpleStringProperty(description);
         this.distance = new SimpleDoubleProperty(distance);
         this.estimatedTime = new SimpleDoubleProperty(estimatedTime);
-        this.logs = new ArrayList<>();
     }
 
     public Tour(String name, String startingPoint, String destination, TransportType transportType, String description) {
+        this.id = 0;
         this.name = new SimpleStringProperty(name);
         this.startingPoint = new SimpleStringProperty(startingPoint);
         this.destination= new SimpleStringProperty(destination);
@@ -46,18 +47,21 @@ public class Tour {
         this.description = new SimpleStringProperty(description);
         this.distance = new SimpleDoubleProperty(0);
         this.estimatedTime = new SimpleDoubleProperty(0);
-        this.logs = new ArrayList<>();
     }
 
     public void addLog(Log log) {
         this.logs.add(log);
     }
 
-    public void setLogs(List<Log> logs) {
+    public void removeLog(Log log) {
+        this.logs.remove(log);
+    }
+
+    public void setLogs(ObservableList<Log> logs) {
         this.logs = logs;
     }
 
-    public List<Log> getLogs() {
+    public ObservableList<Log> getLogs() {
         return logs;
     }
 

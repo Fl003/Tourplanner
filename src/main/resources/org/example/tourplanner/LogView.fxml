@@ -10,7 +10,7 @@
                 <Font name="Arial Bold" size="18.0" />
             </font>
         </Label>
-          <Button id="newLog" layoutX="458.0" layoutY="13.0" mnemonicParsing="false" onAction="#showLogModal" prefHeight="23.0" prefWidth="94.0" text="%CreateLog" textFill="WHITE" AnchorPane.rightAnchor="20.0">
+          <Button id="newLog" layoutX="458.0" layoutY="13.0" mnemonicParsing="false" onAction="#createNewLog" prefHeight="23.0" prefWidth="94.0" text="%CreateLogBtn" textFill="WHITE" AnchorPane.rightAnchor="20.0">
               <font>
                   <Font name="Arial Bold" size="12.0" />
               </font>
@@ -22,6 +22,7 @@
                 <TableColumn fx:id="columnTotalDistance" prefWidth="75.0" text="%ColumnTotalDistance" />
                 <TableColumn fx:id="columnTotalTime" prefWidth="75.0" text="%ColumnTotalTime" />
                 <TableColumn fx:id="columnRating" prefWidth="75.0" text="%ColumnRating" />
+                <TableColumn fx:id="columnComment" prefWidth="75.0" text="%ColumnComment" />
             </columns>
         </TableView>
 </AnchorPane>

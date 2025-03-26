@@ -52,28 +52,28 @@ public class TourListController {
                     private final Region spacer = new Region();
 
                     {
-                        hbox.setAlignment(Pos.CENTER);
-                        HBox.setMargin(editBtn, new Insets(0, 5, 0, 20));
-                        editBtn.setGraphic(new ImageView(imgEdit));
-                        editBtn.setStyle("-fx-background-color: orange;");
                         editBtn.setOnAction(event -> {
                             Tour tour = getItem();
                             if (tour != null) {
-                                System.out.println(tour.getName() + " edited");
                                 editBtn(tour);
                             }
-
                         });
-                        deleteBtn.setGraphic(new ImageView(imgDelete));
-                        deleteBtn.setStyle("-fx-background-color: darkred;");
+
                         deleteBtn.setOnAction(event -> {
                             Tour tour = getItem();
                             if (tour != null) {
-                                System.out.println(tour.getName() + " deleted");
                                 deleteBtn();
                             }
                         });
+
+                        // styling
+                        hbox.setAlignment(Pos.CENTER);
+                        HBox.setMargin(editBtn, new Insets(0, 5, 0, 20));
                         HBox.setHgrow(spacer, Priority.ALWAYS);
+                        editBtn.setGraphic(new ImageView(imgEdit));
+                        editBtn.setStyle("-fx-background-color: orange;");
+                        deleteBtn.setGraphic(new ImageView(imgDelete));
+                        deleteBtn.setStyle("-fx-background-color: darkred;");
                         hbox.getChildren().addAll(nameLabel, spacer, editBtn, deleteBtn);
                     }
 
@@ -107,7 +107,6 @@ public class TourListController {
             // TODO: how to call function from other controller????
             //MainController.showSuccess("message");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -136,6 +135,7 @@ public class TourListController {
     public void deleteBtn() {
         tourListViewModel.deleteTour(tourList.getSelectionModel().getSelectedItem());
     }
+
     public void editBtn(Tour selectedTour){
         //tourListViewModel.editTour(tourList.getSelectionModel().getSelectedItem());
         if(selectedTour == null){return;}

@@ -38,11 +38,11 @@ public class ControllerFactory {
         } else if (controllerClass == MapController.class) {
             return new MapController(mapViewModel);
         } else if (controllerClass == LogController.class) {
-            return new LogController(logViewModel);
+            return new LogController(logViewModel, tourListViewModel, logModalViewModel);
         } else if (controllerClass == TourModalController.class) {
             return new TourModalController(tourModalViewModel, tourListViewModel);
         } else if (controllerClass == LogModalController.class) {
-            return new LogModalController(logModalViewModel);
+            return new LogModalController(logModalViewModel, tourListViewModel);
         }
         throw new IllegalArgumentException("Unknown controller class: " + controllerClass);
     }
