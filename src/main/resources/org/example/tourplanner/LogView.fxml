@@ -10,7 +10,7 @@
                 <Font name="Arial Bold" size="18.0" />
             </font>
         </Label>
-          <Button id="newLog" layoutX="458.0" layoutY="13.0" mnemonicParsing="false" onAction="#createNewLog" prefHeight="23.0" prefWidth="94.0" text="%CreateLogBtn" textFill="WHITE" AnchorPane.rightAnchor="20.0">
+          <Button fx:id="newLog" layoutX="458.0" layoutY="13.0" mnemonicParsing="false" onAction="#createNewLog" prefHeight="23.0" prefWidth="94.0" text="%CreateLogBtn" textFill="WHITE" AnchorPane.rightAnchor="20.0">
               <font>
                   <Font name="Arial Bold" size="12.0" />
               </font>

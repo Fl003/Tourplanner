@@ -54,8 +54,8 @@
             </SplitPane>
         </AnchorPane>
     </SplitPane>
-    <HBox fx:id="statusBar" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
-        <Label fx:id="statusMessage" maxHeight="1.7976931348623157E308" textFill="WHITE"
+    <HBox fx:id="statusBarBig" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+        <Label fx:id="statusMessageBig" maxHeight="1.7976931348623157E308" textFill="WHITE"
                HBox.hgrow="ALWAYS">
             <font>
                 <Font size="11.0"/>
