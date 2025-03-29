@@ -1,5 +1,6 @@
 package org.example.tourplanner.view;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,7 +15,9 @@ import java.util.ResourceBundle;
 
 public class TourModalController {
     private final TourModalViewModel tourModalViewModel;
-    private final TourListViewModel tourListViewModel;
+    public Button handleSavingMethod;
+    private TourListViewModel tourListViewModel;
+    private MainController mainController;
 
     @FXML
     public TextField name;
@@ -34,6 +37,15 @@ public class TourModalController {
     private ResourceBundle resources;
     @FXML
     private Tour editableTour;
+
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    public void setViewModel(TourListViewModel viewModel) {
+        this.tourListViewModel = viewModel;
+    }
 
     public TourModalController(TourModalViewModel tourModalViewModel, TourListViewModel tourListViewModel) {
         this.tourModalViewModel = tourModalViewModel;
@@ -60,6 +72,11 @@ public class TourModalController {
             if(editableTour == null) {
                 Tour newTour = new Tour(name.getText(), startingPoint.getText(), destination.getText(), selectedTransportType, description.getText());
                 this.tourListViewModel.addTour(newTour);
+                //MainController.showSuccess(this.resources.getString("SuccessMessage"));
+                Node source = (Node) actionEvent.getSource();
+                Stage stage = (Stage) source.getScene().getWindow();
+                stage.close();
+
             } else {
                 //Edit mode
                 editableTour.setName(name.getText());
@@ -68,15 +85,17 @@ public class TourModalController {
                 editableTour.setDescription(description.getText());
                 editableTour.setTransportType(selectedTransportType);
                 tourListViewModel.updateTour(editableTour);
+
+                Node source = (Node) actionEvent.getSource();
+                Stage stage = (Stage) source.getScene().getWindow();
+                stage.close();
             }
-            Node source = (Node) actionEvent.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
 
         } catch (IllegalArgumentException e) {
             statusBar.setStyle("-fx-background-color: red;");
             statusMessage.setText(this.resources.getString("CorrectTransportType"));
         }
+
     }
 
     @FXML
