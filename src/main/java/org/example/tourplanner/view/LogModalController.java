@@ -52,6 +52,7 @@ public class LogModalController {
     public TextField logHour;
     @FXML
     public TextField logMinute;
+    public Button saveLog;
     @FXML
     ResourceBundle resources;
 
