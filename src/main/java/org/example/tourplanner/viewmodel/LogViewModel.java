@@ -20,6 +20,10 @@ public class LogViewModel {
     }
 
     public void setLogs(Tour tour) {
+        if (tour == null) {
+            this.logs.clear();
+            return;
+        }
         this.selectedTour = tour;
         this.logs.setAll(tour.getLogs());
         // to notice changes in Tour.logs

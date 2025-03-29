@@ -14,14 +14,14 @@ import java.util.List;
 public class TourListViewModel {
     public void deleteTour(Tour selectedItem) {
         tourList.remove(selectedItem);
-        selectedItem = null;
-        getObservableTours().remove(selectedItem);
+        notifyListeners(null);
     }
 
     public void updateTour(Tour editableTour) {
         for(int i = 0; i < tourList.size(); i++) {
             if(tourList.get(i).equals(editableTour)) {
                 tourList.set(i, editableTour);
+                notifyListeners(editableTour);
                 break;
             }
         }
@@ -51,9 +51,7 @@ public class TourListViewModel {
     }
 
     private void notifyListeners(Tour newValue) {
-        //Nullpointerexception
-        if(tourList.isEmpty() == true) {return;}
-            for (var listener : listeners ) {
+        for (var listener : listeners ) {
             listener.onSelectionChanged(newValue);
         }
     }

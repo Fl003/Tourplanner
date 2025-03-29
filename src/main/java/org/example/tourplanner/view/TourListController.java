@@ -62,7 +62,7 @@ public class TourListController {
                         deleteBtn.setOnAction(event -> {
                             Tour tour = getItem();
                             if (tour != null) {
-                                deleteBtn();
+                                deleteBtn(tour);
                             }
                         });
 
@@ -132,13 +132,12 @@ public class TourListController {
         }
     }
 
-    public void deleteBtn() {
-        tourListViewModel.deleteTour(tourList.getSelectionModel().getSelectedItem());
+    public void deleteBtn(Tour tour) {
+        tourListViewModel.deleteTour(tour);
     }
 
     public void editBtn(Tour selectedTour){
-        //tourListViewModel.editTour(tourList.getSelectionModel().getSelectedItem());
-        if(selectedTour == null){return;}
+        if(selectedTour == null) { return; }
         showTourModal(selectedTour);
     }
 

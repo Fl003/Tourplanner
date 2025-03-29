@@ -3,7 +3,9 @@ package org.example.tourplanner.viewmodel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import org.example.tourplanner.model.Log;
 import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.model.TransportType;
 
@@ -37,8 +39,13 @@ public class GeneralViewModel {
 
     public void selectTour(Tour tour) {
         if(tour == null){
-            //NUllpointerexception
-            System.out.println("tour is null");
+            name.set("");
+            startingPoint.set("");
+            destination.set("");
+            transportType.set(null);
+            description.set("");
+            distance.set("");
+            estimatedTime.set("");
             return;
         }
         name.set(tour.getName());
