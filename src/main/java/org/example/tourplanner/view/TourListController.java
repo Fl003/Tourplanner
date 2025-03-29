@@ -29,6 +29,8 @@ public class TourListController {
     public ListView<Tour> tourList;
 
     private final TourListViewModel tourListViewModel;
+    public Button newTour;
+    private MainController mainController;
 
     public TourListController(TourListViewModel tourListViewModel) {
         this.tourListViewModel = tourListViewModel;
@@ -120,10 +122,11 @@ public class TourListController {
             Parent root = loader.load();
 
             TourModalController controller = loader.getController();
+            controller.setMainController(this.mainController);
             controller.setTour(selectedTour);
 
             dialogStage.setScene(new Scene(root));
-            dialogStage.setTitle("Edit Tour");
+            dialogStage.setTitle(selectedTour == null ? "Create Tour" : "Edit Tour");
             dialogStage.setMinHeight(251.0);
             dialogStage.setMinWidth(742.0);
             dialogStage.showAndWait();
@@ -139,6 +142,7 @@ public class TourListController {
     public void editBtn(Tour selectedTour){
         if(selectedTour == null) { return; }
         showTourModal(selectedTour);
+
     }
 
 }
