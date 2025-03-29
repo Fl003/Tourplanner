@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TourListViewModel {
+    private String editableTour;
+
     public void deleteTour(Tour selectedItem) {
         tourList.remove(selectedItem);
         notifyListeners(null);
@@ -44,7 +46,7 @@ public class TourListViewModel {
 
     private List<SelectionChangedListener> listeners = new ArrayList<>();
 
-    private ObservableList<Tour> tourList = FXCollections.observableArrayList();
+    private final ObservableList<Tour> tourList = FXCollections.observableArrayList();
 
     public ChangeListener<Tour> getChangeListener() {
         return (observableValue, oldValue, newValue) -> notifyListeners(newValue);
@@ -61,7 +63,7 @@ public class TourListViewModel {
     }
 
     public TourListViewModel() {
-        tourList.add(new Tour(1,"Test1", "Fh Technikum", "Handelskai", TransportType.CAR, "Not available", 1408.8, 281.9));
+        tourList.add(new Tour(1,"ErsterTest", "Fh Technikum", "Handelskai", TransportType.CAR, "Not available", 1408.8, 281.9));
         Log l = new Log(LocalDate.now(), 15, 35, "Was a very nice trip", "easy", 3502, 432, 3);
         tourList.getFirst().addLog(l);
     }
