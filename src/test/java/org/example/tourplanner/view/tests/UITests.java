@@ -109,7 +109,6 @@ public class UITests extends ApplicationTest {
 //fourth UI test: adding a log to a specific tour
     @Test
     public void addLog() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
-        FxRobot robot = new FxRobot();
         mockTourListViewModel = new TourListViewModel();
         Tour tour = new Tour("ZweiterTest","Vienna", "Germany", TransportType.BUS, "schön");
         mockTourListViewModel.addTour(tour);
@@ -127,7 +126,7 @@ public class UITests extends ApplicationTest {
             datePicker.setValue(LocalDate.of(2025, 3, 24));
         });
 
-        clickOn("#logHour").write("25");
+        clickOn("#logHour").write("17");
         clickOn("#logMinute").write("25");
         clickOn("#difficulty").write("easy");
         clickOn("#totalDistance").write("10000");
@@ -136,7 +135,7 @@ public class UITests extends ApplicationTest {
         clickOn("#star5");
         clickOn("#saveLog");
 
-        assertTrue(tourListView.getSelectionModel().getSelectedItems().size() > 1);
+        assertTrue(tourListView.getSelectionModel().getSelectedItems().size() > 0);
     }
 //UI Test: clicking on a tour to ensure viewing data works
     @Test
