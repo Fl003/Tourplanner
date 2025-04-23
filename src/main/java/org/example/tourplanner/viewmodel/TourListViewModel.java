@@ -3,30 +3,21 @@ package org.example.tourplanner.viewmodel;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.example.tourplanner.dto.TourDto;
 import org.example.tourplanner.model.Log;
 import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.model.TransportType;
+import org.example.tourplanner.service.TourService;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TourListViewModel {
-    private String editableTour;
+    private final TourService tourService;
 
     public void deleteTour(Tour selectedItem) {
         tourList.remove(selectedItem);
         notifyListeners(null);
-    }
-
-    public void updateTour(Tour editableTour) {
-        for(int i = 0; i < tourList.size(); i++) {
-            if(tourList.get(i).equals(editableTour)) {
-                tourList.set(i, editableTour);
-                notifyListeners(editableTour);
-                break;
-            }
-        }
     }
 
     public void saveLog(Log newLog, Tour selectedTour) {
@@ -62,10 +53,10 @@ public class TourListViewModel {
         listeners.add(listener);
     }
 
-    public TourListViewModel() {
-        tourList.add(new Tour(1,"ErsterTest", "Fh Technikum", "Handelskai", TransportType.CAR, "Not available", 1408.8, 281.9));
-        Log l = new Log(LocalDate.now(), 15, 35, "Was a very nice trip", "easy", 3502, 432, 3);
-        tourList.getFirst().addLog(l);
+    public TourListViewModel(TourService tourService) {
+        this.tourService = tourService;
+
+        loadTours();
     }
 
     public void addTour(Tour tour) {
@@ -76,6 +67,24 @@ public class TourListViewModel {
         // search for tour and delete log from tour
         int i = this.tourList.indexOf(tour);
         this.tourList.get(i).removeLog(log);
+    }
+
+    public void loadTours() {
+        tourList.clear();
+        List<TourDto> tours = this.tourService.getAllTours();
+        for (TourDto tourDto : tours) {
+            Tour tour = new Tour(
+                    tourDto.getId(),
+                    tourDto.getName(),
+                    tourDto.getStartingPoint(),
+                    tourDto.getDestination(),
+                    TransportType.valueOf(tourDto.getTransportType()),
+                    tourDto.getDescription(),
+                    tourDto.getDistance(),
+                    tourDto.getDuration()
+            );
+            tourList.add(tour);
+        }
     }
 
     public ObservableList<Tour> getObservableTours() {

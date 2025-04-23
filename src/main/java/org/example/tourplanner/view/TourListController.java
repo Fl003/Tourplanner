@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.tourplanner.FXMLDependencyInjection;
 import org.example.tourplanner.model.Tour;
+import org.example.tourplanner.service.TourService;
 import org.example.tourplanner.viewmodel.TourListViewModel;
 import java.util.Locale;
 
@@ -29,11 +30,13 @@ public class TourListController {
     public ListView<Tour> tourList;
 
     private final TourListViewModel tourListViewModel;
+    private final TourService tourService;
     public Button newTour;
     private MainController mainController;
 
-    public TourListController(TourListViewModel tourListViewModel) {
+    public TourListController(TourListViewModel tourListViewModel, TourService tourService) {
         this.tourListViewModel = tourListViewModel;
+        this.tourService = tourService;
     }
 
     @FXML
@@ -64,7 +67,7 @@ public class TourListController {
                         deleteBtn.setOnAction(event -> {
                             Tour tour = getItem();
                             if (tour != null) {
-                                deleteBtn(tour);
+                                deleteBtn(tour.getId());
                             }
                         });
 
@@ -135,8 +138,9 @@ public class TourListController {
         }
     }
 
-    public void deleteBtn(Tour tour) {
-        tourListViewModel.deleteTour(tour);
+    public void deleteBtn(Long tourId) {
+        this.tourService.deleteTour(tourId);
+        this.tourListViewModel.loadTours();
     }
 
     public void editBtn(Tour selectedTour){

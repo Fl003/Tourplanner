@@ -5,7 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Tour {
-    private final Integer id;
+    private final Long id;
     private final StringProperty name;
     private final StringProperty startingPoint;
     private final StringProperty destination;
@@ -17,7 +17,7 @@ public class Tour {
 
 
     public Tour(StringProperty name, StringProperty startingPoint, StringProperty destination, ObjectProperty<TransportType> transportType, StringProperty description, DoubleProperty distance, DoubleProperty estimatedTime) {
-        this.id = 0;
+        this.id = 0L;
         this.name = name;
         this.startingPoint = startingPoint;
         this.destination = destination;
@@ -27,7 +27,7 @@ public class Tour {
         this.estimatedTime = estimatedTime;
     }
 
-    public Tour(Integer id, String name, String startingPoint, String destination, TransportType transportType, String description, Double distance, Double estimatedTime) {
+    public Tour(Long id, String name, String startingPoint, String destination, TransportType transportType, String description, Double distance, Double estimatedTime) {
         this.id = id;
         this.name = new SimpleStringProperty(name);
         this.startingPoint = new SimpleStringProperty(startingPoint);
@@ -39,7 +39,7 @@ public class Tour {
     }
 
     public Tour(String name, String startingPoint, String destination, TransportType transportType, String description) {
-        this.id = 0;
+        this.id = 0L;
         this.name = new SimpleStringProperty(name);
         this.startingPoint = new SimpleStringProperty(startingPoint);
         this.destination= new SimpleStringProperty(destination);
@@ -60,6 +60,8 @@ public class Tour {
     public void setLogs(ObservableList<Log> logs) {
         this.logs = logs;
     }
+
+    public Long getId() { return id; }
 
     public ObservableList<Log> getLogs() {
         return logs;

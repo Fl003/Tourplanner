@@ -69,6 +69,40 @@
             <version>5.14.2</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Apache HttpClient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.3</version>
+        </dependency>
+
+        <!-- Jackson Core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.17.0</version> <!-- oder aktuelle Version -->
+        </dependency>
+
+        <!-- Jackson Databind (für ObjectMapper usw.) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.0</version>
+        </dependency>
+
+        <!-- Optional: Jackson annotations (falls du @JsonProperty usw. nutzt) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.17.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.34</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -78,8 +112,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <source>22</source>
-                    <target>22</target>
+                    <source>21</source>
+                    <target>21</target>
                     <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
