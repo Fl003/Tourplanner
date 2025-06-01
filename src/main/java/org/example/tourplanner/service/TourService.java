@@ -13,8 +13,8 @@ import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.example.tourplanner.dto.TourDto;
-import org.example.tourplanner.model.Tour;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class TourService {
@@ -48,7 +48,7 @@ public class TourService {
 
             request.setEntity(EntityBuilder.create()
                     .setText(json)
-                    .setContentType(ContentType.parse("application/json"))
+                    .setContentType(ContentType.create("application/json", StandardCharsets.UTF_8))
                     .build());
 
             ClassicHttpResponse response = client.executeOpen(null, request, null);
@@ -66,7 +66,7 @@ public class TourService {
 
             request.setEntity(EntityBuilder.create()
                     .setText(json)
-                    .setContentType(ContentType.parse("application/json"))
+                    .setContentType(ContentType.create("application/json", StandardCharsets.UTF_8))
                     .build());
 
             ClassicHttpResponse response = client.executeOpen(null, request, null);

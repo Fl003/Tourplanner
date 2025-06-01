@@ -1,5 +1,7 @@
 package org.example.tourplanner.view;
 
+import org.example.tourplanner.service.DirectionsService;
+import org.example.tourplanner.service.GeocodeService;
 import org.example.tourplanner.service.TourService;
 import org.example.tourplanner.viewmodel.*;
 
@@ -15,14 +17,18 @@ public class ControllerFactory {
 
     // Services
     private final TourService tourService;
+    private final GeocodeService geocodeService;
+    private final DirectionsService directionsService;
 
     public ControllerFactory() {
         tourService = new TourService();
+        geocodeService = new GeocodeService();
+        directionsService = new DirectionsService();
 
         searchBarViewModel = new SearchBarViewModel();
         tourListViewModel = new TourListViewModel(tourService);
         generalViewModel = new GeneralViewModel(tourListViewModel);
-        mapViewModel = new MapViewModel();
+        mapViewModel = new MapViewModel(tourListViewModel);
         logViewModel = new LogViewModel(tourListViewModel);
         mainViewModel = new MainViewModel();
         tourModalViewModel = new TourModalViewModel();
@@ -42,13 +48,15 @@ public class ControllerFactory {
         } else if (controllerClass == GeneralController.class) {
             return new GeneralController(generalViewModel);
         } else if (controllerClass == MapController.class) {
-            return new MapController(mapViewModel);
+            return new MapController(mapViewModel, directionsService);
         } else if (controllerClass == LogController.class) {
             return new LogController(logViewModel, tourListViewModel, logModalViewModel);
         } else if (controllerClass == TourModalController.class) {
-            return new TourModalController(tourModalViewModel, tourListViewModel, tourService);
+            return new TourModalController(tourModalViewModel, tourListViewModel, tourService, directionsService);
         } else if (controllerClass == LogModalController.class) {
             return new LogModalController(logModalViewModel, tourListViewModel);
+        } else if (controllerClass == AddressSelectionController.class) {
+            return new AddressSelectionController(geocodeService);
         }
         throw new IllegalArgumentException("Unknown controller class: " + controllerClass);
     }

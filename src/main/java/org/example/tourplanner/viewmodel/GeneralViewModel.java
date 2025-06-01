@@ -3,15 +3,11 @@ package org.example.tourplanner.viewmodel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import org.example.tourplanner.model.Log;
 import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.model.TransportType;
 
 public class GeneralViewModel {
-    private final TourListViewModel tourListViewModel;
-
     private final ObservableList<String> transportTypes = FXCollections.observableArrayList();
 
     private final StringProperty name = new SimpleStringProperty();
@@ -24,8 +20,7 @@ public class GeneralViewModel {
     private final StringProperty estimatedTime = new SimpleStringProperty();
 
     public GeneralViewModel(TourListViewModel tourListViewModel) {
-        this.tourListViewModel = tourListViewModel;
-        this.tourListViewModel.addSelectionChangedListener(this::selectTour);
+        tourListViewModel.addSelectionChangedListener(this::selectTour);
 
         transportTypes.add(TransportType.CAR.toString());
         transportTypes.add(TransportType.BUS.toString());
@@ -54,7 +49,7 @@ public class GeneralViewModel {
         transportType.set(tour.getTransportType());
         description.set(tour.getDescription());
         double dist = tour.getDistance() / 1000;
-        distance.set(dist + "km");
+        distance.set(String.format("%.2f km", dist));
         int hours = (int) Math.floor(tour.getEstimatedTime() / 3600);
         int minutes = (int) Math.floor((tour.getEstimatedTime() - (hours * 3600)) / 60);
         int seconds = (int) Math.floor((tour.getEstimatedTime() - (minutes * 60) - (hours * 3600)));

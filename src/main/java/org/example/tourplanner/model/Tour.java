@@ -8,7 +8,11 @@ public class Tour {
     private final Long id;
     private final StringProperty name;
     private final StringProperty startingPoint;
+    private final DoubleProperty startLat;
+    private final DoubleProperty startLng;
     private final StringProperty destination;
+    private final DoubleProperty destinationLat;
+    private final DoubleProperty destinationLng;
     private final ObjectProperty<TransportType> transportType;
     private final StringProperty description;
     private final DoubleProperty distance;
@@ -16,33 +20,45 @@ public class Tour {
     private ObservableList<Log> logs = FXCollections.observableArrayList();
 
 
-    public Tour(StringProperty name, StringProperty startingPoint, StringProperty destination, ObjectProperty<TransportType> transportType, StringProperty description, DoubleProperty distance, DoubleProperty estimatedTime) {
+    public Tour(StringProperty name, StringProperty startingPoint, DoubleProperty startLat, DoubleProperty startLng, StringProperty destination, DoubleProperty destinationLat, DoubleProperty destinationLng, ObjectProperty<TransportType> transportType, StringProperty description, DoubleProperty distance, DoubleProperty estimatedTime) {
         this.id = 0L;
         this.name = name;
         this.startingPoint = startingPoint;
+        this.startLat = startLat;
+        this.startLng = startLng;
         this.destination = destination;
+        this.destinationLat = destinationLat;
+        this.destinationLng = destinationLng;
         this.transportType = transportType;
         this.description = description;
         this.distance = distance;
         this.estimatedTime = estimatedTime;
     }
 
-    public Tour(Long id, String name, String startingPoint, String destination, TransportType transportType, String description, Double distance, Double estimatedTime) {
+    public Tour(Long id, String name, String startingPoint, Double startLat, Double startLng, String destination, Double destinationLat, Double destinationLng, TransportType transportType, String description, Double distance, Double estimatedTime) {
         this.id = id;
         this.name = new SimpleStringProperty(name);
         this.startingPoint = new SimpleStringProperty(startingPoint);
+        this.startLat = new SimpleDoubleProperty(startLat);
+        this.startLng = new SimpleDoubleProperty(startLng);
         this.destination= new SimpleStringProperty(destination);
+        this.destinationLat = new SimpleDoubleProperty(destinationLat);
+        this.destinationLng = new SimpleDoubleProperty(destinationLng);
         this.transportType = new SimpleObjectProperty<>(transportType);
         this.description = new SimpleStringProperty(description);
         this.distance = new SimpleDoubleProperty(distance);
         this.estimatedTime = new SimpleDoubleProperty(estimatedTime);
     }
 
-    public Tour(String name, String startingPoint, String destination, TransportType transportType, String description) {
+    public Tour(String name, String startingPoint, Double startLat, Double startLng, String destination, Double destinationLat, Double destinationLng, TransportType transportType, String description) {
         this.id = 0L;
         this.name = new SimpleStringProperty(name);
         this.startingPoint = new SimpleStringProperty(startingPoint);
+        this.startLat = new SimpleDoubleProperty(startLat);
+        this.startLng = new SimpleDoubleProperty(startLng);
         this.destination= new SimpleStringProperty(destination);
+        this.destinationLat =  new SimpleDoubleProperty(destinationLat);
+        this.destinationLng = new SimpleDoubleProperty(destinationLng);
         this.transportType = new SimpleObjectProperty<>(transportType);
         this.description = new SimpleStringProperty(description);
         this.distance = new SimpleDoubleProperty(0);
@@ -75,6 +91,22 @@ public class Tour {
         return startingPoint;
     }
 
+    public Double getStartLat() {
+        return startLat.get();
+    }
+
+    public DoubleProperty startLat() {
+        return startLat;
+    }
+
+    public Double getStartLng() {
+        return startLng.get();
+    }
+
+    public DoubleProperty startLng() {
+        return startLat;
+    }
+
     public String getName() {
         return name.get();
     }
@@ -85,6 +117,22 @@ public class Tour {
 
     public String getDestination() {
         return destination.get();
+    }
+    
+    public Double getDestinationLat() {
+        return destinationLat.get();
+    }
+
+    public DoubleProperty destinationLat() {
+        return destinationLat;
+    }
+
+    public Double getDestinationLng() {
+        return destinationLng.get();
+    }
+
+    public DoubleProperty destinationLng() {
+        return destinationLng;
     }
 
     public StringProperty destinationProperty() {

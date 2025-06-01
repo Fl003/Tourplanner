@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Map Preview</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" crossorigin="anonymous" />
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" crossorigin="anonymous"></script>
+<script>
+    // Initialisiere Karte
+    const map = L.map('map').setView([48.208, 16.371], 18);
+
+    // Füge Tile Layer hinzu
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Globale Referenz für die Directions-Route
+    let directionsLayer = null;
+
+    // Funktion zum Aktualisieren der Route
+    function updateRoute(directions) {
+        // Alte Route entfernen, falls vorhanden
+        clearMarkers()
+        if (directionsLayer) {
+            map.removeLayer(directionsLayer);
+        }
+
+        // Neue Route hinzufügen
+        directionsLayer = L.geoJSON(directions).addTo(map);
+
+        // Karte an Bounding Box anpassen
+        if (directions.bbox && directions.bbox.length === 4) {
+            const [[south, west], [north, east]] = [
+                [directions.bbox[1], directions.bbox[0]],
+                [directions.bbox[3], directions.bbox[2]]
+            ];
+            map.fitBounds([[south, west], [north, east]]);
+        }
+    }
+
+    function clearMarkers() {
+        for (const m of markers) {
+            map.removeLayer(m);
+        }
+        markers = [];
+    }
+
+    var markers = [];
+
+    function addMarker(lat, lng, text) {
+        var marker = L.marker([lat, lng]).addTo(map).bindPopup(text);
+        markers.push(marker);
+    }
+</script>
+</body>
+</html>

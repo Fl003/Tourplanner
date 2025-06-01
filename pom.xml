@@ -25,6 +25,12 @@
             <artifactId>javafx-fxml</artifactId>
             <version>21</version>
         </dependency>
+        <!-- JavaFX WebView -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>21</version>
+        </dependency>
         <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-core</artifactId>
@@ -138,13 +144,13 @@
                 </executions>
             </plugin>
         </plugins>
-        <resources>
-                <resource>
-                        <directory>
-                            src/main/resources
-                        </directory>
-                </resource>
-        </resources>
+            <resources>
+                    <resource>
+                            <directory>
+                                src/main/resources
+                            </directory>
+                    </resource>
+            </resources>
     </build>
 
 </project>

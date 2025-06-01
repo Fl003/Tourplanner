@@ -12,7 +12,11 @@ public class TourDto {
     private String name;
     private String description;
     public String startingPoint;
+    public Double startLat;
+    public Double startLng;
     public String destination;
+    public Double destinationLat;
+    public Double destinationLng;
     public String transportType;
     public Double distance;
     public Double duration;

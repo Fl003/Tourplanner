@@ -32,7 +32,6 @@ public class TourListController {
     private final TourListViewModel tourListViewModel;
     private final TourService tourService;
     public Button newTour;
-    private MainController mainController;
 
     public TourListController(TourListViewModel tourListViewModel, TourService tourService) {
         this.tourListViewModel = tourListViewModel;
@@ -125,7 +124,6 @@ public class TourListController {
             Parent root = loader.load();
 
             TourModalController controller = loader.getController();
-            controller.setMainController(this.mainController);
             controller.setTour(selectedTour);
 
             dialogStage.setScene(new Scene(root));

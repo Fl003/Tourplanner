@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Map Preview</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" crossorigin="anonymous" />
+
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" crossorigin="anonymous"></script>
+
+<script>
+    const map = L.map('map').setView([48.239, 16.378], 17);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    let markers = [];
+
+    function addMarker(lat, lng, text) {
+        const marker = L.marker([lat, lng]).addTo(map).bindPopup(text);
+        markers.push(marker);
+    }
+
+    function clearMarkers() {
+        for (const m of markers) {
+            map.removeLayer(m);
+        }
+        markers = [];
+    }
+
+    function fitToAllMarkers() {
+        if (markers.length === 0) return;
+
+        const group = L.featureGroup(markers);
+        map.fitBounds(group.getBounds());
+    }
+
+    function highlightMarker(point) {
+        const marker = markers[point - 1];
+        if (marker != null) {
+            map.setView(marker.getLatLng(), 20);  // 20 = zoom
+            marker.openPopup();
+        }
+    }
+
+    window.addEventListener('resize', function () {
+        map.invalidateSize();
+    });
+</script>
+</body>
+</html>
