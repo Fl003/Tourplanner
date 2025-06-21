@@ -22,10 +22,10 @@ public class GeneralViewModel {
     public GeneralViewModel(TourListViewModel tourListViewModel) {
         tourListViewModel.addSelectionChangedListener(this::selectTour);
 
-        transportTypes.add(TransportType.CAR.toString());
-        transportTypes.add(TransportType.BUS.toString());
-        transportTypes.add(TransportType.FAHRRAD.toString());
-        transportTypes.add(TransportType.ZUFUSS.toString());
+        transportTypes.add(TransportType.Car.toString());
+        transportTypes.add(TransportType.Bus.toString());
+        transportTypes.add(TransportType.Bike.toString());
+        transportTypes.add(TransportType.Walking.toString());
     }
 
     public ObservableList<String> getTransportType() {

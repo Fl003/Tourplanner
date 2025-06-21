@@ -4,7 +4,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.tourplanner.dto.TourDto;
-import org.example.tourplanner.model.Log;
 import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.model.TransportType;
 import org.example.tourplanner.service.TourService;
@@ -14,22 +13,6 @@ import java.util.List;
 
 public class TourListViewModel {
     private final TourService tourService;
-
-    public void deleteTour(Tour selectedItem) {
-        tourList.remove(selectedItem);
-        notifyListeners(null);
-    }
-
-    public void saveLog(Log newLog, Tour selectedTour) {
-        int index = tourList.indexOf(selectedTour);
-        for(int i = 0; i < tourList.get(index).getLogs().size(); i++) {
-            if(tourList.get(index).getLogs().get(i).equals(newLog)) {
-                tourList.get(index).getLogs().set(i, newLog);
-                return;
-            }
-        }
-        tourList.get(index).getLogs().add(newLog);
-    }
 
     public interface SelectionChangedListener {
         void onSelectionChanged(Tour tour);
@@ -63,10 +46,9 @@ public class TourListViewModel {
         tourList.add(tour);
     }
 
-    public void deleteLog(Log log, Tour tour) {
-        // search for tour and delete log from tour
-        int i = this.tourList.indexOf(tour);
-        this.tourList.get(i).removeLog(log);
+    public void deleteTour(Long tourId) {
+        tourService.deleteTour(tourId);
+        loadTours();
     }
 
     public void loadTours() {

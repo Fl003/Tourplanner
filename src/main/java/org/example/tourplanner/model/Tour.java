@@ -1,8 +1,6 @@
 package org.example.tourplanner.model;
 
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class Tour {
     private final Long id;
@@ -17,7 +15,6 @@ public class Tour {
     private final StringProperty description;
     private final DoubleProperty distance;
     private final DoubleProperty estimatedTime;
-    private ObservableList<Log> logs = FXCollections.observableArrayList();
 
 
     public Tour(StringProperty name, StringProperty startingPoint, DoubleProperty startLat, DoubleProperty startLng, StringProperty destination, DoubleProperty destinationLat, DoubleProperty destinationLng, ObjectProperty<TransportType> transportType, StringProperty description, DoubleProperty distance, DoubleProperty estimatedTime) {
@@ -65,54 +62,22 @@ public class Tour {
         this.estimatedTime = new SimpleDoubleProperty(0);
     }
 
-    public void addLog(Log log) {
-        this.logs.add(log);
-    }
-
-    public void removeLog(Log log) {
-        this.logs.remove(log);
-    }
-
-    public void setLogs(ObservableList<Log> logs) {
-        this.logs = logs;
-    }
-
     public Long getId() { return id; }
-
-    public ObservableList<Log> getLogs() {
-        return logs;
-    }
 
     public String getStartingpoint() {
         return startingPoint.get();
-    }
-
-    public StringProperty startingPointProperty() {
-        return startingPoint;
     }
 
     public Double getStartLat() {
         return startLat.get();
     }
 
-    public DoubleProperty startLat() {
-        return startLat;
-    }
-
     public Double getStartLng() {
         return startLng.get();
     }
 
-    public DoubleProperty startLng() {
-        return startLat;
-    }
-
     public String getName() {
         return name.get();
-    }
-
-    public StringProperty nameProperty() {
-        return name;
     }
 
     public String getDestination() {
@@ -123,52 +88,24 @@ public class Tour {
         return destinationLat.get();
     }
 
-    public DoubleProperty destinationLat() {
-        return destinationLat;
-    }
-
     public Double getDestinationLng() {
         return destinationLng.get();
-    }
-
-    public DoubleProperty destinationLng() {
-        return destinationLng;
-    }
-
-    public StringProperty destinationProperty() {
-        return destination;
     }
 
     public TransportType getTransportType() {
         return transportType.get();
     }
 
-    public ObjectProperty<TransportType> transportTypeProperty() {
-        return transportType;
-    }
-
     public String getDescription() {
         return description.get();
-    }
-
-    public StringProperty descriptionProperty() {
-        return description;
     }
 
     public double getDistance() {
         return distance.get();
     }
 
-    public DoubleProperty distanceProperty() {
-        return distance;
-    }
-
     public double getEstimatedTime() {
         return estimatedTime.get();
-    }
-
-    public DoubleProperty estimatedTimeProperty() {
-        return estimatedTime;
     }
 
     public void setDistance(double distance) {

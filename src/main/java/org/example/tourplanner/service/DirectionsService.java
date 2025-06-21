@@ -15,7 +15,6 @@ public class DirectionsService {
             url += "?api_key=5b3ce3597851110001cf6248128a6e3707124b69a94712fdc871147c";
             url += "&start=" + startLat + "," + startLng;
             url += "&end=" + endLat + "," + endLng;
-            System.out.println("DirectionsService: " + url);
             HttpGet request = new HttpGet(url);
             ClassicHttpResponse response = client.executeOpen(null, request, null);
 

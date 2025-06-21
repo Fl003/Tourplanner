@@ -12,18 +12,18 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.example.tourplanner.dto.TourDto;
+import org.example.tourplanner.dto.LogDto;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class TourService {
+public class LogService {
     private static final String BASE_URL = "http://localhost:8080";
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public List<TourDto> getAllTours() {
+    public List<LogDto> getAllLogsForTourId(Long tourId) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpGet request = new HttpGet(BASE_URL + "/tours");
+            HttpGet request = new HttpGet(BASE_URL + "/logs?tourId=" + tourId);
             ClassicHttpResponse response = client.executeOpen(null, request, null);
 
             if (response.getCode() == 200) {
@@ -41,10 +41,10 @@ public class TourService {
         return List.of();
     }
 
-    public boolean saveTour(TourDto tour) {
+    public boolean saveLog(LogDto log) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpPost request = new HttpPost(BASE_URL + "/tour");
-            String json = mapper.writeValueAsString(tour);
+            HttpPost request = new HttpPost(BASE_URL + "/log");
+            String json = mapper.writeValueAsString(log);
 
             request.setEntity(EntityBuilder.create()
                     .setText(json)
@@ -61,10 +61,10 @@ public class TourService {
         }
     }
 
-    public boolean updateTour(TourDto tour) {
+    public boolean updateLog(LogDto log) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpPut request = new HttpPut(BASE_URL + "/tour");
-            String json = mapper.writeValueAsString(tour);
+            HttpPut request = new HttpPut(BASE_URL + "/log");
+            String json = mapper.writeValueAsString(log);
 
             request.setEntity(EntityBuilder.create()
                     .setText(json)
@@ -79,9 +79,9 @@ public class TourService {
         }
     }
 
-    public boolean deleteTour(Long tourId) {
+    public boolean deleteLog(Long logId) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpDelete request = new HttpDelete(BASE_URL + "/tour/" + tourId);
+            HttpDelete request = new HttpDelete(BASE_URL + "/log/" + logId);
 
             ClassicHttpResponse response = client.executeOpen(null, request, null);
             return response.getCode() == 200 || response.getCode() == 204;

@@ -17,7 +17,6 @@ import org.example.tourplanner.FXMLDependencyInjection;
 import org.example.tourplanner.model.Log;
 import org.example.tourplanner.viewmodel.LogModalViewModel;
 import org.example.tourplanner.viewmodel.LogViewModel;
-import org.example.tourplanner.viewmodel.TourListViewModel;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -26,7 +25,6 @@ import java.util.Locale;
 
 public class LogController {
     private final LogViewModel logViewModel;
-    private final TourListViewModel tourListViewModel;
     private final LogModalViewModel logModalViewModel;
 
     @FXML
@@ -44,18 +42,20 @@ public class LogController {
     @FXML
     public TableColumn<Log, String> columnComment;
 
-    public LogController(LogViewModel logViewModel, TourListViewModel tourListViewModel, LogModalViewModel logModalViewModel) {
+    // constructor
+    public LogController(LogViewModel logViewModel, LogModalViewModel logModalViewModel) {
         this.logViewModel = logViewModel;
-        this.tourListViewModel = tourListViewModel;
         this.logModalViewModel = logModalViewModel;
     }
 
     public void initialize() {
-        columnDateTime.prefWidthProperty().bind(logTable.widthProperty().divide(5));
-        columnDifficulty.prefWidthProperty().bind(logTable.widthProperty().divide(5));
-        columnTotalDistance.prefWidthProperty().bind(logTable.widthProperty().divide(5));
-        columnTotalTime.prefWidthProperty().bind(logTable.widthProperty().divide(5));
-        columnRating.prefWidthProperty().bind(logTable.widthProperty().divide(5));
+        // define column widths
+        columnDateTime.prefWidthProperty().bind(logTable.widthProperty().multiply(0.15));
+        columnDifficulty.prefWidthProperty().bind(logTable.widthProperty().multiply(0.10));
+        columnTotalDistance.prefWidthProperty().bind(logTable.widthProperty().multiply(0.15));
+        columnTotalTime.prefWidthProperty().bind(logTable.widthProperty().multiply(0.20));
+        columnRating.prefWidthProperty().bind(logTable.widthProperty().multiply(0.10));
+        columnComment.prefWidthProperty().bind(logTable.widthProperty().multiply(0.20));
 
         // cellFactory for Formatting, Layout, ...
         columnTotalTime.setCellFactory(tc -> new TableCell<>() {
@@ -115,7 +115,7 @@ public class LogController {
         // CellValueFactory for binding the value
         columnTotalDistance.setCellValueFactory(cellData -> cellData.getValue().totalDistanceProperty().asObject());
         columnTotalTime.setCellValueFactory(cellData -> cellData.getValue().totalTimeProperty().asObject());
-        columnDifficulty.setCellValueFactory(cellData -> cellData.getValue().difficultyProperty());
+        columnDifficulty.setCellValueFactory(cellData -> cellData.getValue().difficultyProperty().asString());
         columnRating.setCellValueFactory(cellData -> cellData.getValue().ratingProperty().asObject());
         columnComment.setCellValueFactory(cellData -> cellData.getValue().commentProperty());
         columnDateTime.setCellValueFactory(cellData -> {
@@ -131,7 +131,7 @@ public class LogController {
             return new SimpleStringProperty(formattedDateTime);
         });
 
-        // edit and delete btn in every row
+        // column for action buttons (edit, delete)
         TableColumn<Log, Void> actionColumn = new TableColumn<>("Actions");
         actionColumn.setCellFactory(tc -> new TableCell<>() {
             private final Image imgEdit = new Image(getClass().getResourceAsStream("/org/example/tourplanner/icons/edit.png"), 15, 15, true, true);
@@ -141,14 +141,24 @@ public class LogController {
             private final HBox container = new HBox(10, editBtn, deleteBtn);
 
             {
+                // edit button onClick
                 editBtn.setOnAction(event -> {
                     Log item = getTableView().getItems().get(getIndex());
-                    handleModifyAction(item);
+                    // set Log to edit in Modal
+                    logModalViewModel.setLog(item);
+                    // set selectedTour in Modal
+                    logModalViewModel.setSelectedTour(logViewModel.getSelectedTour());
+                    try {
+                        showLogModal();
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
                 });
 
+                // delete button onClick
                 deleteBtn.setOnAction(event -> {
                     Log item = getTableView().getItems().get(getIndex());
-                    handleDeleteAction(item);
+                    logViewModel.deleteLog(item);
                 });
 
                 // styling
@@ -168,30 +178,14 @@ public class LogController {
                 }
             }
         });
-
         logTable.getColumns().add(actionColumn);
+        // set datasource
         logTable.setItems(logViewModel.getLogs());
-    }
-
-    private void handleDeleteAction(Log log) {
-        // delete log
-        this.tourListViewModel.deleteLog(log, this.logViewModel.getSelectedTour());
-    }
-
-    private void handleModifyAction(Log log) {
-        // open modal and set log to viewmodel
-        // set log data in viewmodel
-        this.logModalViewModel.setLog(log);
-        this.logModalViewModel.setSelectedTour(logViewModel.getSelectedTour());
-        try {
-            showLogModal();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void createNewLog() {
         this.logModalViewModel.clearLog();
+        // set selectedTour in Modal
         this.logModalViewModel.setSelectedTour(logViewModel.getSelectedTour());
         try {
             showLogModal();
@@ -209,6 +203,7 @@ public class LogController {
         dialogStage.setMinHeight(307.0);
         dialogStage.setMinWidth(742.0);
         dialogStage.showAndWait();
-        logTable.refresh();
+        // refresh log table after closing Modal
+        logViewModel.setLogs(logViewModel.getSelectedTour());
     }
 }

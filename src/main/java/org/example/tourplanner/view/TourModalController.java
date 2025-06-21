@@ -1,7 +1,5 @@
 package org.example.tourplanner.view;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,13 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.tourplanner.FXMLDependencyInjection;
-import org.example.tourplanner.dto.TourDto;
-import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.model.TransportType;
-import org.example.tourplanner.service.DirectionsService;
-import org.example.tourplanner.service.TourService;
 import org.example.tourplanner.viewmodel.TourModalViewModel;
-import org.example.tourplanner.viewmodel.TourListViewModel;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -32,10 +25,6 @@ public class TourModalController {
     public Button end;
     @FXML
     public Button start;
-
-    private TourListViewModel tourListViewModel;
-    private final TourService tourService;
-    private final DirectionsService directionsService;
 
     @FXML
     public TextField name;
@@ -53,105 +42,59 @@ public class TourModalController {
     public Label statusMessage;
     @FXML
     private ResourceBundle resources;
-    @FXML
-    private Tour editableTour;
 
-    private Double startLat;
-    private Double startLng;
-    private Double destinationLat;
-    private Double destinationLng;
-
-    public void setViewModel(TourListViewModel viewModel) {
-        this.tourListViewModel = viewModel;
-    }
-
-    public TourModalController(TourModalViewModel tourModalViewModel, TourListViewModel tourListViewModel, TourService tourService, DirectionsService directionsService) {
+    public TourModalController(TourModalViewModel tourModalViewModel) {
         this.tourModalViewModel = tourModalViewModel;
-        this.tourListViewModel = tourListViewModel;
-        this.tourService = tourService;
-        this.directionsService = directionsService;
     }
 
-    public void handleSavingMethod(ActionEvent actionEvent) {
+    public void saveTour(ActionEvent actionEvent) {
+        if (!validInput()) return;
+
+        if (!tourModalViewModel.saveTour()) {
+            statusBar.setStyle("-fx-background-color: red;");
+            statusMessage.setText(this.resources.getString("CorrectTransportType"));
+        }
+
+        Node source = (Node) actionEvent.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+    }
+
+    private boolean validInput() {
         //validation
         if(name.getText().isEmpty() || startingPoint.getText().isEmpty() || destination.getText().isEmpty() || description.getText().isEmpty() || transportType.getValue() == null) {
             statusBar.setStyle("-fx-background-color: red;");
             statusMessage.setText(this.resources.getString("BlankField"));
-            return;
+            return false;
         }
 
         if(!name.getText().matches("[a-zA-ZäöüÄÖÜß ]+")){
             statusBar.setStyle("-fx-background-color: red;");
             statusMessage.setText(this.resources.getString("OnlyLettersTour"));
-            return;
+            return false;
         }
-
-        TransportType selectedTransportType = TransportType.valueOf(transportType.getSelectionModel().getSelectedItem().toString());
-        double duration = 0.0, distance = 0.0;
-
-        try {
-            String json = directionsService.getDirections(selectedTransportType.apiValue, startLng, startLat, destinationLng, destinationLat);
-            if (json != null) {
-                System.out.println(json);
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode root = mapper.readTree(json);
-                JsonNode segments = root.get("features").get(0).get("properties").get("segments").get(0);
-
-                distance = segments.get("distance").asDouble();
-                duration = segments.get("duration").asDouble();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            // If editableTour = null, then create
-            if(editableTour == null) {
-                TourDto newTour = new TourDto(null, name.getText(), description.getText(), startingPoint.getText(), startLat, startLng, destination.getText(), destinationLat, destinationLng, selectedTransportType.name(), distance, duration);
-                if (this.tourService.saveTour(newTour))
-                {
-                    this.tourListViewModel.loadTours();
-                    Node source = (Node) actionEvent.getSource();
-                    Stage stage = (Stage) source.getScene().getWindow();
-                    stage.close();
-                } else {
-
-                }
-            } else {
-                //Edit
-                TourDto tour = new TourDto(editableTour.getId(), name.getText(), description.getText(), startingPoint.getText(), startLat, startLng, destination.getText(), destinationLat, destinationLng, selectedTransportType.name(), distance, duration);
-                if (this.tourService.updateTour(tour))
-                {
-                    this.tourListViewModel.loadTours();
-                    Node source = (Node) actionEvent.getSource();
-                    Stage stage = (Stage) source.getScene().getWindow();
-                    stage.close();
-                } else {
-                    // failed
-                }
-            }
-        } catch (IllegalArgumentException e) {
-            statusBar.setStyle("-fx-background-color: red;");
-            statusMessage.setText(this.resources.getString("CorrectTransportType"));
-        }
+        return true;
     }
 
     @FXML
     void initialize() {
-        transportType.setItems(this.tourModalViewModel.getTransportType());
-    }
+        // set items in combobox
+        transportType.setItems(this.tourModalViewModel.getTransportTypes());
+        // if edit, set transportType otherwise select first
+        if (tourModalViewModel.getTransportType().get() != null)
+            transportType.setValue(tourModalViewModel.getTransportType().get().toString());
+        else
+            transportType.getSelectionModel().selectFirst();
+        // listen for changes and save in viewmodel
+        transportType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            tourModalViewModel.setTransportType(TransportType.valueOf(newValue));
+        });
 
-    public void setTour(Tour selectedTour) {
-        this.editableTour = selectedTour;
-        name.setText(selectedTour.getName());
-        startingPoint.setText(selectedTour.getStartingpoint());
-        startLat = selectedTour.getStartLat();
-        startLng = selectedTour.getStartLng();
-        destination.setText(selectedTour.getDestination());
-        destinationLat = selectedTour.getDestinationLat();
-        destinationLng = selectedTour.getDestinationLng();
-        description.setText(selectedTour.getDescription());
-        transportType.setValue(selectedTour.getTransportType().toString());
+        // bind fields
+        name.textProperty().bindBidirectional(this.tourModalViewModel.getName());
+        startingPoint.textProperty().bindBidirectional(this.tourModalViewModel.getStartingPoint());
+        description.textProperty().bindBidirectional(this.tourModalViewModel.getDescription());
+        destination.textProperty().bindBidirectional(this.tourModalViewModel.getDestination());
     }
 
     public void selectAddress(ActionEvent actionEvent) throws IOException {
@@ -163,13 +106,9 @@ public class TourModalController {
 
         controller.setCallback((lat, lng, label) -> {
             if (actionEvent.getTarget() == this.start) {
-                startingPoint.setText(label);
-                startLat = lat;
-                startLng = lng;
+                tourModalViewModel.setStartingPoint(label, lat, lng);
             } else if (actionEvent.getTarget() == this.end) {
-                destination.setText(label);
-                destinationLat = lat;
-                destinationLng = lng;
+                tourModalViewModel.setDestination(label, lat, lng);
             }
         });
 

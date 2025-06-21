@@ -1,10 +1,10 @@
 package org.example.tourplanner.model;
 
 public enum TransportType {
-    CAR("driving-car"),
-    BUS("driving-hgv"),
-    FAHRRAD("cycling-regular"),
-    ZUFUSS("foot-walking");
+    Car("driving-car"),
+    Bus("driving-hgv"),
+    Bike("cycling-regular"),
+    Walking("foot-walking");
 
     public final String apiValue;
 
