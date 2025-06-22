@@ -4,89 +4,84 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.view.GeneralController">
-    <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="447.0" AnchorPane.bottomAnchor="0.0"
-               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.view.GeneralController">
+    <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="447.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
-        <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0"
-                    style="-fx-background-color: white;">
-            <Label layoutX="9.0" layoutY="60.0" minWidth="100.0" text="%StartingPoint" AnchorPane.leftAnchor="10.0"
-                   alignment="CENTER_RIGHT">
+        <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
+            <Label alignment="CENTER_RIGHT" layoutX="9.0" layoutY="60.0" minWidth="100.0" text="%StartingPoint" AnchorPane.leftAnchor="10.0">
                 <font>
-                    <Font name="Arial Bold" size="12.0"/>
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
             </Label>
-            <TextField fx:id="name" editable="false" layoutX="116.0" layoutY="17.0" prefHeight="26.0" prefWidth="234.0"
-                       AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0">
+            <TextField fx:id="name" editable="false" layoutX="116.0" layoutY="15.0" prefHeight="26.0" prefWidth="234.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0">
                 <font>
-                    <Font name="Arial" size="12.0"/>
+                    <Font name="Arial" size="12.0" />
                 </font>
             </TextField>
-            <Label layoutX="12.0" layoutY="22.0" minWidth="100.0" text="%TourName" AnchorPane.leftAnchor="10.0"
-                   alignment="CENTER_RIGHT">
+            <Label alignment="CENTER_RIGHT" layoutX="12.0" layoutY="20.0" minWidth="100.0" text="%TourName" AnchorPane.leftAnchor="10.0">
                 <font>
-                    <Font name="Arial Bold" size="12.0"/>
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
             </Label>
-            <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0"/>
-            <TextField fx:id="startingPoint" editable="false" layoutX="106.4" layoutY="55.0" prefHeight="26.0"
-                       prefWidth="244.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0">
+            <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+            <TextField fx:id="startingPoint" editable="false" layoutX="106.4" layoutY="55.0" prefHeight="26.0" prefWidth="244.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0">
                 <font>
-                    <Font name="Arial" size="12.0"/>
+                    <Font name="Arial" size="12.0" />
                 </font>
             </TextField>
-            <Label layoutX="42.0" layoutY="186.0" minWidth="100.0" text="%Distance" AnchorPane.leftAnchor="10.0"
-                   alignment="CENTER_RIGHT">
+            <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="180.0" minWidth="100.0" text="%Distance" AnchorPane.leftAnchor="10.0">
                 <font>
-                    <Font name="Arial Bold" size="12.0"/>
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
             </Label>
-            <Label fx:id="distance" layoutX="106.0" layoutY="186.0" text="50km" AnchorPane.leftAnchor="120.0"/>
-            <Label layoutX="10.0" layoutY="132.0" minWidth="100.0" text="%TransportType" AnchorPane.leftAnchor="10.0"
-                   alignment="CENTER_RIGHT">
+            <Label fx:id="distance" layoutX="120.0" layoutY="180.0" text="50km" AnchorPane.leftAnchor="120.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="140.0" minWidth="100.0" text="%TransportType" AnchorPane.leftAnchor="10.0">
                 <font>
-                    <Font name="Arial Bold" size="12.0"/>
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
             </Label>
-            <Label layoutX="27.0" layoutY="95.0" minWidth="100.0" text="%Destination" AnchorPane.leftAnchor="10.0"
-                   alignment="CENTER_RIGHT">
+            <Label alignment="CENTER_RIGHT" layoutX="27.0" layoutY="100.0" minWidth="100.0" text="%Destination" AnchorPane.leftAnchor="10.0">
                 <font>
-                    <Font name="Arial Bold" size="12.0"/>
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
             </Label>
-            <TextField fx:id="destination" editable="false" layoutX="106.0" layoutY="91.0" prefHeight="26.0"
-                       prefWidth="244.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0">
+            <TextField fx:id="destination" editable="false" layoutX="106.0" layoutY="95.0" prefHeight="26.0" prefWidth="244.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0">
                 <font>
-                    <Font name="Arial" size="12.0"/>
+                    <Font name="Arial" size="12.0" />
                 </font>
             </TextField>
-            <TextField fx:id="transportType" editable="false" layoutX="106.0" layoutY="126.0" prefHeight="26.0"
-                       prefWidth="245.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0">
+            <TextField fx:id="transportType" editable="false" layoutX="106.0" layoutY="135.0" prefHeight="26.0" prefWidth="245.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0">
                 <font>
-                    <Font name="Arial" size="12.0"/>
+                    <Font name="Arial" size="12.0" />
                 </font>
             </TextField>
+         <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="220.0" minWidth="100.0" text="%Popularity">
+            <font>
+               <Font name="Arial Bold" size="12.0" />
+            </font>
+         </Label>
+         <HBox fx:id="popularityStars" layoutX="120.0" layoutY="218.0" prefHeight="18.0" prefWidth="200.0" />
         </AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0"
-                    style="-fx-background-color: white;">
-            <Label layoutX="20.0" layoutY="25.0" minWidth="100.0" text="%Description" AnchorPane.leftAnchor="10.0"
-                   alignment="CENTER_RIGHT">
+        <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
+            <Label alignment="CENTER_RIGHT" layoutX="22.0" layoutY="25.0" minWidth="100.0" text="%Description" AnchorPane.leftAnchor="22.0">
                 <font>
-                    <Font name="Arial Bold" size="12.0"/>
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
             </Label>
-            <TextArea fx:id="description" editable="false" layoutX="127.0" layoutY="14.0" prefHeight="138.0"
-                      prefWidth="218.0" wrapText="true" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="25.0"
-                      AnchorPane.topAnchor="18.0"/>
-            <Label layoutX="16.0" layoutY="186.0" minWidth="100.0" text="%EstimatedTime" AnchorPane.leftAnchor="10.0"
-                   alignment="CENTER_RIGHT">
+            <TextArea fx:id="description" editable="false" layoutX="138.0" layoutY="15.0" prefHeight="146.0" prefWidth="207.0" wrapText="true" AnchorPane.leftAnchor="138.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="18.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="22.0" layoutY="181.0" minWidth="100.0" text="%EstimatedTime" AnchorPane.leftAnchor="22.0">
                 <font>
-                    <Font name="Arial Bold" size="12.0"/>
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
             </Label>
-            <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0"/>
-            <Label fx:id="estimatedTime" layoutX="56.0" layoutY="186.0" text="1:15h" AnchorPane.leftAnchor="120.0"/>
+            <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+            <Label fx:id="estimatedTime" layoutX="138.0" layoutY="180.0" text="1:15h" AnchorPane.leftAnchor="138.0" />
+         <Label alignment="CENTER_RIGHT" layoutX="11.0" layoutY="218.0" minWidth="100.0" text="%ChildFriendliness">
+            <font>
+               <Font name="Arial Bold" size="12.0" />
+            </font>
+         </Label>
+         <HBox fx:id="childFriendlinessStars" layoutX="138.0" layoutY="217.0" prefHeight="18.0" prefWidth="200.0" />
         </AnchorPane>
     </SplitPane>
 </AnchorPane>

@@ -46,7 +46,6 @@ public class TourModalViewModel {
         try {
             String json = directionsService.getDirections(transportType.get().apiValue, startLng.get(), startLat.get(), destinationLng.get(), destinationLat.get());
             if (json != null) {
-                System.out.println(json);
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode root = mapper.readTree(json);
                 JsonNode segments = root.get("features").get(0).get("properties").get("segments").get(0);

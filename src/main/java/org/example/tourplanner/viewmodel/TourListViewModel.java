@@ -5,7 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.tourplanner.dto.TourDto;
 import org.example.tourplanner.model.Tour;
-import org.example.tourplanner.model.TransportType;
+import org.example.tourplanner.service.LogService;
 import org.example.tourplanner.service.TourService;
 
 import java.util.ArrayList;
@@ -13,9 +13,10 @@ import java.util.List;
 
 public class TourListViewModel {
     private final TourService tourService;
+    private final LogService logService;
 
     public interface SelectionChangedListener {
-        void onSelectionChanged(Tour tour);
+        void onSelectionChanged(Long tourId);
     }
 
     private List<SelectionChangedListener> listeners = new ArrayList<>();
@@ -23,10 +24,10 @@ public class TourListViewModel {
     private final ObservableList<Tour> tourList = FXCollections.observableArrayList();
 
     public ChangeListener<Tour> getChangeListener() {
-        return (observableValue, oldValue, newValue) -> notifyListeners(newValue);
+        return (observableValue, oldValue, newValue) -> notifyListeners(newValue.getId());
     }
 
-    private void notifyListeners(Tour newValue) {
+    private void notifyListeners(Long newValue) {
         for (var listener : listeners ) {
             listener.onSelectionChanged(newValue);
         }
@@ -36,8 +37,9 @@ public class TourListViewModel {
         listeners.add(listener);
     }
 
-    public TourListViewModel(TourService tourService) {
+    public TourListViewModel(TourService tourService, LogService logService) {
         this.tourService = tourService;
+        this.logService = logService;
 
         loadTours();
     }
@@ -55,22 +57,20 @@ public class TourListViewModel {
         tourList.clear();
         List<TourDto> tours = this.tourService.getAllTours();
         for (TourDto tourDto : tours) {
-            Tour tour = new Tour(
-                    tourDto.getId(),
-                    tourDto.getName(),
-                    tourDto.getStartingPoint(),
-                    tourDto.getStartLat(),
-                    tourDto.getStartLng(),
-                    tourDto.getDestination(),
-                    tourDto.getDestinationLat(),
-                    tourDto.getDestinationLng(),
-                    TransportType.valueOf(tourDto.getTransportType()),
-                    tourDto.getDescription(),
-                    tourDto.getDistance(),
-                    tourDto.getDuration()
-            );
+            Tour tour = tourService.convertTourDtoToTour(tourDto);
             tourList.add(tour);
         }
+    }
+
+    public void reloadTour(Long tourId) {
+        loadTours();
+        notifyListeners(tourId);
+    }
+
+    public Tour getLastCreatedTours() {
+        TourDto tour = tourService.getLastCreatedTours();
+        if (tour == null) return null;
+        return tourService.convertTourDtoToTour(tour);
     }
 
     public ObservableList<Tour> getObservableTours() {

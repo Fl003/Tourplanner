@@ -1,7 +1,6 @@
 package org.example.tourplanner.model;
 
 import javafx.beans.property.*;
-import net.bytebuddy.build.Plugin;
 
 import java.time.LocalDate;
 
@@ -13,11 +12,11 @@ public class Log {
     private final IntegerProperty minute;
     private final StringProperty comment;
     private final ObjectProperty<Difficulty> difficulty;
-    private final IntegerProperty totalDistance;
+    private final DoubleProperty totalDistance;
     private final IntegerProperty totalTime;
     private final IntegerProperty rating;
 
-    public Log(Long id, Long tourId, LocalDate date, Integer hour, Integer minute, String comment, String difficulty, int totalDistance, int totalTime, int rating) {
+    public Log(Long id, Long tourId, LocalDate date, Integer hour, Integer minute, String comment, String difficulty, double totalDistance, int totalTime, int rating) {
         this.id = id;
         this.tourId = new SimpleLongProperty(tourId);
         this.date = new SimpleObjectProperty<>(date);
@@ -25,7 +24,7 @@ public class Log {
         this.minute = new SimpleIntegerProperty(minute);
         this.comment = new SimpleStringProperty(comment);
         this.difficulty = new SimpleObjectProperty<>(Difficulty.valueOf(difficulty));
-        this.totalDistance = new SimpleIntegerProperty(totalDistance);
+        this.totalDistance = new SimpleDoubleProperty(totalDistance);
         this.totalTime = new SimpleIntegerProperty(totalTime);
         this.rating = new SimpleIntegerProperty(rating);
     }
@@ -38,7 +37,7 @@ public class Log {
         this.minute = new SimpleIntegerProperty(minute);
         this.comment = new SimpleStringProperty(comment);
         this.difficulty = new SimpleObjectProperty<>(Difficulty.valueOf(difficulty));
-        this.totalDistance = new SimpleIntegerProperty(totalDistance);
+        this.totalDistance = new SimpleDoubleProperty(totalDistance);
         this.totalTime = new SimpleIntegerProperty(totalTime);
         this.rating = new SimpleIntegerProperty(rating);
     }
@@ -51,7 +50,7 @@ public class Log {
         this.minute = new SimpleIntegerProperty(0);
         this.comment = new SimpleStringProperty("");
         this.difficulty = new SimpleObjectProperty<>(Difficulty.Easy);
-        this.totalDistance = new SimpleIntegerProperty(0);
+        this.totalDistance = new SimpleDoubleProperty(0.0);
         this.totalTime = new SimpleIntegerProperty(0);
         this.rating = new SimpleIntegerProperty(0);
     }
@@ -59,9 +58,7 @@ public class Log {
     public Long getId() { return id; }
     public Long getTourId() { return tourId.get(); }
     public Difficulty getDifficulty() { return difficulty.get(); }
-    public Integer getTotalDistance() {
-        return totalDistance.get();
-    }
+    public Double getTotalDistance() { return totalDistance.get(); }
     public Integer getTotalTime() { return totalTime.get(); }
     public Integer getRating() { return rating.get(); }
     public String getComment() { return comment.get(); }
@@ -70,9 +67,7 @@ public class Log {
     public Integer getMinute() { return minute.get(); }
 
     public ObjectProperty<Difficulty> difficultyProperty() { return difficulty; }
-    public IntegerProperty totalDistanceProperty() {
-        return totalDistance;
-    }
+    public DoubleProperty totalDistanceProperty() { return totalDistance; }
     public IntegerProperty totalTimeProperty() { return totalTime; }
     public IntegerProperty ratingProperty() { return rating; }
     public StringProperty commentProperty() { return comment; }
@@ -84,7 +79,7 @@ public class Log {
     public void setDifficulty(String difficulty) {
         this.difficulty.set(Difficulty.valueOf(difficulty));
     }
-    public void setTotalDistance(int totalDistance) {
+    public void setTotalDistance(double totalDistance) {
         this.totalDistance.set(totalDistance);
     }
     public void setTotalTime(int totalTime) { this.totalTime.set(totalTime); }

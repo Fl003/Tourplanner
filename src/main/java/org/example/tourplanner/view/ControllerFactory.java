@@ -22,16 +22,16 @@ public class ControllerFactory {
     private final DirectionsService directionsService;
 
     public ControllerFactory() {
-        tourService = new TourService();
         logService = new LogService();
+        tourService = new TourService(logService);
         geocodeService = new GeocodeService();
         directionsService = new DirectionsService();
 
         searchBarViewModel = new SearchBarViewModel();
-        tourListViewModel = new TourListViewModel(tourService);
-        generalViewModel = new GeneralViewModel(tourListViewModel);
-        mapViewModel = new MapViewModel(tourListViewModel);
-        logViewModel = new LogViewModel(tourListViewModel, logService);
+        tourListViewModel = new TourListViewModel(tourService, logService);
+        generalViewModel = new GeneralViewModel(tourListViewModel, tourService);
+        mapViewModel = new MapViewModel(tourListViewModel, tourService);
+        logViewModel = new LogViewModel(tourListViewModel, logService, tourService);
         tourModalViewModel = new TourModalViewModel(tourService, directionsService);
         logModalViewModel = new LogModalViewModel(logService);
     }
@@ -51,7 +51,7 @@ public class ControllerFactory {
         } else if (controllerClass == MapController.class) {
             return new MapController(mapViewModel, directionsService);
         } else if (controllerClass == LogController.class) {
-            return new LogController(logViewModel, logModalViewModel);
+            return new LogController(logViewModel, logModalViewModel, tourListViewModel);
         } else if (controllerClass == TourModalController.class) {
             return new TourModalController(tourModalViewModel);
         } else if (controllerClass == LogModalController.class) {

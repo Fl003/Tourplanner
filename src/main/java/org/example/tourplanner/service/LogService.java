@@ -51,8 +51,6 @@ public class LogService {
                     .setContentType(ContentType.create("application/json", StandardCharsets.UTF_8))
                     .build());
 
-            System.out.println(json);
-
             ClassicHttpResponse response = client.executeOpen(null, request, null);
             return response.getCode() == 200 || response.getCode() == 201;
         } catch (Exception e) {

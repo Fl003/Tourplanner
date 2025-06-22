@@ -191,7 +191,7 @@ public class LogModalController {
         }
 
         // Validate the totalDistance and totalTime to ensure they're numeric
-        if (!logModalViewModel.totalDistanceProperty().get().matches("\\d+(?:[.,]\\d{1,2})?(?:km)?") || !logModalViewModel.totalTimeProperty().get().matches("\\d+|\\d{1,2}(:\\d{1,2}){1,2}")) {
+        if (!logModalViewModel.totalDistanceProperty().get().matches("\\d+(?:[.,]\\d{1,2})?(?:km|m)?") || !logModalViewModel.totalTimeProperty().get().matches("\\d+|\\d{1,2}:\\d{2}|\\d{1,2}:\\d{2}:\\d{2}|\\d+h(?: \\d+min)?(?: \\d+sec)?|\\d+min(?: \\d+sec)?|\\d+sec|\\d+h|\\d+min")) {
             statusBar.setStyle("-fx-background-color: red;");
             statusMessage.setText(this.resources.getString("InvalidNumericValuesLog"));
             return false;

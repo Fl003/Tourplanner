@@ -110,7 +110,12 @@ public class TourListController {
             dialogStage.setMinHeight(251.0);
             dialogStage.setMinWidth(742.0);
             dialogStage.showAndWait();
-            tourListViewModel.loadTours();
+            // get last created tour
+            Tour tour = tourListViewModel.getLastCreatedTours();
+            if (tour == null)
+                tourListViewModel.loadTours();
+            else
+                tourListViewModel.reloadTour(tour.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,7 +133,7 @@ public class TourListController {
             dialogStage.setMinHeight(251.0);
             dialogStage.setMinWidth(742.0);
             dialogStage.showAndWait();
-            tourListViewModel.loadTours();
+            tourListViewModel.reloadTour(selectedTour.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }

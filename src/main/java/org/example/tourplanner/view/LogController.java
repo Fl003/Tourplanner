@@ -17,6 +17,7 @@ import org.example.tourplanner.FXMLDependencyInjection;
 import org.example.tourplanner.model.Log;
 import org.example.tourplanner.viewmodel.LogModalViewModel;
 import org.example.tourplanner.viewmodel.LogViewModel;
+import org.example.tourplanner.viewmodel.TourListViewModel;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ import java.util.Locale;
 public class LogController {
     private final LogViewModel logViewModel;
     private final LogModalViewModel logModalViewModel;
+    private final TourListViewModel tourListViewModel;
 
     @FXML
     public TableView logTable;
@@ -34,7 +36,7 @@ public class LogController {
     @FXML
     public TableColumn<Log, String> columnDifficulty;
     @FXML
-    public TableColumn<Log, Integer> columnTotalDistance;
+    public TableColumn<Log, Double> columnTotalDistance;
     @FXML
     public TableColumn<Log, Integer> columnTotalTime;
     @FXML
@@ -43,9 +45,10 @@ public class LogController {
     public TableColumn<Log, String> columnComment;
 
     // constructor
-    public LogController(LogViewModel logViewModel, LogModalViewModel logModalViewModel) {
+    public LogController(LogViewModel logViewModel, LogModalViewModel logModalViewModel, TourListViewModel tourListViewModel) {
         this.logViewModel = logViewModel;
         this.logModalViewModel = logModalViewModel;
+        this.tourListViewModel = tourListViewModel;
     }
 
     public void initialize() {
@@ -75,7 +78,7 @@ public class LogController {
 
         columnTotalDistance.setCellFactory(tc -> new TableCell<>() {
             @Override
-            protected void updateItem(Integer distance, boolean empty) {
+            protected void updateItem(Double distance, boolean empty) {
                 super.updateItem(distance, empty);
                 if (empty || distance == null)
                     setText(null);
@@ -204,6 +207,6 @@ public class LogController {
         dialogStage.setMinWidth(742.0);
         dialogStage.showAndWait();
         // refresh log table after closing Modal
-        logViewModel.setLogs(logViewModel.getSelectedTour());
+        tourListViewModel.reloadTour(logViewModel.getSelectedTour().getId());
     }
 }

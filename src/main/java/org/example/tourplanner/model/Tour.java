@@ -15,8 +15,11 @@ public class Tour {
     private final StringProperty description;
     private final DoubleProperty distance;
     private final DoubleProperty estimatedTime;
+    // computed attributes -> not saved in db
+    private final IntegerProperty popularity;
+    private final IntegerProperty childFriendliness;
 
-
+    // needed for new Tour, no id yet, no computed values
     public Tour(StringProperty name, StringProperty startingPoint, DoubleProperty startLat, DoubleProperty startLng, StringProperty destination, DoubleProperty destinationLat, DoubleProperty destinationLng, ObjectProperty<TransportType> transportType, StringProperty description, DoubleProperty distance, DoubleProperty estimatedTime) {
         this.id = 0L;
         this.name = name;
@@ -30,9 +33,11 @@ public class Tour {
         this.description = description;
         this.distance = distance;
         this.estimatedTime = estimatedTime;
+        this.popularity = new SimpleIntegerProperty(0);
+        this.childFriendliness = new SimpleIntegerProperty();
     }
 
-    public Tour(Long id, String name, String startingPoint, Double startLat, Double startLng, String destination, Double destinationLat, Double destinationLng, TransportType transportType, String description, Double distance, Double estimatedTime) {
+    public Tour(Long id, String name, String startingPoint, Double startLat, Double startLng, String destination, Double destinationLat, Double destinationLng, TransportType transportType, String description, Double distance, Double estimatedTime, Integer popularity, Integer childFriendliness) {
         this.id = id;
         this.name = new SimpleStringProperty(name);
         this.startingPoint = new SimpleStringProperty(startingPoint);
@@ -45,8 +50,11 @@ public class Tour {
         this.description = new SimpleStringProperty(description);
         this.distance = new SimpleDoubleProperty(distance);
         this.estimatedTime = new SimpleDoubleProperty(estimatedTime);
+        this.popularity = new SimpleIntegerProperty(popularity);
+        this.childFriendliness = new SimpleIntegerProperty(childFriendliness);
     }
 
+    // no id, no distance/estimatedTime, no computed values
     public Tour(String name, String startingPoint, Double startLat, Double startLng, String destination, Double destinationLat, Double destinationLng, TransportType transportType, String description) {
         this.id = 0L;
         this.name = new SimpleStringProperty(name);
@@ -60,6 +68,8 @@ public class Tour {
         this.description = new SimpleStringProperty(description);
         this.distance = new SimpleDoubleProperty(0);
         this.estimatedTime = new SimpleDoubleProperty(0);
+        this.popularity = new SimpleIntegerProperty(0);
+        this.childFriendliness = new SimpleIntegerProperty(0);
     }
 
     public Long getId() { return id; }
@@ -108,6 +118,10 @@ public class Tour {
         return estimatedTime.get();
     }
 
+    public int getPopularity() { return popularity.get(); }
+
+    public int getChildFriendliness() { return childFriendliness.get(); }
+
     public void setDistance(double distance) {
         this.distance.set(distance);
     }
@@ -115,6 +129,10 @@ public class Tour {
     public void setEstimatedTime(double estimatedTime) {
         this.distance.set(estimatedTime);
     }
+
+    public void setPopularity(int popularity) { this.popularity.set(popularity); }
+
+    public void setChildFriendliness(int childFriendliness) { this.childFriendliness.set(childFriendliness); }
 
     @Override
     public String toString() {
