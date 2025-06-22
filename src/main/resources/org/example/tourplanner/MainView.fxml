@@ -24,9 +24,8 @@
             <MenuItem mnemonicParsing="false" text="%Menu_Import_Tour"/>
             <MenuItem mnemonicParsing="false" text="%Menu_Export_Tour"/>
         </Menu>
-        <Menu mnemonicParsing="false" text="%Menu_Reports">
-            <MenuItem mnemonicParsing="false" text="%Menu_Tour_Report"/>
-            <MenuItem mnemonicParsing="false" text="%Menu_Summarize_Report"/>
+        <Menu mnemonicParsing="false" text="%Menu_Summarize_Report">
+            <MenuItem mnemonicParsing="false" text="%DownloadReport" onAction="#downloadPdf"/>
         </Menu>
     </MenuBar>
     <fx:include source="SearchBar.fxml"/>

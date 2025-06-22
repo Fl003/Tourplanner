@@ -44,7 +44,7 @@ public class ControllerFactory {
     //
     public Object create(Class<?> controllerClass) {
         if (controllerClass == MainController.class) {
-            return new MainController(tourModalViewModel);
+            return new MainController(tourModalViewModel, pdfService);
         } else if (controllerClass == SearchBarController.class) {
             return new SearchBarController(searchBarViewModel);
         } else if (controllerClass == TourListController.class) {

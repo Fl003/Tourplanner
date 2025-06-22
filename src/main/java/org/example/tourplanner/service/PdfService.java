@@ -27,4 +27,27 @@ public class PdfService {
             return null;
         }
     }
+
+    public byte[] getSummarizeReportPdf() {
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpGet request = new HttpGet(BASE_URL + "/download/report/");
+
+            System.out.println(request.getUri());
+
+            try (ClassicHttpResponse response = client.executeOpen(null, request, null)) {
+                if (response.getCode() == 200) {
+                    System.out.println("request successful");
+                    return response.getEntity().getContent().readAllBytes();
+                } else {
+                    System.err.println("Fehler beim Herunterladen der PDF: " +
+                            response.getCode() + " " + response.getReasonPhrase());
+                    return null;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Fehler beim PDF-Download: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
