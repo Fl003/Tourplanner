@@ -16,13 +16,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.tourplanner.FXMLDependencyInjection;
 import org.example.tourplanner.model.Tour;
+import org.example.tourplanner.service.PdfService;
 import org.example.tourplanner.service.TourService;
 import org.example.tourplanner.viewmodel.TourListViewModel;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Locale;
 
 public class TourListController {
@@ -31,11 +37,13 @@ public class TourListController {
 
     private final TourListViewModel tourListViewModel;
     private final TourService tourService;
+    private final PdfService pdfService;
     public Button newTour;
 
-    public TourListController(TourListViewModel tourListViewModel, TourService tourService) {
+    public TourListController(TourListViewModel tourListViewModel, TourService tourService, PdfService pdfService) {
         this.tourListViewModel = tourListViewModel;
         this.tourService = tourService;
+        this.pdfService = pdfService;
     }
 
     @FXML
@@ -54,31 +62,40 @@ public class TourListController {
                     private final Image imgDelete = new Image(getClass().getResourceAsStream("/org/example/tourplanner/icons/delete.png"), 15, 15, true, true);
                     private final Button deleteBtn = new Button();
                     private final Region spacer = new Region();
+                    private final Button downloadBtn = new Button();
+                    private final Image imgDownload = new Image(getClass().getResourceAsStream("/org/example/tourplanner/icons/download.png"), 15, 15, true, true);
 
                     {
+                        downloadBtn.setOnAction(event -> {
+                           Tour tour = getItem();
+                           if (tour != null)
+                               downloadPdf(tour.getId());
+                        });
+
                         editBtn.setOnAction(event -> {
                             Tour tour = getItem();
-                            if (tour != null) {
+                            if (tour != null)
                                 editBtn(tour);
-                            }
                         });
 
                         deleteBtn.setOnAction(event -> {
                             Tour tour = getItem();
-                            if (tour != null) {
+                            if (tour != null)
                                 deleteBtn(tour.getId());
-                            }
                         });
 
                         // styling
                         hbox.setAlignment(Pos.CENTER);
-                        HBox.setMargin(editBtn, new Insets(0, 5, 0, 20));
+                        HBox.setMargin(editBtn, new Insets(0, 5, 0, 0));
+                        HBox.setMargin(downloadBtn, new Insets(0, 5, 0, 20));
                         HBox.setHgrow(spacer, Priority.ALWAYS);
                         editBtn.setGraphic(new ImageView(imgEdit));
                         editBtn.setStyle("-fx-background-color: orange;");
                         deleteBtn.setGraphic(new ImageView(imgDelete));
                         deleteBtn.setStyle("-fx-background-color: darkred;");
-                        hbox.getChildren().addAll(nameLabel, spacer, editBtn, deleteBtn);
+                        downloadBtn.setGraphic(new ImageView(imgDownload));
+                        downloadBtn.setStyle("-fx-background-color: purple;");
+                        hbox.getChildren().addAll(nameLabel, spacer, downloadBtn , editBtn, deleteBtn);
                     }
 
                     @Override
@@ -144,7 +161,28 @@ public class TourListController {
     public void editBtn(Tour selectedTour){
         if(selectedTour == null) { return; }
         showTourModal(selectedTour);
-
     }
+
+    public void downloadPdf(Long tourId) {
+        byte[] pdfBytes = this.pdfService.getTourReportPdf(tourId);
+        if (pdfBytes != null) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("PDF speichern");
+            fileChooser.setInitialFileName("tour-report-" + tourId + ".pdf");
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("PDF Dateien", "*.pdf")
+            );
+
+            File file = fileChooser.showSaveDialog(null);
+            if (file != null) {
+                try {
+                    Files.write(file.toPath(), pdfBytes);
+                } catch (IOException e) {
+                    System.err.println("Fehler beim Speichern der PDF: " + e.getMessage());
+                }
+            }
+        }
+    }
+
 
 }
