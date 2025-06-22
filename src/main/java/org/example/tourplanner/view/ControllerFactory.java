@@ -2,12 +2,12 @@ package org.example.tourplanner.view;
 
 import org.example.tourplanner.service.DirectionsService;
 import org.example.tourplanner.service.GeocodeService;
+import org.example.tourplanner.service.LogService;
 import org.example.tourplanner.service.PdfService;
 import org.example.tourplanner.service.TourService;
 import org.example.tourplanner.viewmodel.*;
 
 public class ControllerFactory {
-    private final MainViewModel mainViewModel;
     private final SearchBarViewModel searchBarViewModel;
     private final TourListViewModel tourListViewModel;
     private final GeneralViewModel generalViewModel;
@@ -18,24 +18,25 @@ public class ControllerFactory {
 
     // Services
     private final TourService tourService;
+    private final LogService logService;
     private final GeocodeService geocodeService;
     private final DirectionsService directionsService;
     private final PdfService pdfService;
 
     public ControllerFactory() {
-        tourService = new TourService();
+        logService = new LogService();
+        tourService = new TourService(logService);
         geocodeService = new GeocodeService();
         directionsService = new DirectionsService();
         pdfService = new PdfService();
 
         searchBarViewModel = new SearchBarViewModel();
-        tourListViewModel = new TourListViewModel(tourService);
-        generalViewModel = new GeneralViewModel(tourListViewModel);
-        mapViewModel = new MapViewModel(tourListViewModel);
-        logViewModel = new LogViewModel(tourListViewModel);
-        mainViewModel = new MainViewModel();
-        tourModalViewModel = new TourModalViewModel();
-        logModalViewModel = new LogModalViewModel();
+        tourListViewModel = new TourListViewModel(tourService, logService);
+        generalViewModel = new GeneralViewModel(tourListViewModel, tourService);
+        mapViewModel = new MapViewModel(tourListViewModel, tourService);
+        logViewModel = new LogViewModel(tourListViewModel, logService, tourService);
+        tourModalViewModel = new TourModalViewModel(tourService, directionsService);
+        logModalViewModel = new LogModalViewModel(logService);
     }
 
     //
@@ -43,21 +44,21 @@ public class ControllerFactory {
     //
     public Object create(Class<?> controllerClass) {
         if (controllerClass == MainController.class) {
-            return new MainController(mainViewModel);
+            return new MainController(tourModalViewModel);
         } else if (controllerClass == SearchBarController.class) {
             return new SearchBarController(searchBarViewModel);
         } else if (controllerClass == TourListController.class) {
-            return new TourListController(tourListViewModel, tourService, pdfService);
+            return new TourListController(tourListViewModel, tourModalViewModel, pdfService);
         } else if (controllerClass == GeneralController.class) {
             return new GeneralController(generalViewModel);
         } else if (controllerClass == MapController.class) {
             return new MapController(mapViewModel, directionsService);
         } else if (controllerClass == LogController.class) {
-            return new LogController(logViewModel, tourListViewModel, logModalViewModel);
+            return new LogController(logViewModel, logModalViewModel, tourListViewModel);
         } else if (controllerClass == TourModalController.class) {
-            return new TourModalController(tourModalViewModel, tourListViewModel, tourService, directionsService);
+            return new TourModalController(tourModalViewModel);
         } else if (controllerClass == LogModalController.class) {
-            return new LogModalController(logModalViewModel, tourListViewModel);
+            return new LogModalController(logModalViewModel);
         } else if (controllerClass == AddressSelectionController.class) {
             return new AddressSelectionController(geocodeService);
         }

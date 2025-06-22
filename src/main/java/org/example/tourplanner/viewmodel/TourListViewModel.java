@@ -4,9 +4,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.tourplanner.dto.TourDto;
-import org.example.tourplanner.model.Log;
 import org.example.tourplanner.model.Tour;
-import org.example.tourplanner.model.TransportType;
+import org.example.tourplanner.service.LogService;
 import org.example.tourplanner.service.TourService;
 
 import java.util.ArrayList;
@@ -14,25 +13,10 @@ import java.util.List;
 
 public class TourListViewModel {
     private final TourService tourService;
-
-    public void deleteTour(Tour selectedItem) {
-        tourList.remove(selectedItem);
-        notifyListeners(null);
-    }
-
-    public void saveLog(Log newLog, Tour selectedTour) {
-        int index = tourList.indexOf(selectedTour);
-        for(int i = 0; i < tourList.get(index).getLogs().size(); i++) {
-            if(tourList.get(index).getLogs().get(i).equals(newLog)) {
-                tourList.get(index).getLogs().set(i, newLog);
-                return;
-            }
-        }
-        tourList.get(index).getLogs().add(newLog);
-    }
+    private final LogService logService;
 
     public interface SelectionChangedListener {
-        void onSelectionChanged(Tour tour);
+        void onSelectionChanged(Long tourId);
     }
 
     private List<SelectionChangedListener> listeners = new ArrayList<>();
@@ -40,10 +24,10 @@ public class TourListViewModel {
     private final ObservableList<Tour> tourList = FXCollections.observableArrayList();
 
     public ChangeListener<Tour> getChangeListener() {
-        return (observableValue, oldValue, newValue) -> notifyListeners(newValue);
+        return (observableValue, oldValue, newValue) -> notifyListeners(newValue.getId());
     }
 
-    private void notifyListeners(Tour newValue) {
+    private void notifyListeners(Long newValue) {
         for (var listener : listeners ) {
             listener.onSelectionChanged(newValue);
         }
@@ -53,8 +37,9 @@ public class TourListViewModel {
         listeners.add(listener);
     }
 
-    public TourListViewModel(TourService tourService) {
+    public TourListViewModel(TourService tourService, LogService logService) {
         this.tourService = tourService;
+        this.logService = logService;
 
         loadTours();
     }
@@ -63,32 +48,29 @@ public class TourListViewModel {
         tourList.add(tour);
     }
 
-    public void deleteLog(Log log, Tour tour) {
-        // search for tour and delete log from tour
-        int i = this.tourList.indexOf(tour);
-        this.tourList.get(i).removeLog(log);
+    public void deleteTour(Long tourId) {
+        tourService.deleteTour(tourId);
+        loadTours();
     }
 
     public void loadTours() {
         tourList.clear();
         List<TourDto> tours = this.tourService.getAllTours();
         for (TourDto tourDto : tours) {
-            Tour tour = new Tour(
-                    tourDto.getId(),
-                    tourDto.getName(),
-                    tourDto.getStartingPoint(),
-                    tourDto.getStartLat(),
-                    tourDto.getStartLng(),
-                    tourDto.getDestination(),
-                    tourDto.getDestinationLat(),
-                    tourDto.getDestinationLng(),
-                    TransportType.valueOf(tourDto.getTransportType()),
-                    tourDto.getDescription(),
-                    tourDto.getDistance(),
-                    tourDto.getDuration()
-            );
+            Tour tour = tourService.convertTourDtoToTour(tourDto);
             tourList.add(tour);
         }
+    }
+
+    public void reloadTour(Long tourId) {
+        loadTours();
+        notifyListeners(tourId);
+    }
+
+    public Tour getLastCreatedTours() {
+        TourDto tour = tourService.getLastCreatedTours();
+        if (tour == null) return null;
+        return tourService.convertTourDtoToTour(tour);
     }
 
     public ObservableList<Tour> getObservableTours() {

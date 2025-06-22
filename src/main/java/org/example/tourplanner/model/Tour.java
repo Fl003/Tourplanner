@@ -1,8 +1,6 @@
 package org.example.tourplanner.model;
 
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class Tour {
     private final Long id;
@@ -17,9 +15,11 @@ public class Tour {
     private final StringProperty description;
     private final DoubleProperty distance;
     private final DoubleProperty estimatedTime;
-    private ObservableList<Log> logs = FXCollections.observableArrayList();
+    // computed attributes -> not saved in db
+    private final IntegerProperty popularity;
+    private final IntegerProperty childFriendliness;
 
-
+    // needed for new Tour, no id yet, no computed values
     public Tour(StringProperty name, StringProperty startingPoint, DoubleProperty startLat, DoubleProperty startLng, StringProperty destination, DoubleProperty destinationLat, DoubleProperty destinationLng, ObjectProperty<TransportType> transportType, StringProperty description, DoubleProperty distance, DoubleProperty estimatedTime) {
         this.id = 0L;
         this.name = name;
@@ -33,9 +33,11 @@ public class Tour {
         this.description = description;
         this.distance = distance;
         this.estimatedTime = estimatedTime;
+        this.popularity = new SimpleIntegerProperty(0);
+        this.childFriendliness = new SimpleIntegerProperty();
     }
 
-    public Tour(Long id, String name, String startingPoint, Double startLat, Double startLng, String destination, Double destinationLat, Double destinationLng, TransportType transportType, String description, Double distance, Double estimatedTime) {
+    public Tour(Long id, String name, String startingPoint, Double startLat, Double startLng, String destination, Double destinationLat, Double destinationLng, TransportType transportType, String description, Double distance, Double estimatedTime, Integer popularity, Integer childFriendliness) {
         this.id = id;
         this.name = new SimpleStringProperty(name);
         this.startingPoint = new SimpleStringProperty(startingPoint);
@@ -48,8 +50,11 @@ public class Tour {
         this.description = new SimpleStringProperty(description);
         this.distance = new SimpleDoubleProperty(distance);
         this.estimatedTime = new SimpleDoubleProperty(estimatedTime);
+        this.popularity = new SimpleIntegerProperty(popularity);
+        this.childFriendliness = new SimpleIntegerProperty(childFriendliness);
     }
 
+    // no id, no distance/estimatedTime, no computed values
     public Tour(String name, String startingPoint, Double startLat, Double startLng, String destination, Double destinationLat, Double destinationLng, TransportType transportType, String description) {
         this.id = 0L;
         this.name = new SimpleStringProperty(name);
@@ -63,56 +68,26 @@ public class Tour {
         this.description = new SimpleStringProperty(description);
         this.distance = new SimpleDoubleProperty(0);
         this.estimatedTime = new SimpleDoubleProperty(0);
-    }
-
-    public void addLog(Log log) {
-        this.logs.add(log);
-    }
-
-    public void removeLog(Log log) {
-        this.logs.remove(log);
-    }
-
-    public void setLogs(ObservableList<Log> logs) {
-        this.logs = logs;
+        this.popularity = new SimpleIntegerProperty(0);
+        this.childFriendliness = new SimpleIntegerProperty(0);
     }
 
     public Long getId() { return id; }
 
-    public ObservableList<Log> getLogs() {
-        return logs;
-    }
-
     public String getStartingpoint() {
         return startingPoint.get();
-    }
-
-    public StringProperty startingPointProperty() {
-        return startingPoint;
     }
 
     public Double getStartLat() {
         return startLat.get();
     }
 
-    public DoubleProperty startLat() {
-        return startLat;
-    }
-
     public Double getStartLng() {
         return startLng.get();
     }
 
-    public DoubleProperty startLng() {
-        return startLat;
-    }
-
     public String getName() {
         return name.get();
-    }
-
-    public StringProperty nameProperty() {
-        return name;
     }
 
     public String getDestination() {
@@ -123,53 +98,29 @@ public class Tour {
         return destinationLat.get();
     }
 
-    public DoubleProperty destinationLat() {
-        return destinationLat;
-    }
-
     public Double getDestinationLng() {
         return destinationLng.get();
-    }
-
-    public DoubleProperty destinationLng() {
-        return destinationLng;
-    }
-
-    public StringProperty destinationProperty() {
-        return destination;
     }
 
     public TransportType getTransportType() {
         return transportType.get();
     }
 
-    public ObjectProperty<TransportType> transportTypeProperty() {
-        return transportType;
-    }
-
     public String getDescription() {
         return description.get();
-    }
-
-    public StringProperty descriptionProperty() {
-        return description;
     }
 
     public double getDistance() {
         return distance.get();
     }
 
-    public DoubleProperty distanceProperty() {
-        return distance;
-    }
-
     public double getEstimatedTime() {
         return estimatedTime.get();
     }
 
-    public DoubleProperty estimatedTimeProperty() {
-        return estimatedTime;
-    }
+    public int getPopularity() { return popularity.get(); }
+
+    public int getChildFriendliness() { return childFriendliness.get(); }
 
     public void setDistance(double distance) {
         this.distance.set(distance);
@@ -178,6 +129,10 @@ public class Tour {
     public void setEstimatedTime(double estimatedTime) {
         this.distance.set(estimatedTime);
     }
+
+    public void setPopularity(int popularity) { this.popularity.set(popularity); }
+
+    public void setChildFriendliness(int childFriendliness) { this.childFriendliness.set(childFriendliness); }
 
     @Override
     public String toString() {

@@ -2,7 +2,6 @@ package org.example.tourplanner.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -29,25 +28,29 @@ import org.example.tourplanner.viewmodel.TourListViewModel;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import org.example.tourplanner.viewmodel.TourModalViewModel;
+
 import java.util.Locale;
 
 public class TourListController {
     @FXML
     public ListView<Tour> tourList;
-
-    private final TourListViewModel tourListViewModel;
-    private final TourService tourService;
-    private final PdfService pdfService;
+    @FXML
     public Button newTour;
 
-    public TourListController(TourListViewModel tourListViewModel, TourService tourService, PdfService pdfService) {
+    private final TourModalViewModel tourModalViewModel;
+    private final TourListViewModel tourListViewModel;
+    private final PdfService pdfService;
+
+    public TourListController(TourListViewModel tourListViewModel, TourModalViewModel tourModalViewModel, PdfService pdfService) {
         this.tourListViewModel = tourListViewModel;
-        this.tourService = tourService;
+        this.tourModalViewModel = tourModalViewModel;
         this.pdfService = pdfService;
     }
 
     @FXML
     void initialize() {
+        // set tours in ListView
         tourList.setItems(tourListViewModel.getObservableTours());
         tourList.getSelectionModel().selectedItemProperty().addListener(tourListViewModel.getChangeListener());
 
@@ -116,6 +119,7 @@ public class TourListController {
 
     public void showTourModal(ActionEvent actionEvent) {
         try {
+            tourModalViewModel.clearTour();
             Stage dialogStage = new Stage();
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             Parent root = FXMLDependencyInjection.load("TourModal.fxml", Locale.GERMAN);
@@ -123,10 +127,13 @@ public class TourListController {
             dialogStage.setTitle("Create Tour");
             dialogStage.setMinHeight(251.0);
             dialogStage.setMinWidth(742.0);
-
             dialogStage.showAndWait();
-            // TODO: how to call function from other controller????
-            //MainController.showSuccess("message");
+            // get last created tour
+            Tour tour = tourListViewModel.getLastCreatedTours();
+            if (tour == null)
+                tourListViewModel.loadTours();
+            else
+                tourListViewModel.reloadTour(tour.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -134,28 +141,24 @@ public class TourListController {
 
     public void showTourModal(Tour selectedTour){
         try {
+            tourModalViewModel.setTour(selectedTour);
+
             Stage dialogStage = new Stage();
             dialogStage.initModality(Modality.APPLICATION_MODAL);
-
-            FXMLLoader loader = FXMLDependencyInjection.getLoader("TourModal.fxml", Locale.GERMAN);
-            Parent root = loader.load();
-
-            TourModalController controller = loader.getController();
-            controller.setTour(selectedTour);
-
+            Parent root = FXMLDependencyInjection.load("TourModal.fxml", Locale.GERMAN);
             dialogStage.setScene(new Scene(root));
-            dialogStage.setTitle(selectedTour == null ? "Create Tour" : "Edit Tour");
+            dialogStage.setTitle("Edit Tour");
             dialogStage.setMinHeight(251.0);
             dialogStage.setMinWidth(742.0);
             dialogStage.showAndWait();
+            tourListViewModel.reloadTour(selectedTour.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void deleteBtn(Long tourId) {
-        this.tourService.deleteTour(tourId);
-        this.tourListViewModel.loadTours();
+        this.tourListViewModel.deleteTour(tourId);
     }
 
     public void editBtn(Tour selectedTour){

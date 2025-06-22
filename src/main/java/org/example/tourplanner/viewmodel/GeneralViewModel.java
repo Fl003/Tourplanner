@@ -4,11 +4,15 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.example.tourplanner.dto.TourDto;
 import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.model.TransportType;
+import org.example.tourplanner.service.TourService;
 
 public class GeneralViewModel {
     private final ObservableList<String> transportTypes = FXCollections.observableArrayList();
+
+    private final TourService tourService;
 
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty startingPoint = new SimpleStringProperty();
@@ -18,22 +22,26 @@ public class GeneralViewModel {
     private final StringProperty description = new SimpleStringProperty();
     private final StringProperty distance = new SimpleStringProperty();
     private final StringProperty estimatedTime = new SimpleStringProperty();
+    private final IntegerProperty popularity = new SimpleIntegerProperty();
+    private final IntegerProperty childFriendliness = new SimpleIntegerProperty();
 
-    public GeneralViewModel(TourListViewModel tourListViewModel) {
+    public GeneralViewModel(TourListViewModel tourListViewModel, TourService tourService) {
+        this.tourService = tourService;
+
         tourListViewModel.addSelectionChangedListener(this::selectTour);
 
-        transportTypes.add(TransportType.CAR.toString());
-        transportTypes.add(TransportType.BUS.toString());
-        transportTypes.add(TransportType.FAHRRAD.toString());
-        transportTypes.add(TransportType.ZUFUSS.toString());
+        transportTypes.add(TransportType.Car.toString());
+        transportTypes.add(TransportType.Bus.toString());
+        transportTypes.add(TransportType.Bike.toString());
+        transportTypes.add(TransportType.Walking.toString());
     }
 
     public ObservableList<String> getTransportType() {
         return transportTypes;
     }
 
-    public void selectTour(Tour tour) {
-        if(tour == null){
+    public void selectTour(Long tourId) {
+        if(tourId == null){
             name.set("");
             startingPoint.set("");
             destination.set("");
@@ -41,8 +49,14 @@ public class GeneralViewModel {
             description.set("");
             distance.set("");
             estimatedTime.set("");
+            popularity.set(0);
+            childFriendliness.set(0);
             return;
         }
+
+        TourDto tourDto = tourService.getTourById(tourId);
+        Tour tour = tourService.convertTourDtoToTour(tourDto);
+
         name.set(tour.getName());
         startingPoint.set(tour.getStartingpoint());
         destination.set(tour.getDestination());
@@ -54,6 +68,8 @@ public class GeneralViewModel {
         int minutes = (int) Math.floor((tour.getEstimatedTime() - (hours * 3600)) / 60);
         int seconds = (int) Math.floor((tour.getEstimatedTime() - (minutes * 60) - (hours * 3600)));
         estimatedTime.set(hours + "h " + minutes + "min " + seconds + "sec");
+        popularity.set(tour.getPopularity());
+        childFriendliness.set(tour.getChildFriendliness());
     }
 
     public StringProperty nameProperty() {
@@ -81,4 +97,6 @@ public class GeneralViewModel {
         ));
         return transportTypeString;
     }
+    public IntegerProperty popularityProperty() { return popularity; }
+    public IntegerProperty childFriendlinessProperty() { return childFriendliness; }
 }

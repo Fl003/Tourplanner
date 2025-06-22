@@ -9,9 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import org.example.tourplanner.model.Log;
 import org.example.tourplanner.viewmodel.LogModalViewModel;
-import org.example.tourplanner.viewmodel.TourListViewModel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,12 +18,11 @@ import java.util.ResourceBundle;
 
 public class LogModalController {
     private final LogModalViewModel logModalViewModel;
-    private final TourListViewModel tourListViewModel;
 
     @FXML
     public Label modalTitle;
     @FXML
-    public TextField difficulty;
+    public ComboBox<String> difficulty;
     @FXML
     public TextField totalDistance;
     @FXML
@@ -58,11 +55,11 @@ public class LogModalController {
 
     private List<ImageView> stars = new ArrayList<>();
 
-    public LogModalController(LogModalViewModel logModalViewModel, TourListViewModel tourListViewModel) {
+    public LogModalController(LogModalViewModel logModalViewModel) {
         this.logModalViewModel = logModalViewModel;
-        this.tourListViewModel = tourListViewModel;
     }
 
+    @FXML
     public void initialize() {
         stars = List.of(star1, star2, star3, star4, star5);
         stars.forEach(button -> button.setOnMouseClicked(mouseEvent -> changeRating(button)));
@@ -103,28 +100,45 @@ public class LogModalController {
         logDate.valueProperty().bindBidirectional(logModalViewModel.dateProperty());
         logHour.textProperty().bindBidirectional(logModalViewModel.hourProperty());
         logMinute.textProperty().bindBidirectional(logModalViewModel.minuteProperty());
-        difficulty.textProperty().bindBidirectional(logModalViewModel.difficultyProperty());
         totalDistance.textProperty().bindBidirectional(logModalViewModel.totalDistanceProperty());
         totalTime.textProperty().bindBidirectional(logModalViewModel.totalTimeProperty());
         comment.textProperty().bindBidirectional(logModalViewModel.commentProperty());
-        // only for editing logs
-        if (logModalViewModel.isCreate()) {
+
+        // change Heading and change Rating
+        if (logModalViewModel.getId() == null) {
             modalTitle.setText(this.resources.getString("Log_Create"));
         } else {
             modalTitle.setText(this.resources.getString("Log_Modify"));
             changeRating(stars.get(logModalViewModel.ratingProperty().get() - 1));
         }
+
+        // set difficulty combobox items
+        difficulty.setItems(this.logModalViewModel.getDifficulties());
+
+        // if editing -> set difficulty otherwise select first one
+        if (logModalViewModel.difficultyProperty().get() != null)
+            difficulty.setValue(logModalViewModel.difficultyProperty().get());
+        else
+            difficulty.getSelectionModel().selectFirst();
+
+        difficulty.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            logModalViewModel.difficultyProperty().set(newValue);
+        });
     }
 
     public void changeRating(ImageView button) {
+        // template stars
         Image outlineStar = new Image(getClass().getResourceAsStream("/org/example/tourplanner/icons/star.png"));
         Image filledStar = new Image(getClass().getResourceAsStream("/org/example/tourplanner/icons/star_yellow.png"));
 
+        // button id = star1, star2, star3, ...
         String id = button.getId();
+        // delete star, return number
         int selectedRating = Integer.parseInt(id.substring(4, 5));
         logModalViewModel.setRating(selectedRating);
 
         boolean filled = true;
+        // set filled star until id equals the starId, afterwards only outlined stars
         for (ImageView star : stars) {
             if (filled)
                 star.setImage(filledStar);
@@ -135,6 +149,7 @@ public class LogModalController {
         }
     }
 
+    // function takes min and max and ensures that input is between these two
     private void addNumericConstraint(TextField textField, int min, int max) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || newValue.isEmpty()) return;
@@ -150,52 +165,9 @@ public class LogModalController {
     }
 
     public void saveLog(ActionEvent actionEvent) {
-        if(!validInput()) { return; }
-        // save or modify?
-        Log newLog = new Log();
-        if (!logModalViewModel.isCreate())
-            newLog = logModalViewModel.getCurrentLog();
+        if (!validInput()) return;
 
-        newLog.setDate(logModalViewModel.dateProperty().get());
-        newLog.setHour(Integer.parseInt(logModalViewModel.hourProperty().get()));
-        newLog.setMinute(Integer.parseInt(logModalViewModel.minuteProperty().get()));
-        newLog.setComment(logModalViewModel.commentProperty().get());
-        newLog.setDifficulty(logModalViewModel.difficultyProperty().get());
-
-        String distanceString = logModalViewModel.totalDistanceProperty().get();
-        distanceString = distanceString.replace(",", ".").replace(" ", "");
-        double distance;
-        if (distanceString.endsWith("km") || distanceString.contains(".")) {
-            distanceString = distanceString.replace("km", "");
-            distance = Double.parseDouble(distanceString) * 1000;
-        } else
-            distance = Double.parseDouble(distanceString);
-        newLog.setTotalDistance((int) distance);
-
-        String timeString = logModalViewModel.totalTimeProperty().get();
-        String[] timeParts = timeString.split(":");
-        int hours = 0;
-        int minutes = 0;
-        int seconds = 0;
-        if (timeParts.length == 1) {
-            // Format is ss (seconds only)
-            seconds = Integer.parseInt(timeParts[0]);
-        }
-        if (timeParts.length == 2) {
-            // Format is mm:ss (minutes and seconds only)
-            minutes = Integer.parseInt(timeParts[0]);
-            seconds = Integer.parseInt(timeParts[1]);
-        } else if (timeParts.length == 3) {
-            // Format is HH:mm:ss (hours, minutes, seconds)
-            hours = Integer.parseInt(timeParts[0]);
-            minutes = Integer.parseInt(timeParts[1]);
-            seconds = Integer.parseInt(timeParts[2]);
-        }
-        int totalTimeInSeconds = hours * 3600 + minutes * 60 + seconds;
-        newLog.setTotalTime(totalTimeInSeconds);
-        newLog.setRating(logModalViewModel.ratingProperty().get());
-
-        tourListViewModel.saveLog(newLog, logModalViewModel.getSelectedTour());
+        logModalViewModel.saveLog();
 
         // close the modal
         Node source = (Node) actionEvent.getSource();
@@ -205,7 +177,7 @@ public class LogModalController {
 
     private boolean validInput() {
         // Check if the required fields are empty
-        if (logModalViewModel.dateProperty().get() == null || logModalViewModel.hourProperty().get().isEmpty() || logModalViewModel.minuteProperty().get().isEmpty() || logModalViewModel.commentProperty().get().isEmpty() || logModalViewModel.difficultyProperty().get().isEmpty() || logModalViewModel.totalDistanceProperty().get().isEmpty() || logModalViewModel.totalTimeProperty().get().isEmpty()) {
+        if (logModalViewModel.dateProperty().get() == null || logModalViewModel.hourProperty().get().isEmpty() || logModalViewModel.minuteProperty().get().isEmpty() || logModalViewModel.commentProperty().get().isEmpty() || logModalViewModel.totalDistanceProperty().get().isEmpty() || logModalViewModel.totalTimeProperty().get().isEmpty()) {
             statusBar.setStyle("-fx-background-color: red;");
             statusMessage.setText(this.resources.getString("BlankField"));
             return false;
@@ -219,7 +191,7 @@ public class LogModalController {
         }
 
         // Validate the totalDistance and totalTime to ensure they're numeric
-        if (!logModalViewModel.totalDistanceProperty().get().matches("\\d+(?:[.,]\\d{1,2})?(?:km)?") || !logModalViewModel.totalTimeProperty().get().matches("\\d+|\\d{1,2}(:\\d{1,2}){1,2}")) {
+        if (!logModalViewModel.totalDistanceProperty().get().matches("\\d+(?:[.,]\\d{1,2})?(?:km|m)?") || !logModalViewModel.totalTimeProperty().get().matches("\\d+|\\d{1,2}:\\d{2}|\\d{1,2}:\\d{2}:\\d{2}|\\d+h(?: \\d+min)?(?: \\d+sec)?|\\d+min(?: \\d+sec)?|\\d+sec|\\d+h|\\d+min")) {
             statusBar.setStyle("-fx-background-color: red;");
             statusMessage.setText(this.resources.getString("InvalidNumericValuesLog"));
             return false;
