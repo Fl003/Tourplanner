@@ -30,13 +30,13 @@ public class ControllerFactory {
         directionsService = new DirectionsService();
         pdfService = new PdfService();
 
-        searchBarViewModel = new SearchBarViewModel();
-        tourListViewModel = new TourListViewModel(tourService, logService);
+        tourListViewModel = new TourListViewModel(tourService);
         generalViewModel = new GeneralViewModel(tourListViewModel, tourService);
         mapViewModel = new MapViewModel(tourListViewModel, tourService);
         logViewModel = new LogViewModel(tourListViewModel, logService, tourService);
         tourModalViewModel = new TourModalViewModel(tourService, directionsService);
         logModalViewModel = new LogModalViewModel(logService);
+        searchBarViewModel = new SearchBarViewModel(tourListViewModel, tourService);
     }
 
     //

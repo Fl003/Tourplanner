@@ -18,6 +18,7 @@ import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.model.TransportType;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TourService {
@@ -196,5 +197,46 @@ public class TourService {
 
         double avg = points / logs.size();
         return (int) Math.round(avg / 6 * 5);
+    }
+
+    public List<Tour> searchAllToursForString(String searchString) {
+        List<Tour> filteredTours = new ArrayList<>();
+        List<TourDto> tourDtos = getAllTours();
+        for (TourDto tourDto : tourDtos) {
+            Tour tour = convertTourDtoToTour(tourDto);
+            if (searchInTour(tour, searchString)) {
+                filteredTours.add(tour);
+                continue;
+            }
+            List<LogDto> logs = logService.getAllLogsForTourId(tourDto.getId());
+            if (!logs.isEmpty()) {
+                if (logService.searchInLogs(logs, searchString)) {
+                    filteredTours.add(tour);
+                }
+            }
+        }
+        return filteredTours;
+    }
+
+    private boolean searchInTour(Tour tour, String searchString) {
+        if (tour.getName().contains(searchString)) return true;
+        if (tour.getDescription().contains(searchString)) return true;
+        if (tour.getDestination().contains(searchString)) return true;
+        // if (tour.getDestinationLat().toString().contains(searchString)) return true;
+        // if (tour.getDestinationLng().toString().contains(searchString)) return true;
+        if (tour.getStartingpoint().contains(searchString)) return true;
+        // if (tour.getStartLat().toString().contains(searchString)) return true;
+        // if (tour.getStartLng().toString().contains(searchString)) return true;
+        if (tour.getTransportType().toString().contains(searchString)) return true;
+        String distanceString = tour.getDistance() / 1000 + "km";
+        if (distanceString.contains(searchString)) return true;
+        int hours = (int) Math.floor(tour.getEstimatedTime() / 3600);
+        int minutes = (int) Math.floor((tour.getEstimatedTime() - (hours * 3600)) / 60);
+        int seconds = (int) Math.floor((tour.getEstimatedTime() - (minutes * 60) - (hours * 3600)));
+        String estimatedTime = hours + "h " + minutes + "min " + seconds + "sec";
+        if (estimatedTime.contains(searchString)) return true;
+        if (String.valueOf(tour.getPopularity()).contains(searchString)) return true;
+        if (String.valueOf(tour.getChildFriendliness()).contains(searchString)) return true;
+        return false;
     }
 }

@@ -3,16 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.tourplanner.view.SearchBarController"
-      prefHeight="26.0" prefWidth="200.0">
+<HBox prefHeight="26.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.view.SearchBarController">
     <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-        <TextField fx:id="SearchBar" prefHeight="26.0" prefWidth="969.0" promptText="%SearchText"
-                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="26.0"
-                   AnchorPane.topAnchor="0.0"/>
-        <Button mnemonicParsing="false" text="🔎" textFill="WHITE"
-                AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-                onAction="#onSearchButton"/>
+        <TextField fx:id="searchBar" prefHeight="26.0" prefWidth="140.0" promptText="%SearchText" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0" />
+        <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#onSearchButton" prefHeight="26.0" prefWidth="60.0" text="Search" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
     </AnchorPane>
 </HBox>

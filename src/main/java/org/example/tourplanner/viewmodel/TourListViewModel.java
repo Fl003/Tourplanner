@@ -13,7 +13,6 @@ import java.util.List;
 
 public class TourListViewModel {
     private final TourService tourService;
-    private final LogService logService;
 
     public interface SelectionChangedListener {
         void onSelectionChanged(Long tourId);
@@ -24,7 +23,10 @@ public class TourListViewModel {
     private final ObservableList<Tour> tourList = FXCollections.observableArrayList();
 
     public ChangeListener<Tour> getChangeListener() {
-        return (observableValue, oldValue, newValue) -> notifyListeners(newValue.getId());
+        return (observableValue, oldValue, newValue) -> {
+            if (newValue != null)
+                notifyListeners(newValue.getId());
+        };
     }
 
     private void notifyListeners(Long newValue) {
@@ -37,9 +39,8 @@ public class TourListViewModel {
         listeners.add(listener);
     }
 
-    public TourListViewModel(TourService tourService, LogService logService) {
+    public TourListViewModel(TourService tourService) {
         this.tourService = tourService;
-        this.logService = logService;
 
         loadTours();
     }
@@ -71,6 +72,11 @@ public class TourListViewModel {
         TourDto tour = tourService.getLastCreatedTours();
         if (tour == null) return null;
         return tourService.convertTourDtoToTour(tour);
+    }
+
+    public void setFilteredTours(List<Tour> filteredTours) {
+        tourList.clear();
+        tourList.addAll(filteredTours);
     }
 
     public ObservableList<Tour> getObservableTours() {
