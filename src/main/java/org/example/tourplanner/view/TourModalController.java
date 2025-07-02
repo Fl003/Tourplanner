@@ -68,7 +68,7 @@ public class TourModalController {
             return false;
         }
 
-        if(!name.getText().matches("[a-zA-ZäöüÄÖÜß ]+")){
+        if(!name.getText().matches("[a-zA-ZäöüÄÖÜß0-9 .,;:!?'\"()\\-_/]+")){
             statusBar.setStyle("-fx-background-color: red;");
             statusMessage.setText(this.resources.getString("OnlyLettersTour"));
             return false;
