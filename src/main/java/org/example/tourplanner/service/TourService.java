@@ -16,12 +16,15 @@ import org.example.tourplanner.dto.LogDto;
 import org.example.tourplanner.dto.TourDto;
 import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.model.TransportType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TourService {
+    private static final Logger logger = LogManager.getLogger(TourService.class);
     private static final String BASE_URL = "http://localhost:8080";
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -34,19 +37,21 @@ public class TourService {
     public List<TourDto> getAllTours() {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(BASE_URL + "/tours");
+            logger.info("send request for receiving tours");
             ClassicHttpResponse response = client.executeOpen(null, request, null);
 
             if (response.getCode() == 200) {
                 String json = EntityUtils.toString(response.getEntity());
-
+                logger.info("successful request");
                 if (json != null) {
                     return mapper.readValue(json, new TypeReference<>() {});
                 }
             } else {
-                System.err.println(response.getCode() + " " + response.getReasonPhrase());
+                logger.warn("tour-call failed");
+                //System.err.println(response.getCode() + " " + response.getReasonPhrase());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+                logger.error("failed to get tours", e);
         }
         return List.of();
     }
@@ -54,19 +59,19 @@ public class TourService {
     public TourDto getTourById(Long tourId) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(BASE_URL + "/tour/" + tourId);
+            logger.info("send request for receiving tour by id {}", tourId);
             ClassicHttpResponse response = client.executeOpen(null, request, null);
 
             if (response.getCode() == 200) {
                 String json = EntityUtils.toString(response.getEntity());
-
-                if (json != null) {
+                logger.info("successful request");
                     return mapper.readValue(json, new TypeReference<>() {});
-                }
             } else {
-                System.err.println(response.getCode() + " " + response.getReasonPhrase());
+                //System.err.println(response.getCode() + " " + response.getReasonPhrase());
+                logger.warn("failed tour-call");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("failed to get tour by id {}", tourId, e);
         }
         return null;
     }
@@ -74,19 +79,19 @@ public class TourService {
     public TourDto getLastCreatedTours() {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(BASE_URL + "/tour/latest");
+            logger.info("send request for receiving tour last created");
             ClassicHttpResponse response = client.executeOpen(null, request, null);
 
             if (response.getCode() == 200) {
                 String json = EntityUtils.toString(response.getEntity());
-
-                if (json != null) {
+                logger.info("successful request");
                     return mapper.readValue(json, new TypeReference<>() {});
-                }
             } else {
-                System.err.println(response.getCode() + " " + response.getReasonPhrase());
+                //System.err.println(response.getCode() + " " + response.getReasonPhrase());
+                logger.warn("failed getLastcreatedTour-calls");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("failed to get tour last created", e);
         }
         return null;
     }
@@ -94,6 +99,7 @@ public class TourService {
     public boolean saveTour(TourDto tour) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPost request = new HttpPost(BASE_URL + "/tour");
+            logger.info("send post request for saving tour {}", tour);
             String json = mapper.writeValueAsString(tour);
 
             request.setEntity(EntityBuilder.create()
@@ -104,7 +110,7 @@ public class TourService {
             ClassicHttpResponse response = client.executeOpen(null, request, null);
             return response.getCode() == 200 || response.getCode() == 201;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("failed to save tour", e);
             return false;
         }
     }
@@ -112,6 +118,7 @@ public class TourService {
     public boolean updateTour(TourDto tour) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPut request = new HttpPut(BASE_URL + "/tour");
+            logger.info("send post request for updating tour {}", tour);
             String json = mapper.writeValueAsString(tour);
 
             request.setEntity(EntityBuilder.create()
@@ -122,7 +129,7 @@ public class TourService {
             ClassicHttpResponse response = client.executeOpen(null, request, null);
             return response.getCode() == 200 || response.getCode() == 201;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("failed to update tour", e);
             return false;
         }
     }
@@ -130,11 +137,11 @@ public class TourService {
     public boolean deleteTour(Long tourId) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpDelete request = new HttpDelete(BASE_URL + "/tour/" + tourId);
-
+            logger.info("send delete request for receiving tour by id {}", tourId);
             ClassicHttpResponse response = client.executeOpen(null, request, null);
             return response.getCode() == 200 || response.getCode() == 204;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("failed to delete tour by id {}", tourId, e);
             return false;
         }
     }

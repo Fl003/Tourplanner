@@ -18,6 +18,8 @@ import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.example.tourplanner.dto.LogDto;
 import org.example.tourplanner.model.Difficulty;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
@@ -28,25 +30,25 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class LogService {
+    private static final Logger logger = LogManager.getLogger(LogService.class);
     private static final String BASE_URL = "http://localhost:8080";
     private final ObjectMapper mapper = new ObjectMapper();
 
     public List<LogDto> getAllLogsForTourId(Long tourId) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(BASE_URL + "/logs?tourId=" + tourId);
+            logger.info("send request {}", request);
             ClassicHttpResponse response = client.executeOpen(null, request, null);
 
             if (response.getCode() == 200) {
                 String json = EntityUtils.toString(response.getEntity());
-
-                if (json != null) {
+                logger.info("Logs successfully requested for id {}", tourId);
                     return mapper.readValue(json, new TypeReference<>() {});
-                }
             } else {
-                System.err.println(response.getCode() + " " + response.getReasonPhrase());
+                logger.warn("log-call failed {}", response);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed to get logs", e);
         }
         return List.of();
     }
@@ -61,10 +63,13 @@ public class LogService {
                     .setContentType(ContentType.create("application/json", StandardCharsets.UTF_8))
                     .build());
 
+            logger.info("send request for saving a log {}", request);
             ClassicHttpResponse response = client.executeOpen(null, request, null);
-            return response.getCode() == 200 || response.getCode() == 201;
+            boolean success = response.getCode() == 200 || response.getCode() == 201;
+            logger.info("Log saved {}", success ? "success" : "failed with HTTP" + response.getCode());
+            return success;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed to save log", e);
             return false;
         }
     }
@@ -79,10 +84,13 @@ public class LogService {
                     .setContentType(ContentType.create("application/json", StandardCharsets.UTF_8))
                     .build());
 
+            logger.info("send request for updating a log");
             ClassicHttpResponse response = client.executeOpen(null, request, null);
-            return response.getCode() == 200 || response.getCode() == 201;
+            boolean success = response.getCode() == 200 || response.getCode() == 201;
+            logger.info("Log update: {}", success ? "success" : "failed with HTTP " + response.getCode());
+            return success;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed to update log", e);
             return false;
         }
     }
@@ -90,16 +98,18 @@ public class LogService {
     public boolean deleteLog(Long logId) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpDelete request = new HttpDelete(BASE_URL + "/log/" + logId);
-
+            logger.info("send request for deleting a log");
             ClassicHttpResponse response = client.executeOpen(null, request, null);
+            logger.info("Log delete {}", logId);
             return response.getCode() == 200 || response.getCode() == 204;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed to delete log", e);
             return false;
         }
     }
 
     public boolean searchInLogs(List<LogDto> logs, String searchString) {
+        logger.debug("search for ... in logs {}", searchString);
         for (LogDto log : logs) {
             LocalDateTime dateTime = log.getDatetime().toLocalDateTime();
             LocalDate date = dateTime.toLocalDate();

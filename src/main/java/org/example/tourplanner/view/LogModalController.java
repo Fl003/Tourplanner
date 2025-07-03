@@ -177,7 +177,7 @@ public class LogModalController {
 
     private boolean validInput() {
         // Check if the required fields are empty
-        if (logModalViewModel.dateProperty().get() == null || logModalViewModel.hourProperty().get().isEmpty() || logModalViewModel.minuteProperty().get().isEmpty() || logModalViewModel.commentProperty().get().isEmpty() || logModalViewModel.totalDistanceProperty().get().isEmpty() || logModalViewModel.totalTimeProperty().get().isEmpty()) {
+        if (logModalViewModel.dateProperty().get() == null || logModalViewModel.hourProperty().isEmpty().get() || logModalViewModel.minuteProperty().isEmpty().get()|| logModalViewModel.commentProperty().isEmpty().get() || logModalViewModel.totalDistanceProperty().isEmpty().get() || logModalViewModel.totalTimeProperty().isEmpty().get()) {
             statusBar.setStyle("-fx-background-color: red;");
             statusMessage.setText(this.resources.getString("BlankField"));
             return false;

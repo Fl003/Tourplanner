@@ -24,6 +24,8 @@ import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.service.PdfService;
 import org.example.tourplanner.service.TourService;
 import org.example.tourplanner.viewmodel.TourListViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +35,7 @@ import org.example.tourplanner.viewmodel.TourModalViewModel;
 import java.util.Locale;
 
 public class TourListController {
+    private static final Logger logger = LogManager.getLogger(TourListController.class);
     @FXML
     public ListView<Tour> tourList;
     @FXML
@@ -181,7 +184,7 @@ public class TourListController {
                 try {
                     Files.write(file.toPath(), pdfBytes);
                 } catch (IOException e) {
-                    System.err.println("Fehler beim Speichern der PDF: " + e.getMessage());
+                    logger.error("Saving of PDF not successful "+ e.getMessage());
                 }
             }
         }

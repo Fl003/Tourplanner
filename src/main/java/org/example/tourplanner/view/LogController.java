@@ -18,6 +18,8 @@ import org.example.tourplanner.model.Log;
 import org.example.tourplanner.viewmodel.LogModalViewModel;
 import org.example.tourplanner.viewmodel.LogViewModel;
 import org.example.tourplanner.viewmodel.TourListViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -25,8 +27,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class LogController {
-    private final LogViewModel logViewModel;
-    private final LogModalViewModel logModalViewModel;
+    private static final Logger logger = LogManager.getLogger(LogController.class);
+    public LogViewModel logViewModel;
+    public LogModalViewModel logModalViewModel;
     private final TourListViewModel tourListViewModel;
 
     @FXML
@@ -153,6 +156,7 @@ public class LogController {
                     logModalViewModel.setSelectedTour(logViewModel.getSelectedTour());
                     try {
                         showLogModal();
+                        logger.info("showlogmodal initiated");
                     } catch(Exception e) {
                         e.printStackTrace();
                     }

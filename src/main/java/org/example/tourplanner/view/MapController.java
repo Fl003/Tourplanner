@@ -7,11 +7,14 @@ import javafx.scene.web.WebView;
 import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.service.DirectionsService;
 import org.example.tourplanner.viewmodel.MapViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
 import java.util.Locale;
 
 public class MapController {
+    private static final Logger logger = LogManager.getLogger(MapController.class);
     private final MapViewModel mapViewModel;
     private final DirectionsService directionsService;
 
@@ -29,7 +32,7 @@ public class MapController {
         if (leafletUrl != null) {
             map.getEngine().load(leafletUrl.toExternalForm());
         } else {
-            System.err.println("AddressSelection.html not found!");
+            logger.error("AdressSelection.html not found");
         }
 
         mapViewModel.selectedTourProperty().addListener((obs, oldTour, selectedTour) -> {

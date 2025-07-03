@@ -72,6 +72,24 @@ public class Tour {
         this.childFriendliness = new SimpleIntegerProperty(0);
     }
 
+    public Tour(Long id, StringProperty name, StringProperty startingPoint, DoubleProperty startLat, DoubleProperty startLng, StringProperty destination, DoubleProperty destinationLat, DoubleProperty destinationLng, ObjectProperty<TransportType> transportType, StringProperty description, DoubleProperty distance, DoubleProperty estimatedTime, IntegerProperty popularity, IntegerProperty childFriendliness) {
+
+        this.id = id;
+        this.name = name;
+        this.startingPoint = startingPoint;
+        this.startLat = startLat;
+        this.startLng = startLng;
+        this.destination = destination;
+        this.destinationLat = destinationLat;
+        this.destinationLng = destinationLng;
+        this.transportType = transportType;
+        this.description = description;
+        this.distance = distance;
+        this.estimatedTime = estimatedTime;
+        this.popularity = popularity;
+        this.childFriendliness = childFriendliness;
+    }
+
     public Long getId() { return id; }
 
     public String getStartingpoint() {

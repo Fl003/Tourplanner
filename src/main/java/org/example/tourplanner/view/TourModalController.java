@@ -41,7 +41,7 @@ public class TourModalController {
     @FXML
     public Label statusMessage;
     @FXML
-    private ResourceBundle resources;
+    public ResourceBundle resources;
 
     public TourModalController(TourModalViewModel tourModalViewModel) {
         this.tourModalViewModel = tourModalViewModel;
@@ -60,7 +60,7 @@ public class TourModalController {
         stage.close();
     }
 
-    private boolean validInput() {
+    public boolean validInput() {
         //validation
         if(name.getText().isEmpty() || startingPoint.getText().isEmpty() || destination.getText().isEmpty() || description.getText().isEmpty() || transportType.getValue() == null) {
             statusBar.setStyle("-fx-background-color: red;");
@@ -77,7 +77,7 @@ public class TourModalController {
     }
 
     @FXML
-    void initialize() {
+    public void initialize() {
         // set items in combobox
         transportType.setItems(this.tourModalViewModel.getTransportTypes());
         // if edit, set transportType otherwise select first

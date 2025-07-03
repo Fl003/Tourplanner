@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import org.example.tourplanner.FXMLDependencyInjection;
 import org.example.tourplanner.service.PdfService;
 import org.example.tourplanner.viewmodel.TourModalViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +26,7 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
-
+    private static final Logger logger = LogManager.getLogger(MainController.class);
     private final TourModalViewModel tourModalViewModel;
     private final PdfService pdfService;
 
@@ -47,10 +49,10 @@ public class MainController implements Initializable {
     }
 
     public void downloadPdf(ActionEvent actionEvent) {
-        System.out.println("Download PDF");
+        logger.info("download Pdf");
 
         byte[] pdfBytes = this.pdfService.getSummarizeReportPdf();
-        System.out.println("got pdf");
+        logger.info("got pdf");
         if (pdfBytes != null) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("PDF speichern");
@@ -64,7 +66,7 @@ public class MainController implements Initializable {
                 try {
                     Files.write(file.toPath(), pdfBytes);
                 } catch (IOException e) {
-                    System.err.println("Fehler beim Speichern der PDF: " + e.getMessage());
+                    logger.error("Error with saving pdf {}", e.getMessage());
                 }
             }
         }
