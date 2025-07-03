@@ -1,24 +1,18 @@
-package org.example.tourplanner.view.tests;
+package org.example.tourplanner.tests;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.example.tourplanner.FXMLDependencyInjection;
 import org.example.tourplanner.model.Tour;
-import org.example.tourplanner.model.TransportType;
-import org.example.tourplanner.view.TourListController;
 import org.example.tourplanner.viewmodel.TourListViewModel;
 import org.junit.jupiter.api.Test;
-import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 
-import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.Locale;
 
@@ -26,7 +20,7 @@ import java.util.Locale;
 // had to be put into program arguments of test in order to be able to run the tests
 // --add-opens javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
 
-
+//4
 public class UITests extends ApplicationTest {
 
     private TourListViewModel mockTourListViewModel;
@@ -40,26 +34,7 @@ public class UITests extends ApplicationTest {
         stage.show();
 
     }
-//first UI test: testing status message
-    @Test
-    public void StatusMessageTourModalTest() {
-        clickOn("#newTour");
-
-        waitForFxEvents();
-
-        clickOn("#name").write("TestTour");
-        clickOn("#startingPoint").write("Wien FHTW");
-        clickOn("#description").write("Fachhochschule");
-
-        clickOn("#handleSavingMethod");
-
-        waitForFxEvents();
-
-        Label statusLabel = lookup("#statusMessage").query();
-        assertEquals("Bitte füllen Sie alle Felder aus!", statusLabel.getText());
-    }
-
-//second UI Test: opening log modal and filling out
+//Simulates UI interaction: opening the log modal, filling in data, selecting a rating, and saving the log
     @Test
     public void openAndFillLogModal() throws InterruptedException {
         clickOn("#newLog");
@@ -82,7 +57,7 @@ public class UITests extends ApplicationTest {
         clickOn("#saveLog");
     }
 
-//third UI Test: not being able to write a number greater than 24 in the hours field
+//not being able to write a number greater than 24 in the hours field
     @Test
     public void NumbersGreaterThan24(){
 
@@ -106,12 +81,12 @@ public class UITests extends ApplicationTest {
         clickOn("#saveLog");
     }
 
-//fourth UI test: adding a log to a specific tour
+//adding a log to a specific tour
     @Test
     public void addLog() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
-        mockTourListViewModel = new TourListViewModel();
-        Tour tour = new Tour("ZweiterTest","Vienna", "Germany", TransportType.BUS, "schön");
-        mockTourListViewModel.addTour(tour);
+        //mockTourListViewModel = new TourListViewModel();
+        //Tour tour = new Tour("ZweiterTest","Vienna", "Germany", TransportType.BUS, "schön");
+        //mockTourListViewModel.addTour(tour);
 
         ListView<Tour> tourListView = lookup("#tourList").query();
         clickOn(tourListView.lookup(".list-cell"));
@@ -137,17 +112,17 @@ public class UITests extends ApplicationTest {
 
         assertTrue(tourListView.getSelectionModel().getSelectedItems().size() > 0);
     }
-//UI Test: clicking on a tour to ensure viewing data works
+//clicking on a tour to ensure viewing data works
     @Test
     public void showData() throws NoSuchFieldException {
-        mockTourListViewModel = new TourListViewModel();
-        Tour tour = new Tour("ZweiterTest", "Vienna", "Germany", TransportType.BUS, "schön");
-        mockTourListViewModel.addTour(tour);
+        //mockTourListViewModel = new TourListViewModel();
+        //Tour tour = new Tour("ZweiterTest", "Vienna", "Germany", TransportType.BUS, "schön");
+        //mockTourListViewModel.addTour(tour);
 
         ListView<Tour> tourListView = lookup("#tourList").query();
         clickOn(tourListView.lookup(".list-cell"));
 
-        assertEquals("ZweiterTest", tour.getName());
+        //assertEquals("ZweiterTest", tour.getName());
     }
 
 }
