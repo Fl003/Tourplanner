@@ -11,8 +11,10 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.example.tourplanner.FXMLDependencyInjection;
 import org.example.tourplanner.model.Tour;
+import org.example.tourplanner.service.ImportExportService;
 import org.example.tourplanner.service.PdfService;
 import org.example.tourplanner.service.TourService;
+import org.example.tourplanner.viewmodel.TourListViewModel;
 import org.example.tourplanner.viewmodel.TourModalViewModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,11 +34,15 @@ public class MainController implements Initializable {
     }
     private static final Logger logger = LogManager.getLogger(MainController.class);
     private final TourModalViewModel tourModalViewModel;
+    private final TourListViewModel tourListViewModel;
     private final PdfService pdfService;
+    private final ImportExportService importExportService;
 
-    public MainController(TourModalViewModel tourModalViewModel, PdfService pdfService) {
+    public MainController(TourModalViewModel tourModalViewModel, TourListViewModel tourListViewModel, PdfService pdfService, ImportExportService importExportService) {
         this.tourModalViewModel = tourModalViewModel;
+        this.tourListViewModel = tourListViewModel;
         this.pdfService = pdfService;
+        this.importExportService = importExportService;
     }
 
     public void showTourModal(ActionEvent actionEvent) throws IOException {
@@ -77,18 +83,17 @@ public class MainController implements Initializable {
     }
 
     public void handleImportTour(ActionEvent actionEvent) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Import Tour File");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Import Tour File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
         Window stage = null;
         File file = fileChooser.showOpenDialog(stage);
 
             if (file != null) {
                 try {
-                    String content = Files.readString(file.toPath());
-                    ObjectMapper mapper = new ObjectMapper();
-                    Tour importedTour = mapper.readValue(content, Tour.class);
-                    //saveTour;
+                    byte[] importBytes = Files.readAllBytes(file.toPath());
+                    if (importExportService.importTourData(importBytes))
+                        tourListViewModel.loadTours();
                 } catch (IOException e) {
                     // logging fehlt noch
                     e.printStackTrace();
@@ -96,6 +101,14 @@ public class MainController implements Initializable {
             }
         }
 
-    public void handleExportTour(ActionEvent actionEvent) {
+    public void handleExportTour(ActionEvent actionEvent) throws IOException {
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        Parent root = FXMLDependencyInjection.load("ExportModal.fxml", Locale.ENGLISH);
+        dialogStage.setScene(new Scene(root));
+        dialogStage.setTitle("Export Tour Data");
+        dialogStage.setMinHeight(292.0);
+        dialogStage.setMinWidth(559.0);
+        dialogStage.showAndWait();
     }
 }

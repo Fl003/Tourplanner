@@ -1,10 +1,6 @@
 package org.example.tourplanner.view;
 
-import org.example.tourplanner.service.DirectionsService;
-import org.example.tourplanner.service.GeocodeService;
-import org.example.tourplanner.service.LogService;
-import org.example.tourplanner.service.PdfService;
-import org.example.tourplanner.service.TourService;
+import org.example.tourplanner.service.*;
 import org.example.tourplanner.viewmodel.*;
 
 public class ControllerFactory {
@@ -19,6 +15,7 @@ public class ControllerFactory {
     // Services
     private final TourService tourService;
     private final LogService logService;
+    private final ImportExportService importExportService;
     private final GeocodeService geocodeService;
     private final DirectionsService directionsService;
     private final PdfService pdfService;
@@ -29,6 +26,7 @@ public class ControllerFactory {
         geocodeService = new GeocodeService();
         directionsService = new DirectionsService();
         pdfService = new PdfService();
+        importExportService = new ImportExportService();
 
         tourListViewModel = new TourListViewModel(tourService);
         generalViewModel = new GeneralViewModel(tourListViewModel, tourService);
@@ -44,7 +42,7 @@ public class ControllerFactory {
     //
     public Object create(Class<?> controllerClass) {
         if (controllerClass == MainController.class) {
-            return new MainController(tourModalViewModel, pdfService);
+            return new MainController(tourModalViewModel, tourListViewModel, pdfService, importExportService);
         } else if (controllerClass == SearchBarController.class) {
             return new SearchBarController(searchBarViewModel);
         } else if (controllerClass == TourListController.class) {
@@ -61,10 +59,11 @@ public class ControllerFactory {
             return new LogModalController(logModalViewModel);
         } else if (controllerClass == AddressSelectionController.class) {
             return new AddressSelectionController(geocodeService);
+        } else if (controllerClass == ExportDataController.class) {
+            return new ExportDataController(tourService, importExportService);
         }
         throw new IllegalArgumentException("Unknown controller class: " + controllerClass);
     }
-
 
     //
     // Singleton-Pattern with early-binding

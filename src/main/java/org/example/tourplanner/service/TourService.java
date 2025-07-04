@@ -139,11 +139,15 @@ public class TourService {
             HttpDelete request = new HttpDelete(BASE_URL + "/tour/" + tourId);
             logger.info("send delete request for receiving tour by id {}", tourId);
             ClassicHttpResponse response = client.executeOpen(null, request, null);
-            return response.getCode() == 200 || response.getCode() == 204;
+            if (response.getCode() == 200 || response.getCode() == 204) {
+                logService.deleteLogsFromTourId(tourId);
+                return true;
+            }
         } catch (Exception e) {
             logger.error("failed to delete tour by id {}", tourId, e);
             return false;
         }
+        return false;
     }
 
     public Tour convertTourDtoToTour(TourDto tourDto) {
@@ -168,15 +172,13 @@ public class TourService {
     }
 
     public int getPopularity(List<LogDto> logs) {
-        // count: <=1, <=3, <=6, <=10, ->
-        // stars:  1,   2,   3,    4,   5
-        if (logs == null) return 1;
-        int logsCount = logs.size();
-        if (logsCount <= 1) return 1;
-        if (logsCount <= 3) return 2;
-        if (logsCount <= 6) return 3;
-        if (logsCount <= 10) return 4;
-        return 5;
+        if (logs == null || logs.isEmpty()) return 5;
+
+        double avgStars = 0;
+        for (LogDto log : logs) {
+            avgStars += log.getRating();
+        }
+        return (int) Math.floor(avgStars / logs.size());
     }
 
     public int getChildFriendliness(List<LogDto> logs) {

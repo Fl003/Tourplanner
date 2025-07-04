@@ -13,18 +13,18 @@
     -fx-background-color: #70b152;
 }
 
-#newTour {
-    -fx-background-color: #70b152;
-}
-
-#searchBtn {
-    -fx-background-color: #70b152;
-}
-
-#newLog {
-    -fx-background-color: #70b152;
-}
-
-#estimatedLabel, #distanceLabel {
+.title {
+    -fx-font-family: Arial;
+    -fx-font-size: 18;
     -fx-font-weight: bold;
+    -fx-text-fill: #70b152;
+}
+
+.whiteBg {
+    -fx-background-color: white;
+}
+
+.primaryBtn {
+    -fx-background-color: #70b152;
+    -fx-text-fill: white;
 }

@@ -61,6 +61,7 @@ public class TourListViewModel {
             Tour tour = tourService.convertTourDtoToTour(tourDto);
             tourList.add(tour);
         }
+        notifyListeners(null);
     }
 
     public void reloadTour(Long tourId) {

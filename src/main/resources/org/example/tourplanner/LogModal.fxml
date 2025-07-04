@@ -6,10 +6,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox minHeight="0.0" minWidth="0.0" prefHeight="307.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.view.LogModalController">
+<VBox minHeight="0.0" minWidth="0.0" prefHeight="307.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style.css" fx:controller="org.example.tourplanner.view.LogModalController">
     <AnchorPane prefHeight="291.0" prefWidth="742.0">
         <SplitPane dividerPositions="0.5" prefHeight="284.0" prefWidth="742.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="255.0" prefWidth="363.0" style="-fx-background-color: white;">
+            <AnchorPane styleClass="whiteBg" minHeight="0.0" minWidth="350.0" prefHeight="255.0" prefWidth="363.0" >
                 <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="106.0" minWidth="100.0" text="%Difficulty" AnchorPane.leftAnchor="10.0" />
                 <Label alignment="CENTER_RIGHT" layoutX="61.0" layoutY="60.0" minWidth="100.0" text="%DateTime" AnchorPane.leftAnchor="10.0" />
                 <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
@@ -28,11 +28,11 @@
                 <Label layoutX="311.0" layoutY="59.0" text=":" />
                 <TextField fx:id="totalTime" layoutX="120.0" layoutY="187.0" prefHeight="26.0" prefWidth="227.0" />
             </AnchorPane>
-            <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
+            <AnchorPane styleClass="whiteBg" minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" >
                 <Label alignment="CENTER_RIGHT" layoutX="39.0" layoutY="60.0" minWidth="100.0" text="%Comment" AnchorPane.leftAnchor="10.0" />
                 <TextArea fx:id="comment" layoutX="120.0" layoutY="56.0" prefHeight="122.0" prefWidth="228.0" wrapText="true" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0" />
                 <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-                <Button fx:id="saveLog" layoutX="232.8" layoutY="245.0" mnemonicParsing="false" onAction="#saveLog" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #70b152;" text="%Create_Button" textFill="WHITE" AnchorPane.rightAnchor="20.0">
+                <Button fx:id="saveLog" styleClass="primaryBtn" layoutX="232.8" layoutY="245.0" mnemonicParsing="false" onAction="#saveLog" prefHeight="26.0" prefWidth="115.0" text="%Create_Button" AnchorPane.rightAnchor="20.0">
                     <font>
                         <Font name="Arial Bold" size="12.0" />
                     </font>

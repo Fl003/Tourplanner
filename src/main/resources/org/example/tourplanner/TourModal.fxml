@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox minHeight="0.0" minWidth="0.0" prefHeight="292.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.view.TourModalController">
+<VBox minHeight="0.0" minWidth="0.0" prefHeight="284.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style.css" fx:controller="org.example.tourplanner.view.TourModalController">
     <AnchorPane prefHeight="263.0" prefWidth="742.0">
         <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="202.0" prefWidth="367.0" style="-fx-background-color: white;">
+            <AnchorPane styleClass="whiteBg" minHeight="0.0" minWidth="350.0" prefHeight="202.0" prefWidth="367.0" >
                 <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="114.0" minWidth="100.0" text="%StartingPoint" AnchorPane.leftAnchor="10.0" />
                 <TextField fx:id="name" layoutX="107.0" layoutY="60.0" prefHeight="26.0" prefWidth="291.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0" />
                 <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="64.0" minWidth="100.0" text="%TourName" AnchorPane.leftAnchor="10.0" />
@@ -18,19 +18,15 @@
                 <ComboBox fx:id="transportType" layoutX="120.0" layoutY="210.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0" />
                 <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="164.0" minWidth="100.0" text="%Destination" AnchorPane.leftAnchor="10.0" />
                 <TextField fx:id="destination" editable="false" layoutX="120.0" layoutY="160.0" prefHeight="26.0" prefWidth="191.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" />
-                <Label alignment="CENTER_RIGHT" layoutX="24.0" layoutY="20.0" text="%Tour_Create" textFill="#70b152">
-                    <font>
-                        <Font name="Arial Bold" size="18.0" />
-                    </font>
-                </Label>
-            <Button fx:id="end" layoutX="324.0" layoutY="160.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="87.0" text="%Select" AnchorPane.rightAnchor="20.0" onAction="#selectAddress" />
-            <Button fx:id="start" layoutX="323.0" layoutY="110.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="87.0" text="%Select" AnchorPane.rightAnchor="20.0" onAction="#selectAddress" />
+                <Label styleClass="title" alignment="CENTER_RIGHT" layoutX="24.0" layoutY="20.0" text="%Tour_Create" />
+            <Button fx:id="end" layoutX="324.0" layoutY="160.0" mnemonicParsing="false" onAction="#selectAddress" prefHeight="26.0" prefWidth="87.0" text="%Select" AnchorPane.rightAnchor="20.0" />
+            <Button fx:id="start" layoutX="323.0" layoutY="110.0" mnemonicParsing="false" onAction="#selectAddress" prefHeight="26.0" prefWidth="87.0" text="%Select" AnchorPane.rightAnchor="20.0" />
             </AnchorPane>
-            <AnchorPane minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
+            <AnchorPane styleClass="whiteBg" minHeight="0.0" minWidth="350.0" prefHeight="160.0" prefWidth="100.0" >
                 <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="64.0" minWidth="100.0" text="%Description" AnchorPane.leftAnchor="10.0" />
                 <TextArea fx:id="description" layoutX="120.0" layoutY="60.0" prefHeight="146.0" prefWidth="292.0" wrapText="true" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0" />
                 <Separator prefHeight="2.0" prefWidth="282.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-                <Button fx:id="handleSavingMethod" layoutX="296.8" layoutY="220.0" mnemonicParsing="false" onAction="#saveTour" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #70b152;" text="%Create_Button" textFill="WHITE" AnchorPane.rightAnchor="20.0">
+                <Button fx:id="handleSavingMethod" styleClass="primaryBtn" layoutX="296.8" layoutY="220.0" mnemonicParsing="false" onAction="#saveTour" prefHeight="26.0" prefWidth="115.0" text="%Create_Button" AnchorPane.rightAnchor="20.0">
                     <font>
                         <Font name="Arial Bold" size="12.0" />
                     </font>

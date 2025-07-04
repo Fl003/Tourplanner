@@ -4,13 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane minHeight="300.0" minWidth="0.0" prefHeight="300.0" prefWidth="559.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.view.LogController">
-        <Label alignment="CENTER" layoutX="23.0" layoutY="14.0" minWidth="60.0" style="&#10;" text="%LogsView_Title" textAlignment="CENTER" textFill="#70b152">
-            <font>
-                <Font name="Arial Bold" size="18.0" />
-            </font>
-        </Label>
-          <Button fx:id="newLog" layoutX="458.0" layoutY="13.0" mnemonicParsing="false" onAction="#createNewLog" prefHeight="23.0" prefWidth="94.0" text="%CreateLogBtn" textFill="WHITE" AnchorPane.rightAnchor="20.0">
+<AnchorPane styleClass="whiteBg" minHeight="300.0" minWidth="0.0" prefHeight="300.0" prefWidth="559.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style.css" fx:controller="org.example.tourplanner.view.LogController">
+        <Label styleClass="title" alignment="CENTER" layoutX="23.0" layoutY="14.0" minWidth="60.0" text="%LogsView_Title" textAlignment="CENTER" />
+          <Button fx:id="newLog" styleClass="primaryBtn" layoutX="458.0" layoutY="13.0" mnemonicParsing="false" onAction="#createNewLog" prefHeight="23.0" prefWidth="94.0" text="%CreateLogBtn" AnchorPane.rightAnchor="20.0">
               <font>
                   <Font name="Arial Bold" size="12.0" />
               </font>

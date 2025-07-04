@@ -29,8 +29,7 @@
         </Menu>
     </MenuBar>
     <fx:include source="SearchBar.fxml"/>
-    <SplitPane dividerPositions="0.25" focusTraversable="true"
-               VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.25" focusTraversable="true" VBox.vgrow="ALWAYS">
         <fx:include source="TourOverView.fxml"/>
         <AnchorPane minWidth="700.0" prefHeight="200.0" prefWidth="200.0">
             <SplitPane dividerPositions="0.25" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"

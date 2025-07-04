@@ -135,4 +135,11 @@ public class LogService {
     }
 
 
+    public void deleteLogsFromTourId(Long tourId) {
+        List<LogDto> logDtos = getAllLogsForTourId(tourId);
+        if (logDtos == null || logDtos.isEmpty()) return;
+        for (LogDto log : logDtos) {
+            deleteLog(log.getId());
+        }
+    }
 }

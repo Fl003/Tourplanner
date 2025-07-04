@@ -80,15 +80,15 @@ public class TourModalController {
     public void initialize() {
         // set items in combobox
         transportType.setItems(this.tourModalViewModel.getTransportTypes());
+        // listen for changes and save in viewmodel
+        transportType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            tourModalViewModel.setTransportType(TransportType.valueOf(newValue));
+        });
         // if edit, set transportType otherwise select first
         if (tourModalViewModel.getTransportType().get() != null)
             transportType.setValue(tourModalViewModel.getTransportType().get().toString());
         else
             transportType.getSelectionModel().selectFirst();
-        // listen for changes and save in viewmodel
-        transportType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            tourModalViewModel.setTransportType(TransportType.valueOf(newValue));
-        });
 
         // bind fields
         name.textProperty().bindBidirectional(this.tourModalViewModel.getName());
