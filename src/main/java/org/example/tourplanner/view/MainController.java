@@ -1,5 +1,6 @@
 package org.example.tourplanner.view;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -7,8 +8,11 @@ import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.example.tourplanner.FXMLDependencyInjection;
+import org.example.tourplanner.model.Tour;
 import org.example.tourplanner.service.PdfService;
+import org.example.tourplanner.service.TourService;
 import org.example.tourplanner.viewmodel.TourModalViewModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -70,5 +74,28 @@ public class MainController implements Initializable {
                 }
             }
         }
+    }
+
+    public void handleImportTour(ActionEvent actionEvent) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Import Tour File");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
+        Window stage = null;
+        File file = fileChooser.showOpenDialog(stage);
+
+            if (file != null) {
+                try {
+                    String content = Files.readString(file.toPath());
+                    ObjectMapper mapper = new ObjectMapper();
+                    Tour importedTour = mapper.readValue(content, Tour.class);
+                    //saveTour;
+                } catch (IOException e) {
+                    // logging fehlt noch
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    public void handleExportTour(ActionEvent actionEvent) {
     }
 }

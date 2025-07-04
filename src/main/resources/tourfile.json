@@ -1,0 +1,11 @@
+{
+  "name": "Vienna Bike Ride",
+  "starting point": "Vienna",
+  "destination": "Klosterneuburg",
+  "transportType": "Bike",
+  "distance": 15.2,
+  "popularity": 3,
+  "description": "scenic route along the Donau",
+  "estimatedTime": "01:00:00",
+  "child-friendliness": 4
+}

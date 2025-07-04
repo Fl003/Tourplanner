@@ -21,8 +21,8 @@
         <Menu mnemonicParsing="false" text="%Menu_Tours">
             <MenuItem mnemonicParsing="false" text="%Menu_Create" onAction="#showTourModal"/>
             <SeparatorMenuItem mnemonicParsing="false"/>
-            <MenuItem mnemonicParsing="false" text="%Menu_Import_Tour"/>
-            <MenuItem mnemonicParsing="false" text="%Menu_Export_Tour"/>
+            <MenuItem mnemonicParsing="false" text="%Menu_Import_Tour" onAction="#handleImportTour"/>
+            <MenuItem mnemonicParsing="false" text="%Menu_Export_Tour" onAction="#handleExportTour"/>
         </Menu>
         <Menu mnemonicParsing="false" text="%Menu_Summarize_Report">
             <MenuItem mnemonicParsing="false" text="%DownloadReport" onAction="#downloadPdf"/>
