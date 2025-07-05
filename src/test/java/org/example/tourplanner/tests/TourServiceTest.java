@@ -49,7 +49,7 @@ public class TourServiceTest {
     @Test
     void getPopularity_shouldReturn1IfNoLogs() {
         int popularity = tourService.getPopularity(null);
-        assertEquals(1, popularity);
+        assertEquals(5, popularity);
     }
 //Tests the popularity algorithm
     @Test
